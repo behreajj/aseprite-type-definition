@@ -9,3 +9,5 @@ The supported API version is `18` (since Aseprite `v1.2.35`)
 
 Put `/definitions` directory into your `library` directory. You can link the file in other ways too.
 See: https://github.com/sumneko/lua-language-server/wiki
+
+It is strongly recommended that `Cast Number to Integer` be turned **off** in settings.
