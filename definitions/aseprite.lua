@@ -7,28 +7,207 @@ local undefined
 
 ---The `app` global namespace
 app = {
-    ---The active site
-    site=undefined --[[@as Site]],
-    ---The range represents the active selection from an objects collection. It returns a sorted list of selected frames, or cels, or layers, or colors, etc.
-    range=undefined --[[@as Range]],
-    ---The active cel
-    activeCel=undefined --[[@as Cel]],
-    ---The active frame number
-    activeFrame=undefined --[[@as integer]],
-    ---The active image
-    activeImage=undefined --[[@as Image]],
-    ---The active layer
-    activeLayer=undefined --[[@as Layer]],
-    ---The active sprite
-    activeSprite=undefined --[[@as Sprite]],
-    ---The active tag
-    activeTag=undefined --[[@as Tag]],
-    ---The active tool
-    activeTool=undefined --[[@as Tool]],
     ---The active brush
     activeBrush=undefined --[[@as Brush]],
+
+    ---The active cel
+    activeCel=undefined --[[@as Cel]],
+
+    ---The active frame number
+    activeFrame=undefined --[[@as integer]],
+
+    ---The active image
+    activeImage=undefined --[[@as Image]],
+
+    ---The active layer
+    activeLayer=undefined --[[@as Layer]],
+
+    ---The active sprite
+    activeSprite=undefined --[[@as Sprite]],
+
+    ---The active tag
+    activeTag=undefined --[[@as Tag]],
+
+    ---The active tool
+    activeTool=undefined --[[@as Tool]],
+
+    ---The API version
+    apiVersion=undefined --[[@as number]],
+
+    ---The background color
+    bgColor=undefined --[[@as Color]],
+
+    ---Executes the given command named `CommandName` with the given parameters; see: https://www.aseprite.org/api/app_command
+    command=undefined --[[@as {[string]: fun(options: {[string]: any})|fun(): any}]],
+    ---@type {tool: fun(tool: Tool): any}|{document: fun(sprite: Sprite): any}|{[string]: {[string]: any}}
+
+    ---The `Events` object to associate functions that can act like listeners of specific App events
+    events=undefined --[[@as Events]],
+
+    ---Closes the application
+    exit=function() end,
+
+    ---The foreground color
+    fgColor=undefined --[[@as Color]],
+
+    ---`true` if the UI is available
+    isUIAvailable=undefined --[[@as boolean]],
+
+    ---A table with parameters specified as `--script-param key=value` in the CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file
+    params=undefined --[[@as {[string]: string}]],
+
+    ---The range represents the active selection from an objects collection. It returns a sorted list of selected frames, or cels, or layers, or colors, etc.
+    range=undefined --[[@as Range]],
+
+    ---The active site
+    site=undefined --[[@as Site]],
+
+    ---sprites opened
+    sprites=undefined --[=[@as Sprite[]]=],
+
+    ---The Aseprite version number (e.g. Version("1.2.10-beta1"))
+    version=undefined --[[@as Version]],
+
+    ---Shows an alert message;
+    ---If `buttons` are not specified, it will show a message box with the OK button only
+    ---@param text string
+    ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]})
+    ---@return integer buttonIndex the selected button i.e. 1 if the first button was clicked
+    alert=function(text) end,
+
+    ---Opens a new sprite loading it from the given filename
+    ---@param filename string
+    ---@return Sprite|nil
+    open=function(filename) end,
+
+    ---Redoes the latest operation in the `activeSprite`
+    redo=function() end,
+
+    ---Force aseprite to refresh screen
+    refresh=function() end,
+
+    ---Creates a new transaction so you can group several sprite modifications in just one undo/redo operation
+    ---@param func fun(...): any a function called inside the transaction
+    ---@overload fun(name: string, func: fun(...): any)
+    transaction=function(func) end,
+
+    ---Undoes the latest operation in the `activeSprite`
+    undo=function() end,
+
+    ---Simulates an user stroke in the canvas using the given tool; see https://www.aseprite.org/api/app#app-usetool
+    ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection?: SelectionMode}
+    usetool=function(options) end,
+
+    ---A set of functions to handle file names and the file system
+    fs={
+        ---The installation path of Aseprite for the current platform
+        appPath=undefined --[[@as string]],
+
+        ---The path the Aseprite executable was launched from
+        currentPath=undefined --[[@as string]],
+
+        ---The preferred path separator of the current platform; see: `app.fs.joinPath()`
+        pathSeparator=undefined --[[@as "/"|"\\"]],
+
+        ---The path for temporary files for the current platform
+        tempPath=undefined --[[@as string]],
+
+        ---The current user's Aseprite configuration path for the current platform
+        userConfigPath=undefined --[[@as string]],
+
+        ---The current user's Documents path for the current platform
+        userDocsPath=undefined --[[@as string]],
+
+        ---Returns the file extension (without including the `.`) of the given filename
+        ---@param fn string filename
+        ---@return string
+        fileExtension=function(fn) end,
+
+        ---Returns the file name (including the extension part) of the given filename
+        ---@param fn string filename
+        ---@return string
+        fileName=function(fn) end,
+
+        ---Returns the path/directory part of the given filename
+        ---@param fn string filename
+        ---@return string
+        filePath=function(fn) end,
+
+        ---Returns the file path joined with the title (without including the extension) of the given filename
+        ---@param fn string filename
+        ---@return string
+        filePathAndTitle=function(fn) end,
+
+        ---Returns the file size of the given filename `fn`
+        ---@param fn string filenmae
+        ---@return integer
+        fileSize=function(fn) end,
+
+        ---Returns the file title (without including the path nor the extension) of the given filename
+        ---@param fn string filename
+        ---@return string
+        fileTitle=function(fn) end,
+
+        ---Returns true if the given filename `fn` is a directory
+        ---@param fn string filename
+        ---@return boolean
+        isDirectory=function(fn) end,
+
+        ---Returns true if the given filename `fn` is a file
+        ---@param fn string filename
+        ---@return boolean
+        isFile=function(fn) end,
+
+        ---Can accept any number of string arguments to join together with the path separator for the current platform
+        ---@param path1 string
+        ---@param path2 string
+        ---@return string
+        joinPath=function(path1, path2) end,
+
+        ---Returns a list of files in the given directory path;  The returned value is a table where each element is a file name, each file name is relative to the given path
+        ---@param path string
+        ---@return string[]
+        listFiles=function(path) end,
+
+        ---Returns the file path converted to a canonical form for the current platform
+        ---@param path string
+        ---@return string
+        normalizePath=function(path) end,
+
+        ---Create all directories needed to access to the path
+        ---@param path string
+        ---@return boolean succeeded
+        makeAllDirectories=function(path) end,
+
+        ---Create one directory
+        ---@param path string
+        ---@return boolean succeeded
+        makeDirectory=function(path) end,
+
+        ---Remove the given directory (it must be empty)
+        ---@param path string
+        ---@return boolean succeeded `true` if the directory was removed (or is already removed)
+        removeDirectory=function(path) end
+    },
+
     ---A set of functions to handle the color for Image pixels at the lowest level: an unsigned integer
-    pixelColor={
+    pixelColor = {
+        ---Constructs a 16-bit unsigned integer for grayscale images
+        ---@param gray integer
+        ---@param alpha integer alpha; default is 255 (opaque)
+        ---@return integer
+        graya=function(gray, alpha) end,
+
+        ---Returns the alpha component
+        ---@param grayPixelValue integer 16-bit integer
+        ---@return integer
+        grayaA=function(grayPixelValue) end,
+
+        ---Returns the gray component
+        ---@param grayPixelValue integer 16-bit integer
+        ---@return integer
+        grayaV=function(grayPixelValue) end,
+
         ---Constructs a 32-bit unsigned integer for RGBA images.
         ---@param red integer
         ---@param green integer
@@ -36,163 +215,41 @@ app = {
         ---@param alpha? integer alpha; default is 255 (opaque)
         ---@return integer
         rgba=function(red, green, blue, alpha) end,
-        ---Returns the red component
-        ---@param rgbaPixelValue integer 32-bit integer
-        ---@return integer
-        rgbaR=function(rgbaPixelValue) end,
-        ---Returns the green component
-        ---@param rgbaPixelValue integer 32-bit integer
-        ---@return integer
-        rgbaG=function(rgbaPixelValue) end,
-        ---Returns the blue component
-        ---@param rgbaPixelValue integer 32-bit integer
-        ---@return integer
-        rgbaB=function(rgbaPixelValue) end,
+
         ---Returns the alpha component
         ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
         rgbaA=function(rgbaPixelValue) end,
-        ---Constructs a 16-bit unsigned integer for grayscale images
-        ---@param gray integer
-        ---@param alpha integer alpha; default is 255 (opaque)
+
+        ---Returns the blue component
+        ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
-        graya=function(gray, alpha) end,
-        ---Returns the gray component
-        ---@param grayPixelValue integer 16-bit integer
+        rgbaB=function(rgbaPixelValue) end,
+
+        ---Returns the green component
+        ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
-        grayaV=function(grayPixelValue) end,
-        ---Returns the alpha component
-        ---@param grayPixelValue integer 16-bit integer
+        rgbaG=function(rgbaPixelValue) end,
+
+        ---Returns the red component
+        ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
-        grayaA=function(grayPixelValue) end
+        rgbaR=function(rgbaPixelValue) end,
     },
-    ---The Aseprite version number (e.g. Version("1.2.10-beta1"))
-    version=undefined --[[@as Version]],
-    ---The API version
-    apiVersion=undefined --[[@as number]],
-    ---The foreground color
-    fgColor=undefined --[[@as Color]],
-    ---The background color
-    bgColor=undefined --[[@as Color]],
-    ---`true` if the UI is available
-    isUIAvailable=undefined --[[@as boolean]],
-    ---sprites opened
-    sprites=undefined --[=[@as Sprite[]]=],
-    ---A table with parameters specified as `--script-param key=value` in the CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file
-    params=undefined --[[@as {[string]: string}]],
-    ---Shows an alert message;
-    ---If `buttons` are not specified, it will show a message box with the OK button only
-    ---@param text string
-    ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]})
-    ---@return integer buttonIndex the selected button i.e. 1 if the first button was clicked
-    alert=function(text) end,
-    ---Opens a new sprite loading it from the given filename
-    ---@param filename string
-    ---@return Sprite|nil
-    open=function(filename) end,
-    ---Closes the application
-    exit=function() end,
-    ---Creates a new transaction so you can group several sprite modifications in just one undo/redo operation
-    ---@param func fun(...): any a function called inside the transaction
-    transaction=function(func) end,
-    ---Executes the given command named `CommandName` with the given parameters; see: https://www.aseprite.org/api/app_command
-    command=undefined --[[@as {[string]: fun(options: {[string]: any})|fun(): any}]],
-    ---@type {tool: fun(tool: Tool): any}|{document: fun(sprite: Sprite): any}|{[string]: {[string]: any}}
-    preferences={
+
+    preferences = {
         -- TODO: fix the description of tool and document
 
         ---Returns the preferences of the given tool
         ---@param tool Tool
         ---@return any
         tool=function(tool) end,
+
         ---Returns the preferences of the given `sprite`
         ---@param sprite Sprite
         ---@return any
         document=function(sprite) end
     },
-    ---A set of functions to handle file names and the file system
-    fs={
-        ---The preferred path separator of the current platform; see: `app.fs.joinPath()`
-        pathSeparator=undefined --[[@as "/"|"\\"]],
-        ---Returns the path/directory part of the given filename
-        ---@param fn string filename
-        ---@return string
-        filePath=function(fn) end,
-        ---Returns the file name (including the extension part) of the given filename
-        ---@param fn string filename
-        ---@return string
-        fileName=function(fn) end,
-        ---Returns the file extension (without including the `.`) of the given filename
-        ---@param fn string filename
-        ---@return string
-        fileExtension=function(fn) end,
-        ---Returns the file title (without including the path nor the extension) of the given filename
-        ---@param fn string filename
-        ---@return string
-        fileTitle=function(fn) end,
-        ---Returns the file path joined with the title (without including the extension) of the given filename
-        ---@param fn string filename
-        ---@return string
-        filePathAndTitle=function(fn) end,
-        ---Returns the file path converted to a canonical form for the current platform
-        ---@param path string
-        ---@return string
-        normalizePath=function(path) end,
-        ---Can accept any number of string arguments to join together with the path separator for the current platform
-        ---@param path1 string
-        ---@param path2 string
-        ---@return string
-        joinPath=function(path1, path2) end,
-        ---The path the Aseprite executable was launched from
-        currentPath=undefined --[[@as string]],
-        ---The installation path of Aseprite for the current platform
-        appPath=undefined --[[@as string]],
-        ---The path for temporary files for the current platform
-        tempPath=undefined --[[@as string]],
-        ---The current user's Documents path for the current platform
-        userDocsPath=undefined --[[@as string]],
-        ---The current user's Aseprite configuration path for the current platform
-        userConfigPath=undefined --[[@as string]],
-        ---Returns true if the given filename `fn` is a file
-        ---@param fn string filename
-        ---@return boolean
-        isFile=function(fn) end,
-        ---Returns true if the given filename `fn` is a directory
-        ---@param fn string filename
-        ---@return boolean
-        isDirectory=function(fn) end,
-        ---Returns the file size of the given filename `fn`
-        ---@param fn string filenmae
-        ---@return integer
-        fileSize=function(fn) end,
-        ---Returns a list of files in the given directory path;  The returned value is a table where each element is a file name, each file name is relative to the given path
-        ---@param path string
-        ---@return string[]
-        listFiles=function(path) end,
-        ---Create one directory
-        ---@param path string
-        ---@return boolean succeeded
-        makeDirectory=function(path) end,
-        ---Create all directories needed to access to the path
-        ---@param path string
-        ---@return boolean succeeded
-        makeAllDirectories=function(path) end,
-        ---Remove the given directory (it must be empty)
-        ---@param path string
-        ---@return boolean succeeded `true` if the directory was removed (or is already removed)
-        removeDirectory=function(path) end
-    },
-    ---Force aseprite to refresh screen
-    refresh=function() end,
-    ---Undoes the latest operation in the `activeSprite`
-    undo=function() end,
-    ---Redoes the latest operation in the `activeSprite`
-    redo=function() end,
-    ---Simulates an user stroke in the canvas using the given tool; see https://www.aseprite.org/api/app#app-usetool
-    ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection?: SelectionMode}
-    usetool=function(options) end,
-    ---The `Events` object to associate functions that can act like listeners of specific App events
-    events=undefined --[[@as Events]]
 }
 
 
@@ -203,7 +260,8 @@ app = {
 AniDir = {
     FOWARD=undefined --[[@as AniDir]],
     REVERSE=undefined --[[@as AniDir]],
-    PING_PONG=undefined --[[@as AniDir]]
+    PING_PONG=undefined --[[@as AniDir]],
+    PING_PONG_REVERSE=undefined --[[@as AniDir]],
 }
 
 
@@ -467,6 +525,12 @@ Dialog = {
     ---@return Dialog
     button=function(dialog, options) end,
 
+    ---@param dialog Dialog
+    ---@param options {id?: string, label?: string, width?: integer, height?: integer, visible?: boolean, autoScaling?: boolean, onpaint?: fun(event: {context: GraphicsContext}), onkeydown?: function, onkeyup?: function, onmousemove?: function, onmousedown?: function, onmouseup?: function, ondblclick?: function, onwheel?: function, ontouchmagnify?: function}
+    canvas = function(dialog, options)
+        -- TODO: Better specify events in listener function
+    end,
+
     ---Creates a check box
     ---@param dialog Dialog
     ---@param options {id?: string, label?: string, text?: string, selected?: boolean, onclick?: function}
@@ -531,6 +595,10 @@ Dialog = {
     ---@return Dialog
     radio=function(dialog, options) end,
 
+    ---@param dialog Dialog
+    repaint = function(dialog)
+    end,
+
     ---Creates a separator
     ---@param dialog Dialog
     ---@param options {id?: string, text?: string}
@@ -581,6 +649,167 @@ Events = {
 }
 
 
+---The GraphicsContext object provides methods for drawing images, text and shapes on the canvas.
+---@class GraphicsContext
+---@field antialias boolean
+---@field blendMode BlendMode
+---@field color Color
+---@field height integer
+---@field opacity integer
+---@field strokeWidth integer
+---@field width integer
+GraphicsContext = {
+    ---Starts a new path, emptying the list of tracked sub-paths. This is the first method to call when drawing paths.
+    ---@param gc GraphicsContext
+    beginPath = function(gc)
+    end,
+
+    ---Sets the current path as a clipping area for following drawing operations.
+    ---@param gc GraphicsContext
+    clip = function(gc)
+    end,
+
+    ---Closes the current sub-path by connecting the current point with the first point of the current sub-path.
+    ---@param gc GraphicsContext
+    closePath = function(gc)
+    end,
+
+    ---Adds a cubic Bézier curve to the current sub-path, from the last point to the specified xy-coordinates, with two control points (specified by cp1x/cp1y and cp2x/cp2y coordinates).
+    ---@param gc GraphicsContext
+    ---@param cp1x number first control point x
+    ---@param cp1y number first control point y
+    ---@param cp2x number second control point x
+    ---@param cp2y number second control point y
+    ---@param x number anchor point x
+    ---@param y number anchor point y
+    cubicTo = function(gc, cp1x, cp1y, cp2x, cp2y, x, y)
+    end,
+
+    ---Draws on the canvas the given image.
+    ---
+    ---If given xy-coordinates, the full image will be drawn at the specified position, in it's original scale.
+    ---
+    ---If given source and destination bounds (or their respective values), a part of the image is drawn (specified by the srcRect, or srcX/srcY/srcW/srcH, relative to the image) on the canvas (specified by the dstRect or dstX/dstY/dstW/dstH). This allows drawing only a part of and/or scaling the image.
+    ---@param gc GraphicsContext
+    ---@param image Image
+    ---@param x integer
+    ---@param y integer
+    ---@overload fun(gc: GraphicsContext, image: Image, srcRect: Rectangle, dstRect: Rectangle)
+    ---@overload fun(gc: GraphicsContext, image: Image, srcX: integer, srcY: integer, srcW: integer, srcH: integer, dstX: integer, dstY: integer, dstW: integer, dstH: integer)
+    drawImage = function(gc, image, x, y)
+    end,
+
+    ---Draws on the canvas a theme part specified by the given partId, at a given Point or at specified xy-coordinates.
+    ---@param gc GraphicsContext
+    ---@param partId string
+    ---@param point Point
+    ---@overload fun(gc: GraphicsContext, partId: string, x: integer, y: integer)
+    drawThemeImage = function(gc, partId, point)
+    end,
+
+    ---Draws on the canvas a theme part specified by the given partId, filling a given Rectangle or at specified xy-coordinates, with given width and height. This method uses nine-slice scaling for parts that have their Slice's center defined.
+    ---@param gc GraphicsContext
+    ---@param partId string
+    ---@param rectangle Rectangle
+    ---@overload fun(gc: GraphicsContext, partId: string, x: integer, y: integer, w: integer, h: integer)
+    drawThemeRect = function(gc, partId, rectangle)
+    end,
+
+    ---Fills the current path with the current color.
+    ---@param gc GraphicsContext
+    fill = function(gc)
+    end,
+
+    ---Fills the given rectangle with the current color.
+    ---@param gc GraphicsContext
+    ---@param rectangle Rectangle
+    fillRect = function(gc, rectangle)
+    end,
+
+    ---Draws on the canvas the given text string, at a position specified by the xy-coordinates.
+    ---@param gc GraphicsContext
+    ---@param text string
+    ---@param x integer
+    ---@param y integer
+    fillText = function(gc, text, x, y)
+    end,
+
+    ---Adds a line to the current sub-path, from the last point to the specified xy-coordinates.
+    ---@param gc GraphicsContext
+    ---@param x number
+    ---@param y number
+    lineTo = function(gc, x, y)
+    end,
+
+    ---Returns the size of the given text using the current font.
+    ---@param gc GraphicsContext
+    ---@param text string
+    ---@return Size
+    measureText = function(gc, text)
+    end,
+
+    ---Starts a new sub-path at the specified xy-coordinates. This is the second method to call (after GraphicsContext:beginPath()) when drawing paths.
+    ---@param gc GraphicsContext
+    ---@param x number
+    ---@param y number
+    moveTo = function(gc, x, y)
+    end,
+
+    ---Adds an oval enclosed by the given Rectangle to the current sub-path.
+    ---@param gc GraphicsContext
+    ---@param rectangle Rectangle
+    oval = function(gc, rectangle)
+    end,
+
+    ---Adds a given Rectangle to the current sub-path.
+    ---@param gc GraphicsContext
+    ---@param rectangle Rectangle
+    rect = function(gc, rectangle)
+    end,
+
+    ---Restores the last saved canvas state.
+    ---@param gc GraphicsContext
+    restore = function(gc)
+    end,
+
+    ---Adds a given Rectangle to the current sub-path with rounded corners.
+    ---
+    ---If a single radius is specified, a rectangle with circular corners is created. This method can be used to easily draw circles.
+    ---
+    ---If two radii are specified, a rectangle with elliptical corners is created.
+    ---@param gc GraphicsContext
+    ---@param rectangle Rectangle
+    ---@param rx number
+    ---@param ry number
+    ---@overload fun(gc: GraphicsContext, rectangle: Rectangle, r: number)
+    roundedRect = function(gc, rectangle, rx, ry)
+    end,
+
+    ---Saves the current state of the canvas to restore it later, including: color, opacity, blendMode, strokeWidth and clipping region.
+    ---@param gc GraphicsContext
+    save = function(gc)
+    end,
+
+    ---Paints the edges of the current path with the current color and current width.
+    ---@param gc GraphicsContext
+    stroke = function(gc)
+    end,
+
+    ---Paints the edges of the given rectangle with the current color and current width.
+    ---@param gc GraphicsContext
+    ---@param rectangle Rectangle
+    strokeRect = function(gc, rectangle)
+    end
+}
+
+
+---@class Grid
+---@field tileSize Size
+Grid = {
+    -- TODO: Finish definition.
+}
+
+
 ---@class Frame
 ---@field duration number Duration of this frame in the animation in seconds
 ---@field frameNumber integer The frame number; the `frame` is equal to `frame.sprite.frames[frameNumber]`
@@ -612,7 +841,9 @@ Image = {
     ---@param destinationImage Image
     ---@param sourceImage Image
     ---@param position? Point
-    drawImage=function(destinationImage, sourceImage, position) end,
+    ---@param opacity? integer
+    ---@param blendMode? BlendMode|integer
+    drawImage=function(destinationImage, sourceImage, position, opacity, blendMode) end,
 
     ---Sets the pixel in the xy-coordinate to the given integer pixel value
     ---@param image Image
@@ -672,6 +903,12 @@ Image = {
     ---@overload fun(image: Image, options: {filename: string, palette: Palette})
     saveAs=function(image, filename) end,
 
+    ---Returns the shrunken bounds (a rectangle) of the image removing all the empty space of borders using the mask color or the given reference color in refColor.
+    ---@param image Image
+    ---@param refColor integer
+    ---@return Rectangle
+    shrinkBounds=function(image, refColor) end,
+
     ---Copies/draws the given sourceImage image over destinationImage; If position is a point, it will draw the sourceImage in the given position
     ---@deprecated
     ---@param destinationImage Image
@@ -729,6 +966,7 @@ function ImageSpec() end
 ---@field cels boolean Cel[] Table of cels in the layer
 ---@field color Color User-defined color of this layer in the timeline
 ---@field data string The user-defined data related to this layer
+---@field id integer The layer's id
 ---@field isBackground boolean Whether or not a layer is a background
 ---@field isCollapsed boolean Whether or not a group layer is collapsed, i.e., whether its child layers are hidden in the timeline
 ---@field isContinuous boolean Whether a layer biases toward linked cels when a new cel is created in the timeline
@@ -737,6 +975,7 @@ function ImageSpec() end
 ---@field isGroup boolean Whether or not the layer is a group and has the capacity to be a parent to other layers
 ---@field isImage boolean Whether or not the layer contains cels with images
 ---@field isReference boolean Whether or not the layer is a reference layer
+---@field isTilemap boolean Whether or not the layer is a tile map
 ---@field isTransparent boolean Whether or not a layer supports transparency
 ---@field isVisible boolean Whether or not the layer is visible
 ---@field layers Layer[]|nil If a layer is a group, gets the table of child layers for which the group serves as a parent
@@ -745,6 +984,7 @@ function ImageSpec() end
 ---@field parent Sprite|Layer
 ---@field sprite Sprite The sprite to which the layer belongs
 ---@field stackIndex integer The layer's index in its parent's layers table
+---@field tileset Tileset|nil If the layer is a tile map, gets or sets the layer's tile set. 
 Layer = {
     ---Returns a cel, if any, at the intersection of the layer and a frame
     ---@param layer Layer
@@ -824,6 +1064,10 @@ function Point(x, y) end
 ---@field sprite Sprite Sprite to which the range is pointing to
 ---@field type RangeType
 Range = {
+    ---Clears the current selected range of frames/layers/cels/colors
+    ---@param range Range
+    clear=function(range) end,
+
     ---Returns true if the given object (layer/frame/cel) is inside the selected range
     ---@param range Range
     ---@param object Layer|Frame|Cel
@@ -833,10 +1077,6 @@ Range = {
     ---@param range Range
     ---@param colorIndex integer
     containsColor=function(range, colorIndex) end,
-
-    ---Clears the current selected range of frames/layers/cels/colors
-    ---@param range Range
-    clear=function(range) end
 }
 
 
@@ -988,7 +1228,7 @@ function Size() end
 ---@field colorMode ColorMode The color mode of the sprite
 ---@field colorSpace ColorSpace The color space of the sprite
 ---@field events Events events to associate functions that can act like listeners of specific Sprite events; see: https://www.aseprite.org/api/sprite#sprite-events
----@field filename string  The name of the file from where this sprite was loaded or saved or an empty string
+---@field filename string The name of the file from where this sprite was loaded or saved or an empty string
 ---@field frames Frame[] The frames the sprite has
 ---@field gridBounds Rectangle The bounds of the sprite grid
 ---@field height integer
@@ -999,6 +1239,7 @@ function Size() end
 ---@field slices Slice[] The slices the sprite has
 ---@field spec ImageSpec The specification for image in this sprite
 ---@field tags Tag[] The tags the sprite has
+---@field tilesets Tileset[] The tilesets the sprite has
 ---@field transparentColor integer An integer that spcifies what index (`0` by default) on indexed sprites
 ---@field width integer
 Sprite = {
@@ -1053,6 +1294,12 @@ Sprite = {
     ---@param tag Tag
     ---@overload fun(sprite: Sprite, tagName: string)
     deleteTag=function(sprite, tag) end,
+
+    ---Removes a tile from a tileset.
+    ---@param sprite Sprite
+    ---@param tile Tile
+    ---@overload fun(sprite: Sprite, tileset: Tileset, tileIndex: integer)
+    deleteTile=function(sprite, tile) end,
 
     ---Flatten all layers of the sprite into one layer; is the same as `app.commands.FlattenLayers()`
     ---@param sprite Sprite
@@ -1155,6 +1402,33 @@ function Sprite(width, height, colorMode) end
 ---@field toFrame  Frame The last Frame object where this tag ends; Note: Old versions (Aseprite v1.2.10-beta2) returned a frame number instead of a Frame object
 
 
+---@class Tile
+---@field image Image
+Tile = {
+    -- TODO: Finish definition.
+}
+
+---@class Tileset
+---@field grid Grid
+---@field name string
+Tileset = {
+    -- TODO: Finish definition.
+
+    ---@param tileset Tileset
+    ---@param index integer
+    ---@return Image
+    ---@deprecated
+    getTile = function(tileset, index)
+    end,
+
+    ---@param tileset Tileset
+    ---@param index integer
+    ---@return Tile
+    tile = function(tileset, index)
+    end
+}
+
+
 ---References a drawing tool. At the moment this class is used only to get and set the active tool (`app.activeTool`), or to paint on the canvas (`tool` parameter in `app.useTool()`)
 ---@class Tool
 ---@field id string the identifier of the specified in the `gui.xml` file
@@ -1169,9 +1443,9 @@ function Sprite(width, height, colorMode) end
 ---@field prereleaseNumber integer The pre-release version
 
 ---Create a new `Version` instance from a string
----@param verstion string
+---@param version string
 ---@return Version
-function Version(verstion) end
+function Version(version) end
 
 
 ---WebSocket
