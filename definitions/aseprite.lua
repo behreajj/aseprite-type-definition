@@ -9,11 +9,11 @@ local undefined
 app = {
     ---The active site
     site=undefined --[[@as Site]],
-    ---The range represents the active selection from an objects collection; It returns a sorted list of selected frames, or cels, or layers, or colors, etc.
+    ---The range represents the active selection from an objects collection. It returns a sorted list of selected frames, or cels, or layers, or colors, etc.
     range=undefined --[[@as Range]],
     ---The active cel
     activeCel=undefined --[[@as Cel]],
-    ---The active frame numbe
+    ---The active frame number
     activeFrame=undefined --[[@as integer]],
     ---The active image
     activeImage=undefined --[[@as Image]],
@@ -27,7 +27,7 @@ app = {
     activeTool=undefined --[[@as Tool]],
     ---The active brush
     activeBrush=undefined --[[@as Brush]],
-    ---A set of function to handle the color for Image pixels at the lowest level: an unsigned integer
+    ---A set of functions to handle the color for Image pixels at the lowest level: an unsigned integer
     pixelColor={
         ---Constructs a 32-bit unsigned integer for RGBA images.
         ---@param red integer
@@ -76,19 +76,19 @@ app = {
     bgColor=undefined --[[@as Color]],
     ---`true` if the UI is available
     isUIAvailable=undefined --[[@as boolean]],
-    ---sprites opening
+    ---sprites opened
     sprites=undefined --[=[@as Sprite[]]=],
     ---A table with parameters specified as `--script-param key=value` in the CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file
     params=undefined --[[@as {[string]: string}]],
     ---Shows an alert message;
     ---If `buttons` are not specified, it will show a message box with the OK button only
     ---@param text string
-    ---@overload fun(options: {title: string, text: string|string[], buttons: string | string[]})
+    ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]})
     ---@return integer buttonIndex the selected button i.e. 1 if the first button was clicked
     alert=function(text) end,
     ---Opens a new sprite loading it from the given filename
     ---@param filename string
-    ---@return Sprite | nil
+    ---@return Sprite|nil
     open=function(filename) end,
     ---Closes the application
     exit=function() end,
@@ -96,8 +96,8 @@ app = {
     ---@param func fun(...): any a function called inside the transaction
     transaction=function(func) end,
     ---Executes the given command named `CommandName` with the given parameters; see: https://www.aseprite.org/api/app_command
-    command=undefined --[[@as {[string]: fun(options: {[string]: any}) | fun(): any}]],
-    ---@type {tool: fun(tool: Tool): any} | {document: fun(sprite: Sprite): any} | {[string]: {[string]: any}}
+    command=undefined --[[@as {[string]: fun(options: {[string]: any})|fun(): any}]],
+    ---@type {tool: fun(tool: Tool): any}|{document: fun(sprite: Sprite): any}|{[string]: {[string]: any}}
     preferences={
         -- TODO: fix the description of tool and document
 
@@ -110,7 +110,7 @@ app = {
         ---@return any
         document=function(sprite) end
     },
-    ---A set of function to handle file names and the file system
+    ---A set of functions to handle file names and the file system
     fs={
         ---The preferred path separator of the current platform; see: `app.fs.joinPath()`
         pathSeparator=undefined --[[@as "/"|"\\"]],
@@ -189,7 +189,7 @@ app = {
     ---Redoes the latest operation in the `activeSprite`
     redo=function() end,
     ---Simulates an user stroke in the canvas using the given tool; see https://www.aseprite.org/api/app#app-usetool
-    ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0 | 1, selection?: SelectionMode}
+    ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection?: SelectionMode}
     usetool=function(options) end,
     ---The `Events` object to associate functions that can act like listeners of specific App events
     events=undefined --[[@as Events]]
@@ -416,7 +416,7 @@ function Brush() end
 ---@field red integer
 ---@field green integer
 ---@field blue integer
----@field hsvHue integer
+---@field hsvHue number
 ---@field hsvSaturation number
 ---@field hsvValue number
 ---@field hslHue number
@@ -458,7 +458,7 @@ function ColorSpace() end
 
 ---A class can be used to show input controls/widgets in the screen to get some data from the user
 ---@class Dialog
----@field data {[string]: boolean | string | integer | number | Color | Color[]}
+---@field data {[string]: boolean|string|integer|number|Color|Color[]}
 ---@field bounds Rectangle The bounds of dialog
 Dialog = {
     ---Creates a button
@@ -503,7 +503,7 @@ Dialog = {
 
     ---Changes properties of the given widget that matches the identifier
     ---@param dialog Dialog
-    ---@param options {id: string, visible?: boolean, enabled?: boolean} | {[string]: any}
+    ---@param options {id: string, visible?: boolean, enabled?: boolean}|{[string]: any}
     modify=function(dialog, options) end,
 
     ---Creates a new row
@@ -533,7 +533,7 @@ Dialog = {
 
     ---Creates a widget with a set of colors that can be clicked/picked (when mode="pick", which is the default mode) or can be sorted (when mode="sort", which is the default mode)
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, mode: "pick" | "sort", colors: Color[], onclick?: fun(event: {color: Color, button: MouseButton})}
+    ---@param options {id?: string, label?: string, mode: "pick"|"sort", colors: Color[], onclick?: fun(event: {color: Color, button: MouseButton})}
     ---@return Dialog
     shades=function(dialog, options) end,
 
@@ -551,13 +551,13 @@ Dialog = {
 
     ---Creates a text entry field + a button to select one file to open or save
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, title?: string, open?: boolean, save?: boolean, filename: string | string[], filetypes?: string[], onchange?:fun()}
+    ---@param options {id?: string, label?: string, title?: string, open?: boolean, save?: boolean, filename: string|string[], filetypes?: string[], onchange?:fun()}
     ---@return Dialog
     file=function(dialog, options) end,
 }
 
 
----Creates a new `Dialog` isntance
+---Creates a new `Dialog` instance
 ---@return Dialog
 ---@overload fun(title: string): Dialog
 ---@overload fun(options: {title: string, onclose: fun()}): Dialog
@@ -571,7 +571,7 @@ Events = {
     ---Connects the given `function` with the given event
     ---@param eventName string the event name/code/identifier
     ---@param func fun()
-    ---@return integer listnerCode
+    ---@return integer listenerCode
     on = function(eventName, func) end,
 
     ---Disconnects the given function from all events in the object, or stops/breaks only the specific connection identified by listenerCode
@@ -605,7 +605,7 @@ Image = {
 
     ---Cleare all pixels in the image with given color (or `image.spec.transparentColor` if no color is specified)
     ---@param image Image
-    ---@param color? Color | integer
+    ---@param color? Color|integer
     clear=function(image, color) end,
 
     ---Sets the pixel in the xy-coordinate to the given integer pixel value
@@ -631,9 +631,9 @@ Image = {
     ---Draws the given sourceSprite frame number into the destinationImage; If position is a point, it will draw the sourceSprite in the given position
     ---@param destinationImage Image
     ---@param sourceSprite Sprite
-    ---@param frameNumber integer
+    ---@param frame Frame|integer
     ---@param position? Point
-    drawSprite=function(destinationImage, sourceSprite, frameNumber, position) end,
+    drawSprite=function(destinationImage, sourceSprite, frame, position) end,
 
     ---Returns true if both images looks the same (spec is equal and all pixels are the same)
     ---@param image Image
@@ -648,14 +648,14 @@ Image = {
 
     ---Returns true if all pixels in the image are equal to the given color (which can be a pixel color or a color)
     ---@param image Image
-    ---@param color Color | integer
+    ---@param color Color|integer
     ---@return boolean
     isPlain=function(image, color) end,
 
     ---Returns a pixel iterator for the whole image or the given rectangle
     ---@param image Image
     ---@param rectangle? Rectangle
-    ---@return fun(): integer | fun(integer) | {x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates
+    ---@return fun(): integer|fun(integer)|{x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates
     pixels=function(image, rectangle) end,
 
     ---Sets the pixel in the xy-coordinate to the given integer pixel value
@@ -663,6 +663,7 @@ Image = {
     ---@param x integer
     ---@param y integer
     ---@param color integer
+    ---@deprecated
     putPixel=function(image, x, y, color) end,
 
     ---Copies/draws the given sourceImage image over destinationImage; If position is a point, it will draw the sourceImage in the given position
@@ -670,6 +671,7 @@ Image = {
     ---@param destinationImage Image
     ---@param sourceImage Image
     ---@param position? Point
+    ---@deprecated
     putImage=function(destinationImage, sourceImage, position) end,
 
     ---Draws the given sourceSprite frame number into the destinationImage; If position is a point, it will draw the sourceSprite in the given position
@@ -677,6 +679,7 @@ Image = {
     ---@param sourceSprite Sprite
     ---@param frameNumber integer
     ---@param position Point
+    ---@deprecated
     putSprite=function(destinationImage, sourceSprite, frameNumber, position) end,
 
     ---Saves the image as a sprite in the given `filename`
@@ -689,8 +692,8 @@ Image = {
     ---@param image Image
     ---@param width integer
     ---@param height integer
-    ---@overload fun(image: Image, options: {width: integer, height: integer, method?: "bilinear" | "rotsprite", pivot?: Point})
-    ---@overload fun(image: Image, options: {size: Size, method?: "bilinear" | "rotsprite", pivot?: Point})
+    ---@overload fun(image: Image, options: {width: integer, height: integer, method?: "bilinear"|"rotsprite", pivot?: Point})
+    ---@overload fun(image: Image, options: {size: Size, method?: "bilinear"|"rotsprite", pivot?: Point})
     resize=function(image, width, height) end
 }
 
@@ -717,18 +720,18 @@ function Image(width, height, colorMode) end
 ---Creates a new `ImageSpec` instance
 ---@return ImageSpec
 ---@overload fun(otherImageSpec: ImageSpec): ImageSpec
----@overload fun(options: {width: integer, height: integer, colorMode: ColorMode | number, transparentColor: number})
+---@overload fun(options: {width: integer, height: integer, colorMode: ColorMode|number, transparentColor: number})
 function ImageSpec() end
 
 
 ---@class Layer
 ---@field sprite Sprite The sprite to which the layer belongs
 ---@field name string
----@field opacity integer | nil The layer opacity, a value from 0 (transparent) to 255 (opaque), or `nil` if the `layer` is a group
----@field blendMode BlendMode | nil The blend mode of the layer, or `nil` if the `layer` is a group
----@field layers Layer[] | nil If a layer is a group, gets the table of child layers for which the group serves as a parent
----@field parent Sprite | Layer
----@field stackIndex integer Tthe layer's index in its parent's layers table
+---@field opacity integer|nil The layer opacity, a value from 0 (transparent) to 255 (opaque), or `nil` if the `layer` is a group
+---@field blendMode BlendMode|nil The blend mode of the layer, or `nil` if the `layer` is a group
+---@field layers Layer[]|nil If a layer is a group, gets the table of child layers for which the group serves as a parent
+---@field parent Sprite|Layer
+---@field stackIndex integer The layer's index in its parent's layers table
 ---@field isImage boolean Whether or not the layer contains cels with images
 ---@field isGroup boolean Whether or not the layer is a group and has the capacity to be a parent to other layers
 ---@field isTransparent boolean Whether or not a layer supports transparency
@@ -746,8 +749,8 @@ Layer = {
     ---Returns a cel, if any, at the intersection of the layer and a frame
     ---@param layer Layer
     ---@param frame Frame
-    ---@return Cel | nil
-    ---@overload fun(layer: Layer, frameNumber: integer): Cel | nil
+    ---@return Cel|nil
+    ---@overload fun(layer: Layer, frameNumber: integer): Cel|nil
     cel=function(layer, frame) end
 }
 
@@ -768,7 +771,7 @@ Palette = {
     ---Changes a palette color in the given entry index (the index goes from 0 to #palette-1)
     ---@param palette Palette
     ---@param index integer
-    ---@param color Color | integer
+    ---@param color Color|integer
     setColor=function(palette, index, color) end,
 
     ---Saves the palette in the given `filename`
@@ -787,16 +790,16 @@ function Palette() end
 
 
 ---@class Point
----@field x number
----@field y number
+---@field x integer
+---@field y integer
 
 ---Creates a new `Point` instance
----@param x? number Default is 0
----@param y? number Default is 0
+---@param x? integer Default is 0
+---@param y? integer Default is 0
 ---@return Point
 ---@overload fun(otherPoint: Point): Point
----@overload fun(options: {x: number, y: number}): Point
----@overload fun(numbers: {[1]: number, [2]: number}): Point
+---@overload fun(options: {x: integer, y: integer}): Point
+---@overload fun(numbers: {[1]: integer, [2]: integer}): Point
 function Point(x, y) end
 
 
@@ -815,7 +818,7 @@ function Point(x, y) end
 Range = {
     ---Returns true if the given object (layer/frame/cel) is inside the selected range
     ---@param range Range
-    ---@param object Layer | Frame | Cel
+    ---@param object Layer|Frame|Cel
     contains=function(range, object) end,
 
     ---Returns true if the given color index is selected in the color bar
@@ -829,12 +832,12 @@ Range = {
 }
 
 
---Creates a new `Rectangle` instance
+---Creates a new `Rectangle` instance
 ---@class Rectangle
----@field x number
----@field y number
----@field width number
----@field height number
+---@field x integer
+---@field y integer
+---@field width integer
+---@field height integer
 Rectangle = {
     ---Returns true if the rectangle is empty i.e. width and/or height are 0
     ---@param rectangle Rectangle
@@ -869,9 +872,9 @@ Rectangle = {
 ---Creates a new `Rectangle` instance
 ---@return Rectangle
 ---@overload fun(otherRectangle: Rectangle): Rectangle
----@overload fun(x: number, y: number, width: number, height: number): Rectangle
----@overload fun(options: {x: number, y: number, width: number, height: number}): Rectangle
----@overload fun(numbers: {[1]: number, [2]: number, [3]: number, [4]: number})
+---@overload fun(x: integer, y: integer, width: integer, height: integer): Rectangle
+---@overload fun(options: {x: integer, y: integer, width: integer, height: integer}): Rectangle
+---@overload fun(numbers: {[1]: integer, [2]: integer, [3]: integer, [4]: integer})
 function Rectangle() end
 
 
@@ -918,6 +921,7 @@ Selection = {
     ---@param selection Selection
     ---@param point Point
     ---@return boolean
+    ---@overload fun(selection: Selection, x: integer, y: integer): boolean
     contains=function(selection, point) end,
 }
 
@@ -927,7 +931,7 @@ Selection = {
 function Selection(rectangle) end
 
 
----An object that saves the active state of the editor in a specific moment; Which active sprite, layer, frame, cel, image, etc. where in a specific moment
+---An object that saves the active state of the editor in a specific moment: which active sprite, layer, frame, cel, image, etc.
 ---@class Site
 ---@field sprite Sprite The active sprite
 ---@field layer Layer The active layer
@@ -949,15 +953,15 @@ function Selection(rectangle) end
 
 
 ---@class Size
----@field width number
----@field height number
+---@field width integer
+---@field height integer
 
 ---Creates a new `Size` instance with the given dimensions (or width=height=0 if they are not specified)
 ---@return Size
 ---@overload fun(otherSize: Size): Size
----@overload fun(width: number, height: number): Size
----@overload fun(options: {width: number, height: number}): Size
----@overload fun(options: number[]): Size
+---@overload fun(width: integer, height: integer): Size
+---@overload fun(options: {width: integer, height: integer}): Size
+---@overload fun(options: integer[]): Size
 function Size() end
 
 
@@ -1008,7 +1012,7 @@ Sprite = {
     ---@param filename string
     saveCopyAs=function(sprite, filename) end,
 
-    ---Closes the sprite; This doesn't ask the user to save changes; see: app.command.CloseFile()
+    ---Closes the sprite. This doesn't ask the user to save changes; see: app.command.CloseFile()
     ---@param sprite Sprite
     close=function(sprite) end,
 
@@ -1029,8 +1033,8 @@ Sprite = {
 
     ---Converts all the sprite pixels to a new color space so the image looks the same as in the previous color space
     ---@param sprite Sprite
-    ---@param ColorSpace ColorSpace
-    convertColorSpace=function(sprite, ColorSpace) end,
+    ---@param colorSpace ColorSpace
+    convertColorSpace=function(sprite, colorSpace) end,
 
     ---Creates a new layer at the top of the layers stack
     ---@param sprite Sprite
@@ -1063,13 +1067,13 @@ Sprite = {
 
     ---Deletes the given `frame`
     ---@param sprite Sprite
-    ---@param frame Frame
+    ---@param frame Frame|integer
     deleteFrame=function(sprite, frame) end,
 
     ---Creates a new cel in the given `layer` and `frame` number. If the image is not specified, a new image will be created with the size of the sprite canvas. The position is a point to locate the image.
     ---@param sprite Sprite
     ---@param layer Layer
-    ---@param frame? Frame | integer
+    ---@param frame? Frame|integer
     ---@param image? Image
     ---@param position? Point
     ---@return Cel
@@ -1106,7 +1110,7 @@ Sprite = {
     ---@overload fun(sprite: Sprite, sliceName: string)
     deleteSlice=function(sprite, slice) end,
 
-    ---Flatten all layers of the sprite into one layer; as the same as `app.commands.FlattenLayers()`
+    ---Flatten all layers of the sprite into one layer; is the same as `app.commands.FlattenLayers()`
     ---@param sprite Sprite
     flatten=function(sprite) end,
 }
@@ -1135,7 +1139,7 @@ function Sprite(width, height, colorMode) end
 ---@field color Color The user-defined color of this tag in the timeline
 
 
----References a drawing tool; At the moment this class is used only to get and set the active tool (`app.activeTool`), or to paint on the canvas (`tool` parameter in `app.useTool()`)
+---References a drawing tool. At the moment this class is used only to get and set the active tool (`app.activeTool`), or to paint on the canvas (`tool` parameter in `app.useTool()`)
 ---@class Tool
 ---@field id string the identifier of the specified in the `gui.xml` file
 
@@ -1145,7 +1149,7 @@ function Sprite(width, height, colorMode) end
 ---@field major integer The first number of version
 ---@field minor integer The second number of the version
 ---@field patch integer The third number of the version
----@field prereleaseLabel string Returns the pre-release label/keyword; For official releases it's an empty string, in other cases it might be "alpha", "beta", "dev", etc.
+---@field prereleaseLabel string Returns the pre-release label/keyword. For official releases it's an empty string, in other cases it might be "alpha", "beta", "dev", etc.
 ---@field prereleaseNumber integer The pre-release version
 
 ---Create a new `Version` instance from a string
