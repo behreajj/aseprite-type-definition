@@ -10,23 +10,26 @@ app = {
     ---The active brush
     activeBrush = undefined --[[@as Brush]],
 
-    ---The active cel
-    activeCel = undefined --[[@as Cel]],
+    ---The active cel. `nil` when no sprite is active or
+    ---when the active layer is a group.
+    activeCel = undefined --[[@as Cel|nil]],
 
-    ---The active frame number
-    activeFrame = undefined --[[@as integer]],
+    ---The active frame. `nil` when no sprite is active.
+    ---Can be assigned an integer frame number.
+    activeFrame = undefined --[[@as Frame|nil]],
 
-    ---The active image
-    activeImage = undefined --[[@as Image]],
+    ---The active image. `nil` when no sprite is active or
+    ---when the active layer is a group.
+    activeImage = undefined --[[@as Image|nil]],
 
-    ---The active layer
-    activeLayer = undefined --[[@as Layer]],
+    ---The active layer. `nil` when no sprite is active.
+    activeLayer = undefined --[[@as Layer|nil]],
 
-    ---The active sprite
-    activeSprite = undefined --[[@as Sprite]],
+    ---The active sprite.
+    activeSprite = undefined --[[@as Sprite|nil]],
 
-    ---The active tag
-    activeTag = undefined --[[@as Tag]],
+    ---The active tag. `nil` when no sprite is active.
+    activeTag = undefined --[[@as Tag|nil]],
 
     ---The active tool
     activeTool = undefined --[[@as Tool]],
@@ -36,10 +39,6 @@ app = {
 
     ---The background color
     bgColor = undefined --[[@as Color]],
-
-    ---Executes the given command named `CommandName` with the given parameters; see: https://www.aseprite.org/api/app_command
-    command = undefined --[[@as {[string]: fun(options: {[string]: any})|fun(): any}]],
-    ---@type {tool: fun(tool: Tool): any}|{document: fun(sprite: Sprite): any}|{[string]: {[string]: any}}
 
     ---The `Events` object to associate functions that can act like listeners of specific App events
     events = undefined --[[@as Events]],
@@ -61,6 +60,9 @@ app = {
 
     ---sprites opened
     sprites = undefined --[=[@as Sprite[]]=],
+
+    ---Returns the UI Elements Scaling value specified in Edit > Preferences as a scale factor (1 for 100%, 2 for 200%, etc.)
+    uiScale = undefined --[[@as integer]],
 
     ---The Aseprite version number (e.g. Version("1.2.10-beta1"))
     version = undefined --[[@as Version]],
@@ -105,6 +107,63 @@ app = {
     ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection?: SelectionMode}
     usetool = function(options)
     end,
+
+    ---Executes the given command named `CommandName` with the given parameters; see: https://www.aseprite.org/api/app_command
+    command = {
+        BackgroundFromLayer = function()
+        end,
+
+        ---@param options {format?: "rgb"|"gray"|"grayscale"|"indexed", dithering?: "ordered"|"old"|"error-diffusion", rgbmap?: "octree"|"rgb5a3"|"default", toGray?: "luma"|"hsv"|"hsl"}
+        ---@NOTE How to handle dither-matrix param containing a hyphen?
+        ChangePixelFormat = function(options)
+        end,
+
+        ---@param options {ui?: boolean, channels?: integer, curve?: Point[]|integer[][] }
+        ColorCurve = function(options)
+        end,
+
+        ---For the algorithm, 0 is default, 1 is RGB table, 2 is octree.
+        ---@param options {ui?: boolean, withAlpha?: boolean, maxColors?: integer, useRange?: boolean, algorithm?:0|1|2}
+        ColorQuantization = function(options)
+        end,
+
+        FitScreen = function()
+        end,
+
+        GoToNextTab = function()
+        end,
+
+        GoToPreviousTab = function()
+        end,
+
+        InvertMask = function()
+        end,
+
+        LayerFromBackground = function()
+        end,
+
+        LinkCels = function()
+        end,
+
+        ---To load the default palette, assign "default" to the "preset" option.
+        ---@param options {preset?: string|"default", filename?: string}
+        LoadPalette = function(options)
+        end,
+
+        ---@param options {brush?: "circle"|"square", modifier?: "border"|"contract"|"expand", quantity?: integer}
+        ModifySelection = function(options)
+        end,
+
+        Refresh = function()
+        end,
+
+        SwitchColors = function()
+        end,
+
+        ---@param options {close?: boolean, open?: boolean, switch?: boolean}
+        Timeline = function(options)
+        end,
+    },
 
     ---A set of functions to handle file names and the file system
     fs = {
@@ -151,7 +210,7 @@ app = {
         end,
 
         ---Returns the file size of the given filename `fn`
-        ---@param fn string filenmae
+        ---@param fn string filename
         ---@return integer
         fileSize = function(fn)
         end,
@@ -288,8 +347,6 @@ app = {
     },
 
     preferences = {
-        -- TODO: fix the description of tool and document
-
         ---Returns the preferences of the given tool
         ---@param tool Tool
         ---@return any
@@ -522,7 +579,7 @@ WebSocketMessageType = {
 ---@field type BrushType
 Brush = {}
 
----Creates a new `Braush` instance
+---Creates a new `Brush` instance
 ---@return Brush
 ---@overload fun(size: Size): Brush
 ---@overload fun(image: Image): Brush
@@ -729,10 +786,11 @@ end
 ---see: `app.events`, `sprite.events`
 ---@class Events
 Events = {
-    ---Connects the given `function` with the given event
+    ---Connects the given `function` with the given event.
+    ---Returns the listenerCode.
     ---@param eventName string the event name/code/identifier
     ---@param func fun()
-    ---@return integer listenerCode
+    ---@return integer
     on = function(eventName, func)
     end,
 
@@ -912,6 +970,13 @@ GraphicsContext = {
 ---@field tileSize Size
 Grid = {}
 
+---Creates a new `Grid` instance
+---@return Grid
+---@overload fun(otherGrid: Grid): Grid
+---@overload fun(x: integer, y: integer, width: integer, height: integer): Grid
+---@overload fun(numbers: {[1]: integer, [2]: integer, [3]: integer, [4]: integer}): Grid
+function Grid()
+end
 
 ---@class Image
 ---@field bounds Rectangle Returns a rectangle with the bounds of the image with origin equal to (0, 0).
@@ -961,7 +1026,8 @@ Image = {
     drawSprite = function(destinationImage, sourceSprite, frame, position)
     end,
 
-    ---Returns a integer pixel value for the given xy-coordinate related to the "Image" itself
+    ---Returns a integer pixel value for the given coordinate related to the Image itself.
+    ---When the coordinates are out-of-bounds, Returns `0xffffffff`, which is white for RGB images.
     ---@param image Image
     ---@param x integer
     ---@param y integer
@@ -1244,6 +1310,8 @@ Range = {
 ---@field width integer
 ---@field x integer
 ---@field y integer
+---@operator band(Rectangle): Rectangle
+---@operator bor(Rectangle): Rectangle
 Rectangle = {
     ---Returns true if `otherRectangle` is inside `rectangle`
     ---@param rectangle Rectangle
@@ -1285,7 +1353,7 @@ Rectangle = {
 ---@overload fun(otherRectangle: Rectangle): Rectangle
 ---@overload fun(x: integer, y: integer, width: integer, height: integer): Rectangle
 ---@overload fun(options: {x: integer, y: integer, width: integer, height: integer}): Rectangle
----@overload fun(numbers: {[1]: integer, [2]: integer, [3]: integer, [4]: integer})
+---@overload fun(numbers: {[1]: integer, [2]: integer, [3]: integer, [4]: integer}): Rectangle
 function Rectangle()
 end
 
@@ -1350,14 +1418,16 @@ Selection = {
 function Selection(rectangle)
 end
 
----An object that saves the active state of the editor in a specific moment: which active sprite, layer, frame, cel, image, etc.
+---An object that saves the active state of the editor in a specific moment.
+---Cel, frame, image, layer or sprite may be nil if no sprite is open or if
+---the active layer is a group.
 ---@class Site
----@field cel Cel The active cel
----@field frame Frame The active frame
----@field frameNumber integer The index of active frame
----@field image  Image The active image
----@field layer Layer The active layer
----@field sprite Sprite The active sprite
+---@field cel Cel|nil The active cel
+---@field frame Frame|nil The active frame
+---@field frameNumber integer The index of active frame. Returns 1 if no sprite is open.
+---@field image  Image|nil The active image
+---@field layer Layer|nil The active layer
+---@field sprite Sprite|nil The active sprite
 Site = {}
 
 
@@ -1421,7 +1491,7 @@ Slice = {}
 ---@field spec ImageSpec The specification for image in this sprite
 ---@field tags Tag[] The tags the sprite has
 ---@field tilesets Tileset[] The tilesets the sprite has
----@field transparentColor integer An integer that spcifies what index (`0` by default) on indexed sprites
+---@field transparentColor integer An integer that specifies which index is transparent for indexed sprites
 ---@field width integer
 Sprite = {
     ---Assign a new color space to the sprite without modifying the sprite pixels
@@ -1579,8 +1649,8 @@ Sprite = {
     ---@param sprite Sprite
     ---@return Tileset
     ---@overload fun(sprite: Sprite, grid: Grid, numTiles?: integer): Tileset
-    ---@overload fun(sprite: Sprite, rectangle: Rectangle, numTiles?: integer): Tileset
     ---@overload fun(sprite: Sprite, anotherTileset: Tileset): Tileset
+    ---@NOTE The proper overload signature for Rectangles is unclear?
     newTileset = function(sprite)
     end,
 
@@ -1620,7 +1690,6 @@ Sprite = {
 ---@overload fun (otherSprite: Sprite): Sprite
 ---@overload fun(options: { fromFile: string }): Sprite
 ---@overload fun(options: { fromFile: string, oneFrame: any }): Sprite
----@ NOTE: no information for oneFrame of Sprite{ fromFile=filename, oneFrame }
 function Sprite(width, height, colorMode)
 end
 
@@ -1732,26 +1801,26 @@ WebSocket = {
     close = function(webSocket)
     end,
 
-    ---Sends a binary message to the server
+    ---Sends a binary message to the server.
     ---@param webSocket WebSocket
     ---@param ... string
     sendBinary = function(webSocket, ...)
     end,
 
-    ---Sends a very short ping message to the server. There's a limit to the length of data that can be sent
+    ---Sends a very short ping message to the server. There's a limit to the length of data that can be sent.
     ---@param webSocket WebSocket
     ---@param str string
     sendPing = function(webSocket, str)
     end,
 
-    ---Sends a text message to the server. If multiple strings are passed, they will be joined togethercomment
+    ---Sends a text message to the server. If multiple strings are passed, they will be joined together.
     ---@param webSocket WebSocket
     ---@param ... string
     sendText = function(webSocket, ...)
     end,
 }
 
----Creates as websocket client
+---Creates as websocket client.
 ---@param options? {url: string, onreceive: fun(message: string, data: string), deflate: boolean, minreconnectwait: integer, maxreconnectwait: integer}
 ---@return WebSocket
 function WebSocket(options)
