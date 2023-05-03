@@ -1768,11 +1768,11 @@ end
 ---@field aniDir AniDir The Animation Direction property of the tag.
 ---@field color Color The user-defined color of this tag in the timeline.
 ---@field frames integer The number of frames that this tag contains.
----@field fromFrame Frame The first frame where this tag starts.
+---@field fromFrame Frame|nil The `Frame` where this tag starts.
 ---@field name string The name of the tag.
 ---@field repeats integer Gets or sets the number of times the tag is repeated/looped.
 ---@field sprite Sprite The sprite to which this tag belongs.
----@field toFrame  Frame The last Frame object where this tag ends.
+---@field toFrame  Frame|nil The `Frame` where this tag ends.
 Tag = {}
 
 
