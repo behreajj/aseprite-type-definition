@@ -372,209 +372,173 @@ app = {
 }
 
 
----Direction of animation playback
----@class AniDir
-
----Direction of animation playback
+---https://github.com/aseprite/aseprite/blob/main/src/doc/anidir.h#L16
+---@enum AniDir
 AniDir = {
-    FOWARD = undefined --[[@as AniDir]],
-    REVERSE = undefined --[[@as AniDir]],
-    PING_PONG = undefined --[[@as AniDir]],
-    PING_PONG_REVERSE = undefined --[[@as AniDir]],
+    FOWARD = 0,
+    REVERSE = 1,
+    PING_PONG = 2,
+    PING_PONG_REVERSE = 3,
 }
 
 
----Layer blend mode
----@class BlendMode
-
----Layer blend mode
+---https://github.com/aseprite/aseprite/blob/main/src/doc/blend_mode.h#L26
+---@enum BlendMode
 BlendMode = {
-    NORMAL = undefined --[[@as BlendMode]],
-    MULTIPLY = undefined --[[@as BlendMode]],
-    SCREEN = undefined --[[@as BlendMode]],
-    OVERLAY = undefined --[[@as BlendMode]],
-    DARKEN = undefined --[[@as BlendMode]],
-    LIGHTEN = undefined --[[@as BlendMode]],
-    COLOR_DODGE = undefined --[[@as BlendMode]],
-    COLOR_BURN = undefined --[[@as BlendMode]],
-    HARD_LIGHT = undefined --[[@as BlendMode]],
-    SOFT_LIGHT = undefined --[[@as BlendMode]],
-    DIFFERENCE = undefined --[[@as BlendMode]],
-    EXCLUSION = undefined --[[@as BlendMode]],
-    HSL_HUE = undefined --[[@as BlendMode]],
-    HSL_SATURATION = undefined --[[@as BlendMode]],
-    HSL_COLOR = undefined --[[@as BlendMode]],
-    HSL_LUMINOSITY = undefined --[[@as BlendMode]],
-    ADDITION = undefined --[[@as BlendMode]],
-    SUBTRACT = undefined --[[@as BlendMode]],
-    DIVIDE = undefined --[[@as BlendMode]]
+    NORMAL = 0,
+    MULTIPLY = 1,
+    SCREEN = 2,
+    OVERLAY = 3,
+    DARKEN = 4,
+    LIGHTEN = 5,
+    COLOR_DODGE = 6,
+    COLOR_BURN = 7,
+    HARD_LIGHT = 8,
+    SOFT_LIGHT = 9,
+    DIFFERENCE = 10,
+    EXCLUSION = 11,
+    HSL_HUE = 12,
+    HSL_SATURATION = 13,
+    HSL_COLOR = 14,
+    HSL_LUMINOSITY = 15,
+    ADDITION = 16,
+    SUBTRACT = 17,
+    DIVIDE = 18
 }
 
 
----Brush pattern
----@class BrushPattern
-
----Brush pattern
+---https://github.com/aseprite/aseprite/blob/main/src/doc/brush_pattern.h#L14
+---@enum BrushPattern
 BrushPattern = {
-    NONE = undefined --[[@as BrushPattern]],
-    ORIGIN = undefined --[[@as BrushPattern]],
-    TARGET = undefined --[[@as BrushPattern]]
+    ORIGIN = 0,
+    TARGET = 1,
+    NONE = 2
 }
 
 
----Brush Type
----@class BrushType
-
----Brush Type
+---https://github.com/aseprite/aseprite/blob/main/src/doc/brush_type.h#L15
+---@enum BrushType
 BrushType = {
-    CIRCLE = undefined --[[@as BrushType]],
-    SQUARE = undefined --[[@as BrushType]],
-    LINE = undefined --[[@as BrushType]],
-    IMAGE = undefined --[[@as BrushType]]
+    CIRCLE = 0,
+    SQUARE = 1,
+    LINE = 2,
+    IMAGE = 3
 }
 
 
----Color mode
----@class ColorMode
-
----Color mode
+---https://github.com/aseprite/aseprite/blob/main/src/doc/color_mode.h
+---@enum ColorMode
 ColorMode = {
-    RGB = undefined --[[@as ColorMode]],
-    GRAY = undefined --[[@as ColorMode]],
-    INDEXED = undefined --[[@as ColorMode]],
-    TILEMAP = undefined --[[@as ColorMode]]
+    RGB = 0,
+    GRAY = 1,
+    INDEXED = 2,
+    TILEMAP = 4
 }
 
 
----Filter Channels
----@class FilterChannels
----@operator bor(FilterChannels): FilterChannels
-
----Filter Channels
+---@enum FilterChannels
 FilterChannels = {
-    RED = undefined --[[@as FilterChannels]],
-    GREEN = undefined --[[@as FilterChannels]],
-    BLUE = undefined --[[@as FilterChannels]],
-    ALPHA = undefined --[[@as FilterChannels]],
-    GRAY = undefined --[[@as FilterChannels]],
-    INDEX = undefined --[[@as FilterChannels]],
-    RGB = undefined --[[@as FilterChannels]],
-    RGBA = undefined --[[@as FilterChannels]],
-    GRAYA = undefined --[[@as FilterChannels]]
+    RED = 1,
+    GREEN = 2,
+    BLUE = 4,
+    ALPHA = 8,
+    GRAY = 16,
+    INDEX = 32,
+    RGB = 7,
+    RGBA = 15,
+    GRAYA = 24
 }
 
 
----Ink
----@class Ink
-
----Ink
+---@enum Ink
 Ink = {
-    SIMPLE = undefined --[[@as Ink]],
-    ALPHA_COMPOSTING = undefined --[[@as Ink]],
-    COPY_COLOR = undefined --[[@as Ink]],
-    LOCK_ALPHA = undefined --[[@as Ink]],
-    SHADING = undefined --[[@as Ink]]
+    SIMPLE = 0,
+    ALPHA_COMPOSTING = 1,
+    COPY_COLOR = 2,
+    LOCK_ALPHA = 3,
+    SHADING = 4
 }
 
 
----Mouse button
----@class MouseButton
-
----Mouse button
+---@enum MouseButton
 MouseButton = {
-    NONE = undefined --[[@as MouseButton]],
-    LEFT = undefined --[[@as MouseButton]],
-    RIGHT = undefined --[[@as MouseButton]],
-    MIDDLE = undefined --[[@as MouseButton]],
-    X1 = undefined --[[@as MouseButton]],
-    X2 = undefined --[[@as MouseButton]]
+    NONE = 0,
+    LEFT = 1,
+    RIGHT = 2,
+    MIDDLE = 3,
+    X1 = 4,
+    X2 = 5
 }
 
 
----Mouse cursor
----@class MouseCursor
-
----Mouse cursor
+---@NOTE Both GRAB and GRABBING appear as 6. 2 is missing?
+---@enum MouseCursor
 MouseCursor = {
-    NONE = undefined --[[@as MouseCursor]],
-    ARROW = undefined --[[@as MouseCursor]],
-    CROSSHAIR = undefined --[[@as MouseCursor]],
-    POINTER = undefined --[[@as MouseCursor]],
-    NOT_ALLOWED = undefined --[[@as MouseCursor]],
-    GRAB = undefined --[[@as MouseCursor]],
-    GRABBING = undefined --[[@as MouseCursor]],
-    MOVE = undefined --[[@as MouseCursor]],
-    NS_RESIZE = undefined --[[@as MouseCursor]],
-    WE_RESIZE = undefined --[[@as MouseCursor]],
-    N_RESIZE = undefined --[[@as MouseCursor]],
-    NE_RESIZE = undefined --[[@as MouseCursor]],
-    E_RESIZE = undefined --[[@as MouseCursor]],
-    SE_RESIZE = undefined --[[@as MouseCursor]],
-    S_RESIZE = undefined --[[@as MouseCursor]],
-    SW_RESIZE = undefined --[[@as MouseCursor]],
-    W_RESIZE = undefined --[[@as MouseCursor]],
-    NW_RESIZE = undefined --[[@as MouseCursor]]
+    NONE = 0,
+    ARROW = 1,
+    CROSSHAIR = 3,
+    NOT_ALLOWED = 4,
+    POINTER = 5,
+    GRAB = 6,
+    MOVE = 7,
+    NS_RESIZE = 8,
+    WE_RESIZE = 9,
+    N_RESIZE = 10,
+    NE_RESIZE = 11,
+    E_RESIZE = 12,
+    SE_RESIZE = 13,
+    S_RESIZE = 14,
+    SW_RESIZE = 15,
+    W_RESIZE = 16,
+    NW_RESIZE = 17,
 }
 
 
----Type of ranges selected in the timeline
----@class RangeType
-
----Type of ranges selected in the timeline
+---@enum RangeType
 RangeType = {
-    EMPTY = undefined --[[@as RangeType]],
-    LAYERS = undefined --[[@as RangeType]],
-    FRAMES = undefined --[[@as RangeType]],
-    CELS = undefined --[[@as RangeType]],
+    EMPTY = 0,
+    CELS = 1,
+    FRAMES = 2,
+    LAYERS = 4
 }
 
 
---- Selection mode
----@class SelectionMode
-
+---@enum SelectionMode
 SelectionMode = {
-    REPLACE = undefined --[[@as SelectionMode]],
-    ADD = undefined --[[@as SelectionMode]],
-    SUBTRACT = undefined --[[@as SelectionMode]],
-    INTERSECT = undefined --[[@as SelectionMode]],
+    REPLACE = 0,
+    ADD = 1,
+    SUBTRACT = 2,
+    INTERSECT = 3
 }
 
 
----Data format used to export JSON files in 1app.command.ExportSpriteSheet1
----@class SpriteSheetDataFormat
-
----Data format used to export JSON files in 1app.command.ExportSpriteSheet1
+---@enum SpriteSheetDataFormat
 SpriteSheetDataFormat = {
-    JSON_HASH = undefined --[[@as SpriteSheetDataFormat]],
-    JSON_ARRAY = undefined --[[@as SpriteSheetDataFormat]],
+    JSON_HASH = 0,
+    JSON_ARRAY = 1
 }
 
 
----Type of sprite sheet used in `app.command.ExportSpriteSheet`
----@class SpriteSheetType
-
----Type of sprite sheet used in `app.command.ExportSpriteSheet`
+---@enum SpriteSheetType
 SpriteSheetType = {
-    HORIZONTAL = undefined --[[@as SpriteSheetType]],
-    VERTICAL = undefined --[[@as SpriteSheetType]],
-    ROWS = undefined --[[@as SpriteSheetType]],
-    COLUMNS = undefined --[[@as SpriteSheetType]],
-    PACKED = undefined --[[@as SpriteSheetType]]
+    HORIZONTAL = 1,
+    VERTICAL = 2,
+    ROWS = 3,
+    COLUMNS = 4,
+    PACKED = 5
 }
 
 
----Type of WebSocket message
----@class WebSocketMessageType
-
----Type of WebSocket message
+---@enum WebSocketMessageType
 WebSocketMessageType = {
-    TEXT = undefined --[[@as WebSocketMessageType]],
-    BINARY = undefined --[[@as WebSocketMessageType]],
-    OPEN = undefined --[[@as WebSocketMessageType]],
-    CLOSE = undefined --[[@as WebSocketMessageType]],
-    PING = undefined --[[@as WebSocketMessageType]],
-    PONG = undefined --[[@as WebSocketMessageType]],
-    FRAGMENT = undefined --[[@as WebSocketMessageType]]
+    TEXT = 0,
+    OPEN = 1,
+    CLOSE = 2,
+    ERROR = 3,
+    PING = 4,
+    PONG = 5,
+    FRAGMENT = 6,
+    BINARY = 16
 }
 
 
@@ -656,7 +620,7 @@ ColorSpace = {}
 ---Creates an empty color space, sRGB color space, or loads a color
 ---profile from the given ICC file specified in "fromFile" parameter.
 ---@return ColorSpace
----@overload fun(options: {sRGB: true}): ColorSpace
+---@overload fun(options: {sRGB: boolean}): ColorSpace
 ---@overload fun(options: {fromFile: string}): ColorSpace
 function ColorSpace()
 end
@@ -1159,6 +1123,7 @@ Image = {
 }
 
 ---Creates a new `Image` instance.
+---Images loaded fromFile may be `nil`.
 ---@param width integer
 ---@param height integer
 ---@param colorMode? ColorMode
@@ -1225,7 +1190,7 @@ KeyEvent = {
 ---@field isVisible boolean Whether or not the layer is visible
 ---@field layers Layer[]|nil If a layer is a group, gets the table of child layers
 ---@field name string
----@field opacity integer|nil The layer opacity, or `nil` if the `layer` is a group
+---@field opacity integer|nil The layer opacity, or `nil` if the `Layer` is a group
 ---@field parent Sprite|Layer
 ---@field sprite Sprite The sprite to which the layer belongs
 ---@field stackIndex integer The layer's index in its parent's layers table
@@ -1233,9 +1198,8 @@ KeyEvent = {
 Layer = {
     ---Returns a cel, if any, at the intersection of the layer and a frame
     ---@param layer Layer
-    ---@param frame Frame
+    ---@param frame Frame|integer
     ---@return Cel|nil
-    ---@overload fun(layer: Layer, frameNumber: integer): Cel|nil
     cel = function(layer, frame)
     end
 }
@@ -1288,14 +1252,16 @@ Palette = {
     end,
 }
 
----Creates a new `Palette` instance; By default it will contain 256 colors;
+---Creates a new `Palette` instance. By default it will contain 256 colors.
 ---`fromResource` is an ID specified in one of the extensions
----palette (e.g. `DB16`, `DB32`, `Solarized`). The resource string should be
+---palette (e.g. `DB16`, `DB32`, `Solarized`).
+---
+---Palettes loaded fromFile may be `nil`. The resource string should be
 ---validated as correct before the constructor is called.
 ---@return Palette
 ---@overload fun(numberOfColors: integer): Palette
----@overload fun(options: {fromFile: string})
----@overload fun(options: {fromResource: string})
+---@overload fun(options: {fromFile: string}): Palette
+---@overload fun(options: {fromResource: string}): Palette
 function Palette()
 end
 
@@ -1482,7 +1448,7 @@ end
 ---@field cel Cel|nil The active cel
 ---@field frame Frame|nil The active frame
 ---@field frameNumber integer The index of active frame. Returns 1 if no sprite is open.
----@field image  Image|nil The active image
+---@field image Image|nil The active image
 ---@field layer Layer|nil The active layer
 ---@field sprite Sprite|nil The active sprite
 Site = {}
@@ -1751,7 +1717,8 @@ Sprite = {
     end,
 }
 
----Creates a new sprite with `Sprite` instance
+---Creates a new sprite with `Sprite` instance.
+---Sprites loaded fromFile may be `nil`.
 ---@param width integer
 ---@param height integer
 ---@param colorMode? ColorMode
@@ -1759,7 +1726,7 @@ Sprite = {
 ---@overload fun(spec: ImageSpec): Sprite
 ---@overload fun (otherSprite: Sprite): Sprite
 ---@overload fun(options: { fromFile: string }): Sprite
----@overload fun(options: { fromFile: string, oneFrame: any }): Sprite
+---@overload fun(options: { fromFile: string, oneFrame: boolean }): Sprite
 function Sprite(width, height, colorMode)
 end
 
@@ -1772,7 +1739,7 @@ end
 ---@field name string The name of the tag.
 ---@field repeats integer Gets or sets the number of times the tag is repeated/looped.
 ---@field sprite Sprite The sprite to which this tag belongs.
----@field toFrame  Frame|nil The `Frame` where this tag ends.
+---@field toFrame Frame|nil The `Frame` where this tag ends.
 Tag = {}
 
 
