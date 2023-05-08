@@ -732,7 +732,10 @@ Dialog = {
     separator = function(dialog, options)
     end,
 
-    ---Creates a widget with a set of colors that can be clicked/picked (when mode="pick", which is the default mode) or can be sorted (when mode="sort", which is the default mode)
+    ---Creates a widget with an array of colors.
+    ---Colors can be picked when the mode is "pick".
+    ---They can be sorted and accessed as an array when
+    ---the mode is "sort". The default mode is "pick".
     ---@param dialog Dialog
     ---@param options {id?: string, label?: string, mode: "pick"|"sort", colors: Color[], onclick?: fun(event: {color: Color, button: MouseButton})}
     ---@return Dialog
