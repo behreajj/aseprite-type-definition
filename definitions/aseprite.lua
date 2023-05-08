@@ -7,7 +7,7 @@ local undefined
 
 ---The `app` global namespace
 app = {
-    ---The active brush
+    ---The active brush.
     activeBrush = undefined --[[@as Brush]],
 
     ---The active cel. `nil` when no sprite is active or
@@ -31,20 +31,20 @@ app = {
     ---The active tag. `nil` when no sprite is active.
     activeTag = undefined --[[@as Tag|nil]],
 
-    ---The active tool
+    ---The active tool.
     activeTool = undefined --[[@as Tool]],
 
-    ---The API version
+    ---The API version.
     apiVersion = undefined --[[@as number]],
 
-    ---The background color
+    ---The background color.
     bgColor = undefined --[[@as Color]],
 
     ---The `Events` object to associate functions that can act like
     ---listeners of specific app events
     events = undefined --[[@as Events]],
 
-    ---The foreground color
+    ---The foreground color.
     fgColor = undefined --[[@as Color]],
 
     ---`true` if the UI is available
@@ -54,46 +54,46 @@ app = {
     ---CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file
     params = undefined --[[@as {[string]: string}]],
 
-    ---The range represents the active selection from an objects collection.
-    ---It returns a sorted list of selected frames, or cels, or layers, or colors.
+    ---The range of elements chosen in the timeline or palette bar.
+    ---Contains a list of frames, cels, layers, or colors.
     range = undefined --[[@as Range]],
 
-    ---The active site
+    ---The active site.
     site = undefined --[[@as Site]],
 
-    ---sprites opened
+    ---Opened sprites in the application.
     sprites = undefined --[=[@as Sprite[]]=],
 
-    ---Returns the UI Elements Scaling value specified in Edit > Preferences
-    ---as a scale factor (1 for 100%, 2 for 200%, etc.)
+    ---Returns the UI Elements scaling specified in Edit > Preferences,
+    ---e.g., 1 for 100%, 2 for 200%.
     uiScale = undefined --[[@as integer]],
 
-    ---The Aseprite version number (e.g. Version("1.2.10-beta1"))
+    ---The Aseprite version number, e.g., Version("1.2.10-beta1").
     version = undefined --[[@as Version]],
 
-    ---Shows an alert message;
-    ---If `buttons` are not specified, it will show a message box with the OK button only
+    ---Shows an alert message.
+    ---If `buttons` are not specified, it will show a message box with the OK button only.
     ---@param text string
     ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]})
-    ---@return integer buttonIndex the selected button i.e. 1 if the first button was clicked
+    ---@return integer buttonIndex the selected button, e.g., 1 if the first button was clicked
     alert = function(text)
     end,
 
-    ---Closes the application
+    ---Closes the application.
     exit = function()
     end,
 
-    ---Opens a new sprite loading it from the given filename
+    ---Loads and opens a sprite from the given filename.
     ---@param filename string
     ---@return Sprite|nil
     open = function(filename)
     end,
 
-    ---Redoes the latest operation in the `activeSprite`
+    ---Redoes the latest operation in the `activeSprite`.
     redo = function()
     end,
 
-    ---Force aseprite to refresh screen
+    ---Forces a screen refresh.
     refresh = function()
     end,
 
@@ -104,18 +104,18 @@ app = {
     transaction = function(func)
     end,
 
-    ---Undoes the latest operation in the `activeSprite`
+    ---Undoes the latest operation in the `activeSprite`.
     undo = function()
     end,
 
-    ---Simulates an user stroke in the canvas using the given tool;
-    ---see https://www.aseprite.org/api/app#app-usetool
+    ---Simulates a user stroke in the canvas using the given tool.
+    ---See https://www.aseprite.org/api/app#app-usetool .
     ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection?: SelectionMode}
     usetool = function(options)
     end,
 
-    ---Executes the given command named `CommandName` with the given parameters;
-    ---see: https://www.aseprite.org/api/app_command
+    ---Executes the given command named `CommandName` with the given parameters.
+    ---See: https://www.aseprite.org/api/app_command .
     command = {
         BackgroundFromLayer = function()
         end,
@@ -172,33 +172,33 @@ app = {
         end,
     },
 
-    ---A set of functions to handle file names and the file system
+    ---A set of functions to handle file names and the file system.
     fs = {
-        ---The installation path of Aseprite for the current platform
+        ---The installation path of Aseprite for the current platform.
         appPath = undefined --[[@as string]],
 
-        ---The path the Aseprite executable was launched from
+        ---The path from which the Aseprite executable launched.
         currentPath = undefined --[[@as string]],
 
-        ---The preferred path separator of the current platform; see: `app.fs.joinPath()`
+        ---The preferred path separator of the current platform; see: `app.fs.joinPath()`.
         pathSeparator = undefined --[[@as "/"|"\\"]],
 
-        ---The path for temporary files for the current platform
+        ---The path for temporary files for the current platform.
         tempPath = undefined --[[@as string]],
 
-        ---The current user's Aseprite configuration path for the current platform
+        ---The current user's Aseprite configuration path for the current platform.
         userConfigPath = undefined --[[@as string]],
 
-        ---The current user's Documents path for the current platform
+        ---The current user's Documents path for the current platform.
         userDocsPath = undefined --[[@as string]],
 
-        ---Returns the file extension (without including the `.`) of the given filename
+        ---Returns the file extension of the given filename, excluding the `.`.
         ---@param fn string filename
         ---@return string
         fileExtension = function(fn)
         end,
 
-        ---Returns the file name (including the extension part) of the given filename
+        ---Returns the file name, including the extension.
         ---@param fn string filename
         ---@return string
         fileName = function(fn)
@@ -210,7 +210,7 @@ app = {
         filePath = function(fn)
         end,
 
-        ---Returns the file path joined with the title (without including the extension) of the given filename
+        ---Returns the file path joined with the title, excluding the extension, of the given filename.
         ---@param fn string filename
         ---@return string
         filePathAndTitle = function(fn)
@@ -262,19 +262,19 @@ app = {
         normalizePath = function(path)
         end,
 
-        ---Create all directories needed to access to the path.
+        ---Creates all directories needed to access to the path.
         ---@param path string
         ---@return boolean succeeded
         makeAllDirectories = function(path)
         end,
 
-        ---Create one directory.
+        ---Creates one directory.
         ---@param path string
         ---@return boolean succeeded
         makeDirectory = function(path)
         end,
 
-        ---Remove the given directory (it must be empty).
+        ---Removes the given directory (it must be empty).
         ---@param path string
         ---@return boolean succeeded `true` if the directory was removed (or is already removed)
         removeDirectory = function(path)
@@ -283,20 +283,20 @@ app = {
 
     ---A set of functions to handle the color for Image pixels at the lowest level: an unsigned integer
     pixelColor = {
-        ---Constructs a 16-bit unsigned integer for grayscale images
+        ---Constructs a 16-bit unsigned integer for grayscale images.
         ---@param gray integer
         ---@param alpha integer alpha; default is 255 (opaque)
         ---@return integer
         graya = function(gray, alpha)
         end,
 
-        ---Returns the alpha component
+        ---Returns the alpha component.
         ---@param grayPixelValue integer 16-bit integer
         ---@return integer
         grayaA = function(grayPixelValue)
         end,
 
-        ---Returns the gray component
+        ---Returns the gray component.
         ---@param grayPixelValue integer 16-bit integer
         ---@return integer
         grayaV = function(grayPixelValue)
@@ -311,25 +311,25 @@ app = {
         rgba = function(red, green, blue, alpha)
         end,
 
-        ---Returns the alpha component
+        ---Returns the alpha component.
         ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
         rgbaA = function(rgbaPixelValue)
         end,
 
-        ---Returns the blue component
+        ---Returns the blue component.
         ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
         rgbaB = function(rgbaPixelValue)
         end,
 
-        ---Returns the green component
+        ---Returns the green component.
         ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
         rgbaG = function(rgbaPixelValue)
         end,
 
-        ---Returns the red component
+        ---Returns the red component.
         ---@param rgbaPixelValue integer 32-bit integer
         ---@return integer
         rgbaR = function(rgbaPixelValue)
@@ -357,13 +357,13 @@ app = {
     },
 
     preferences = {
-        ---Returns the preferences of the given tool
+        ---Returns the preferences of the given `Tool`.
         ---@param tool Tool
         ---@return any
         tool = function(tool)
         end,
 
-        ---Returns the preferences of the given `sprite`
+        ---Returns the preferences of the given `Sprite`.
         ---@param sprite Sprite
         ---@return any
         document = function(sprite)
@@ -785,7 +785,7 @@ Events = {
 
 
 ---@class Frame
----@field duration number Duration of this frame in the animation in seconds.
+---@field duration number Duration of the frame in seconds.
 ---@field frameNumber integer The frame number.
 ---@field next Frame|nil The next frame, if any.
 ---@field previous Frame|nil The previous frame, if any.
@@ -803,6 +803,7 @@ Frame = {}
 ---@field opacity integer Opacity used in stroke(), fill(), drawImage(), etc.
 ---@field strokeWidth integer Gets or sets the width of lines painted with strokes.
 ---@field width integer Gets the width of the visible area in pixels. Changes when the dialog is resized.
+---@NOTE Also contains the field 'theme', which in turn has an instance styleMetrics method.
 GraphicsContext = {
     ---Starts a new path, emptying the list of tracked sub-paths.
     ---This is the first method to call when drawing paths.
@@ -979,17 +980,17 @@ end
 
 ---@class Image
 ---@field bounds Rectangle Returns a rectangle with the bounds of the image with origin equal to (0, 0).
----@field bytes string A byte string that contains raw image data
----@field cel Cel The cel to which this image belongs or `nil`
----@field colorMode ColorMode
----@field height integer
----@field rowStride integer Number of bytes for each row in the image
----@field spec ImageSpec The specification for this image
+---@field bytes string A byte string that contains raw image data.
+---@field cel Cel The cel to which this image belongs or `nil`.
+---@field colorMode ColorMode The image color mode.
+---@field height integer The image height.
+---@field rowStride integer Number of bytes for each row in the image.
+---@field spec ImageSpec The specification for this image.
 ---@field version integer Version assigned to the image inside the program, updated with each image change.
----@field width integer
+---@field width integer The image width.
 Image = {
     ---Clear all pixels in the image with given color
-    ---(or `image.spec.transparentColor` if no color is specified)
+    ---(or `image.spec.transparentColor` if no color is specified).
     ---@param image Image
     ---@param color? Color|integer
     clear = function(image, color)
@@ -1001,8 +1002,8 @@ Image = {
     clone = function(image)
     end,
 
-    ---Copies/draws the given sourceImage image over destinationImage.
-    ---If position is a point, it will draw the sourceImage in the given position.
+    ---Draws the given sourceImage image on the destinationImage.
+    ---For indexed color mode, sets the region to the destination image.
     ---@param destinationImage Image
     ---@param sourceImage Image
     ---@param position? Point
@@ -1101,7 +1102,7 @@ Image = {
     putImage = function(destinationImage, sourceImage, position)
     end,
 
-    ---Sets the pixel in the xy-coordinate to the given integer pixel value
+    ---Sets the pixel in the xy-coordinate to the given integer pixel value.
     ---@param image Image
     ---@param x integer
     ---@param y integer
@@ -1135,16 +1136,16 @@ Image = {
 function Image(width, height, colorMode)
 end
 
----Specifications of sprites or images
+---Specifications of sprites or images.
 ---@class ImageSpec
 ---@field colorMode ColorMode
 ---@field colorSpace ColorSpace
 ---@field height integer
 ---@field width integer
----@field transparentColor integer The index that refers a transparent color in a palette when the image or sprite uses indexed color mode
+---@field transparentColor integer The index that refers a transparent color in a palette when the image or sprite uses indexed color mode.
 ImageSpec = {}
 
----Creates a new `ImageSpec` instance
+---Creates a new `ImageSpec` instance.
 ---@return ImageSpec
 ---@overload fun(otherImageSpec: ImageSpec): ImageSpec
 ---@overload fun(options: {width: integer, height: integer, colorMode: ColorMode|number, transparentColor: number})
@@ -1172,28 +1173,28 @@ KeyEvent = {
 
 
 ---@class Layer
----@field blendMode BlendMode|nil The blend mode of the layer, or `nil` if the `layer` is a group
----@field cels boolean Cel[] Table of cels in the layer
----@field color Color User-defined color of this layer in the timeline
----@field data string The user-defined data related to this layer
----@field id integer The layer's id
----@field isBackground boolean Whether or not a layer is a background
----@field isCollapsed boolean Whether or not a group's children are hidden in the timeline
----@field isContinuous boolean Whether a layer biases toward linked cels when a new cel is created in the timeline
----@field isEditable boolean Whether a layer is editable (unlocked)
----@field isExpanded boolean Whether or not a group's child layers are visible in the timeline
----@field isGroup boolean Whether or not the layer is a group and has the capacity to be a parent to other layers
----@field isImage boolean Whether or not the layer contains cels with images
----@field isReference boolean Whether or not the layer is a reference layer
----@field isTilemap boolean Whether or not the layer is a tile map
----@field isTransparent boolean Whether or not a layer supports transparency
----@field isVisible boolean Whether or not the layer is visible
----@field layers Layer[]|nil If a layer is a group, gets the table of child layers
----@field name string
----@field opacity integer|nil The layer opacity, or `nil` if the `Layer` is a group
----@field parent Sprite|Layer
----@field sprite Sprite The sprite to which the layer belongs
----@field stackIndex integer The layer's index in its parent's layers table
+---@field blendMode BlendMode|nil The blend mode of the layer, or `nil` if the `layer` is a group.
+---@field cels Cel[] Table of cels in the layer.
+---@field color Color User-defined color of this layer in the timeline.
+---@field data string The user-defined data related to this layer.
+---@field id integer The layer's id.
+---@field isBackground boolean Whether or not a layer is a background.
+---@field isCollapsed boolean Whether or not a group's children are hidden in the timeline.
+---@field isContinuous boolean Whether a layer biases toward linked cels when a new cel is created.
+---@field isEditable boolean Whether a layer is editable (unlocked).
+---@field isExpanded boolean Whether or not a group's child layers are visible in the timeline.
+---@field isGroup boolean Whether or not the layer is a group and can be a parent to other layers.
+---@field isImage boolean Whether or not the layer contains cels with images.
+---@field isReference boolean Whether or not the layer is a reference layer.
+---@field isTilemap boolean Whether or not the layer is a tile map.
+---@field isTransparent boolean Whether or not a layer supports transparency.
+---@field isVisible boolean Whether or not the layer is visible.
+---@field layers Layer[]|nil If a layer is a group, gets the table of child layers.
+---@field name string The layer's name. Should not be treated as a unique identifier.
+---@field opacity integer|nil The layer opacity, or `nil` if the `Layer` is a group.
+---@field parent Sprite|Layer The layer's parent. May be a `Sprite` for top-level layers.
+---@field sprite Sprite The sprite to which the layer belongs.
+---@field stackIndex integer The layer's index in its parent's layers table.
 ---@field tileset Tileset|nil If the layer is a tile map, gets or sets the layer's tile set.
 Layer = {
     ---Returns a cel, if any, at the intersection of the layer and a frame
@@ -1209,8 +1210,8 @@ Layer = {
 ---@field altKey boolean
 ---@field button MouseButton
 ---@field ctrlKey boolean
----@field deltaX number
----@field deltaY number
+---@field deltaX number|nil
+---@field deltaY number|nil
 ---@field metaKey boolean
 ---@field pressure number
 ---@field shiftKey boolean
@@ -1221,10 +1222,10 @@ MouseEvent = {}
 
 
 ---@class Palette
----@field frame Frame|nil returns the first frame, if any
+---@field frame Frame|nil Gets the first frame, if any.
 ---@NOTE also includes frameNumber property, but unclear what happens if frame is nil
 Palette = {
-    ---Returns the color in the given entry index (the index goes from 0 to #palette-1)
+    ---Returns the color at the given index. The index goes from 0 to #palette - 1.
     ---@param palette Palette
     ---@param index integer
     ---@return Color
@@ -1243,8 +1244,8 @@ Palette = {
     saveAs = function(palette, filename)
     end,
 
-    ---Changes a palette color in the given entry index
-    ---(the index goes from 0 to #palette-1).
+    ---Changes a palette color in the given index.
+    ---The index goes from 0 to #palette - 1.
     ---@param palette Palette
     ---@param index integer
     ---@param color Color|integer
@@ -1288,36 +1289,47 @@ Point = {}
 function Point(x, y)
 end
 
----The range of selected objects;
----It can be a list of one type of the following: layers, frames, cels, images, and colors
+---The range of selected objects. It may contain layers, frames, cels,
+---images, tiles and/or colors. Tiles and colors are references indirectly
+---through `integer`s.
 ---@class Range
----@field cels Cel[] The table of cels
----@field colors integer[] The table of palette entries in the color bar
----@field editableImages Image[] The table of unique, editable images
----@field frames Frame[] The table of frames
----@field images Image[] The table of unique images
----@field isEmpty boolean Whether or not the range is empty
----@field layers Layer[] The table of layers
----@field slices Slice[] The table of slices
----@field sprite Sprite Sprite to which the range is pointing to
+---@field cels Cel[] The table of cels.
+---@field colors integer[] The table of indices in the color bar.
+---@field editableImages Image[] The table of unique, editable images.
+---@field frames Frame[] The table of frames.
+---@field images Image[] The table of unique images.
+---@field isEmpty boolean Whether or not the range is empty.
+---@field layers Layer[] The table of layers.
+---@field slices Slice[] The table of slices.
+---@field sprite Sprite Sprite to which the range is pointing.
+---@field tiles integer[] The table of indices in the tileset bar.
 ---@field type RangeType
 Range = {
-    ---Clears the current selected range of frames/layers/cels/colors
+    ---Clears the current range's contents.
     ---@param range Range
     clear = function(range)
     end,
 
-    ---Returns true if the given object (layer/frame/cel) is inside the selected range
+    ---Returns true if the layer, frame or cel is in the timeline range.
     ---@param range Range
     ---@param object Layer|Frame|Cel
+    ---@return boolean
     contains = function(range, object)
     end,
 
-    ---Returns true if the given color index is selected in the color bar
+    ---Returns true if the given color index is selected in the color bar.
     ---@param range Range
     ---@param colorIndex integer
+    ---@return boolean
     containsColor = function(range, colorIndex)
     end,
+
+    ---Returns true if the given tile index is selected in the tileset bar.
+    ---@param range Range
+    ---@param tileIndex integer
+    ---@return boolean
+    containsTile = function(range, tileIndex)
+    end
 }
 
 
@@ -1447,10 +1459,10 @@ end
 ---@class Site
 ---@field cel Cel|nil The active cel
 ---@field frame Frame|nil The active frame
----@field frameNumber integer The index of active frame. Returns 1 if no sprite is open.
 ---@field image Image|nil The active image
 ---@field layer Layer|nil The active layer
 ---@field sprite Sprite|nil The active sprite
+---@NOTE As with other classes, omit frameNumber property.
 Site = {}
 
 
@@ -1496,27 +1508,27 @@ Slice = {}
 
 
 ---@class Sprite
----@field backgroundLayer Layer The background layer or `nil`
+---@field backgroundLayer Layer|nil The background layer, if any.
 ---@field bounds Rectangle The bounds of the sprite as a rectangle in the position `0, 0`
----@field cels Cel[] The cels the sprite has
----@field colorMode ColorMode The color mode of the sprite
+---@field cels Cel[] The cels contained by the sprite.
+---@field colorMode ColorMode The sprite's color mode.
 ---@field colorSpace ColorSpace The color space of the sprite
 ---@field events Events events to associate functions that can act like listeners of specific Sprite events.
 ---@field filename string The name of the file from where this sprite was loaded or saved or an empty string
----@field frames Frame[] The frames the sprite has
+---@field frames Frame[] The frames contained by the sprite.
 ---@field gridBounds Rectangle The bounds of the sprite grid
----@field height integer
+---@field height integer The vertical sprite dimension.
 ---@field isModified boolean Returns true if the sprite is modified compared to the latest saved state on disk.
----@field layers Layer[] The layer the sprite has
----@field palettes Palette[] The palettes the sprite has
----@field pixelRatio Size The pixel ratio of the sprite
----@field selection Selection The active selection
----@field slices Slice[] The slices the sprite has
----@field spec ImageSpec The specification for image in this sprite
----@field tags Tag[] The tags the sprite has
----@field tilesets Tileset[] The tilesets the sprite has
+---@field layers Layer[] The layers contained by the sprite.
+---@field palettes Palette[] The palettes contained by the sprite.
+---@field pixelRatio Size The pixel ratio.
+---@field selection Selection The active selection.
+---@field slices Slice[] The slices contained by the sprite.
+---@field spec ImageSpec The sprite's image specification.
+---@field tags Tag[] The tags contained by the sprite.
+---@field tilesets Tileset[] The tilesets contained by the sprite.
 ---@field transparentColor integer An integer that specifies which index is transparent for indexed sprites
----@field width integer
+---@field width integer The horizontal sprite dimension.
 Sprite = {
     ---Assign a new color space to the sprite without modifying the sprite pixels
     ---@param sprite Sprite
@@ -1531,7 +1543,7 @@ Sprite = {
     end,
 
     ---Converts all the sprite pixels to a new color space
-    ---so the image looks the same as in the previous color space
+    ---so the image looks the same as in the previous color space.
     ---@param sprite Sprite
     ---@param colorSpace ColorSpace
     convertColorSpace = function(sprite, colorSpace)
@@ -1566,25 +1578,25 @@ Sprite = {
     ---Deletes the given `Layer` or the layer with the given `layerName`.
     ---@param sprite Sprite
     ---@param layer Layer
-    ---@overload fun(sprite: Sprite, layerName: string)
+    ---@NOTE Also accepts a string name. Discouraged because names aren't unique.
     deleteLayer = function(sprite, layer)
     end,
 
     ---Deletes the given `Slice`.
     ---@param sprite Sprite
     ---@param slice Slice
-    ---@overload fun(sprite: Sprite, sliceName: string)
+    ---@NOTE Also accepts a string name. Discouraged because names aren't unique.
     deleteSlice = function(sprite, slice)
     end,
 
     ---Deletes the given `Tag`.
     ---@param sprite Sprite
     ---@param tag Tag
-    ---@overload fun(sprite: Sprite, tagName: string)
+    ---@NOTE Also accepts a string name. Discouraged because names aren't unique.
     deleteTag = function(sprite, tag)
     end,
 
-    ---Removes a tile from a tileset.
+    ---Deletes a `Tile` from a `Tileset`.
     ---@param sprite Sprite
     ---@param tile Tile
     ---@overload fun(sprite: Sprite, tileset: Tileset, tileIndex: integer)
@@ -1633,25 +1645,24 @@ Sprite = {
     ---Creates a copy of the given `frame` object or frame number and returns
     ---a `Frame` that points to the newly created frame at `frameNumber`.
     ---@param sprite Sprite
-    ---@param frame Frame
+    ---@param frame Frame|integer
     ---@return Frame
-    ---@overload fun(sprite: Sprite, frameNumber: integer): Frame
     newFrame = function(sprite, frame)
     end,
 
-    ---Creates a new empty layer group at the top of the layers stack
+    ---Creates a new group layer at the top of the layers stack.
     ---@param sprite Sprite
     ---@return Layer
     newGroup = function(sprite)
     end,
 
-    ---Creates a new layer at the top of the layers stack
+    ---Creates a new layer at the top of the layers stack.
     ---@param sprite Sprite
     ---@return Layer
     newLayer = function(sprite)
     end,
 
-    ---Creates a new slice
+    ---Creates a new slice.
     ---@param sprite Sprite
     ---@param rectangle? Rectangle
     ---@return Slice
@@ -1677,7 +1688,7 @@ Sprite = {
     end,
 
     ---Returns a new tileset and adds it to the sprite's tilesets.
-    ---If no parameters are given, the  tileset has 1 tile of 16x16 pixels.
+    ---If no parameters are given, the tileset has 1 tile of 16x16 pixels.
     ---If Grid or Rectangle is specified, it is used to set the tileset's
     ---origin and tile size.
     ---numTiles specifies the number of initial tiles.
@@ -1689,7 +1700,7 @@ Sprite = {
     newTileset = function(sprite)
     end,
 
-    ---Resizes the sprite (and all frames/cels)
+    ---Resizes the sprite and all cels that it contains.
     ---@param sprite Sprite
     ---@param width integer
     ---@param height integer
@@ -1697,7 +1708,7 @@ Sprite = {
     resize = function(sprite, width, height)
     end,
 
-    ---Saves the sprite to the given file and mark the sprite as saved
+    ---Saves the sprite to the given file and mark the sprite as saved.
     ---@param sprite Sprite
     ---@param filename string
     saveAs = function(sprite, filename)
@@ -1710,7 +1721,7 @@ Sprite = {
     saveCopyAs = function(sprite, filename)
     end,
 
-    ---Changes the sprite palette
+    ---Changes the sprite palette.
     ---@param sprite Sprite
     ---@param palette Palette
     setPalette = function(sprite, palette)
@@ -1746,9 +1757,9 @@ Tag = {}
 -- Represents a tile from a Tileset.
 ---@class Tile
 ---@field color Color Gets or sets the user-defined color of this tile.
----@field data string Gets or sets the user-defined data related to this tile (a text string).
+---@field data string Gets or sets the user-defined data related to this tile, a string.
 ---@field image Image Gets or sets the image of this tile.
----@field index integer The index of the tile (position in its tileset).
+---@field index integer The index of the tile in its tileset.
 Tile = {}
 
 
@@ -1778,7 +1789,7 @@ Tileset = {
 
 ---The Timer class can be used to execute a function periodically.
 ---@class Timer
----@field interval number Returns the interval of this specific timer (in seconds).
+---@field interval number Returns the interval of the timer in seconds.
 ---@field isRunning boolean Returns true if the timer is running.
 Timer = {
     ---Starts the timer.
@@ -1806,25 +1817,26 @@ end
 Tool = {}
 
 
+---Received as first parameter in the function associated to ontouch event of a canvas widget.
 ---@class TouchEvent
----@field magnification number
----@field x integer
----@field y integer
+---@field magnification number Magnification factor to apply.
+---@field x integer Horizontal coordinate, starting from the top-left corner.
+---@field y integer Vertical coordinate, starting from the top-left corner.
 TouchEvent = {}
 
 
 ---Represents a version number and provides an easy way to
----compare if the `app.version` is greater or equal than a
----specific expected version. See https://semver.org/ .
+---compare if the `app.version` is greater or equal than an
+---expected version. See https://semver.org/ .
 ---@class Version
 ---@field major integer Major change number.
 ---@field minor integer Minor change number.
 ---@field patch integer Patch change number.
----@field prereleaseLabel string Returns the pre-release label/keyword.
+---@field prereleaseLabel string Returns the pre-release label.
 ---@field prereleaseNumber integer The pre-release version.
 Version = {}
 
----Create a new `Version` instance from a string
+---Create a new `Version` instance from a string.
 ---@param version string
 ---@return Version
 function Version(version)
@@ -1832,9 +1844,9 @@ end
 
 ---WebSocket
 ---@class WebSocket
----@field url string Address of the server (read-only)
+---@field url string Address of the server. Read-only. The url is specified when creating the websocket.
 WebSocket = {
-    ---Try connecting to the server.
+    ---Tries to connect to the server.
     ---@param webSocket WebSocket
     connect = function(webSocket)
     end,
