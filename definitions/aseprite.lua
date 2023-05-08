@@ -5,7 +5,7 @@
 local undefined
 
 
----The `app` global namespace
+---The `app` global namespace.
 app = {
     ---The active brush.
     activeBrush = undefined --[[@as Brush]],
@@ -47,7 +47,7 @@ app = {
     ---The foreground color.
     fgColor = undefined --[[@as Color]],
 
-    ---`true` if the UI is available
+    ---Whether the UI is available.
     isUIAvailable = undefined --[[@as boolean]],
 
     ---A table with parameters specified as `--script-param key=value` in the
@@ -71,7 +71,7 @@ app = {
     ---The Aseprite version number, e.g., Version("1.2.10-beta1").
     version = undefined --[[@as Version]],
 
-    ---Shows an alert message.
+    ---Displays an alert message.
     ---If `buttons` are not specified, it will show a message box with the OK button only.
     ---@param text string
     ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]})
@@ -114,8 +114,8 @@ app = {
     usetool = function(options)
     end,
 
-    ---Executes the given command named `CommandName` with the given parameters.
-    ---See: https://www.aseprite.org/api/app_command .
+    ---Executes the command named `CommandName` with the parameters provided.
+    ---See https://www.aseprite.org/api/app_command .
     command = {
         BackgroundFromLayer = function()
         end,
@@ -172,7 +172,7 @@ app = {
         end,
     },
 
-    ---A set of functions to handle file names and the file system.
+    ---Functions to handle file names and the file system.
     fs = {
         ---The installation path of Aseprite for the current platform.
         appPath = undefined --[[@as string]],
@@ -204,7 +204,7 @@ app = {
         fileName = function(fn)
         end,
 
-        ---Returns the path/directory part of the given filename
+        ---Returns the path/directory part of the given filename.
         ---@param fn string filename
         ---@return string
         filePath = function(fn)
@@ -216,47 +216,47 @@ app = {
         filePathAndTitle = function(fn)
         end,
 
-        ---Returns the file size of the given filename `fn`
+        ---Returns the file size of the given filename `fn`.
         ---@param fn string filename
         ---@return integer
         fileSize = function(fn)
         end,
 
-        ---Returns the file title (without including the path nor the extension) of the given filename
+        ---Returns the file title (without including the path nor the extension) of the given filename.
         ---@param fn string filename
         ---@return string
         fileTitle = function(fn)
         end,
 
-        ---Returns true if the given filename `fn` is a directory
+        ---Returns true if the given filename `fn` is a directory.
         ---@param fn string filename
         ---@return boolean
         isDirectory = function(fn)
         end,
 
-        ---Returns true if the given filename `fn` is a file
+        ---Returns true if the given filename `fn` is a file.
         ---@param fn string filename
         ---@return boolean
         isFile = function(fn)
         end,
 
-        ---Can accept any number of string arguments to join together
-        ---with the path separator for the current platform
-        ---@param path1 string
-        ---@param path2 string
+        ---Joins together a number of string arguments
+        ---with the path separator for the current platform.
+        ---@param ... string
         ---@return string
-        joinPath = function(path1, path2)
+        joinPath = function(...)
         end,
 
         ---Returns a list of files in the given directory path.
-        ---The returned value is a table where each element is a
-        ---file name, each file name is relative to the given path.
+        ---Each file name in the return table is relative to
+        ---the given path.
         ---@param path string
         ---@return string[]
         listFiles = function(path)
         end,
 
-        ---Returns the file path converted to a canonical form for the current platform.
+        ---Returns the file path converted to a canonical form
+        ---for the current platform.
         ---@param path string
         ---@return string
         normalizePath = function(path)
@@ -264,24 +264,24 @@ app = {
 
         ---Creates all directories needed to access to the path.
         ---@param path string
-        ---@return boolean succeeded
+        ---@return boolean
         makeAllDirectories = function(path)
         end,
 
         ---Creates one directory.
         ---@param path string
-        ---@return boolean succeeded
+        ---@return boolean
         makeDirectory = function(path)
         end,
 
         ---Removes the given directory (it must be empty).
         ---@param path string
-        ---@return boolean succeeded `true` if the directory was removed (or is already removed)
+        ---@return boolean success `true` if the directory was removed (or is already removed).
         removeDirectory = function(path)
         end
     },
 
-    ---A set of functions to handle the color for Image pixels at the lowest level: an unsigned integer
+    ---A set of functions to handle the color for Image pixels at the lowest level: an unsigned integer.
     pixelColor = {
         ---Constructs a 16-bit unsigned integer for grayscale images.
         ---@param gray integer
@@ -542,9 +542,9 @@ WebSocketMessageType = {
 }
 
 
----Identifies a brush to paint with `app.useTool()` function
+---Identifies a brush to paint with `app.useTool()` function.
 ---@class Brush
----@field angle integer Angle of brush pattern between -180 and 180
+---@field angle integer Angle of brush pattern between -180 and 180.
 ---@field center Point
 ---@field image Image
 ---@field pattern BrushPattern
@@ -553,7 +553,7 @@ WebSocketMessageType = {
 ---@field type BrushType
 Brush = {}
 
----Creates a new `Brush` instance
+---Creates a new `Brush` instance.
 ---@return Brush
 ---@overload fun(size: Size): Brush
 ---@overload fun(image: Image): Brush
@@ -561,17 +561,18 @@ Brush = {}
 function Brush()
 end
 
----Cel
+---A cel contains an image at the intersection of a layer and a frame.
+---Its position offsets the image from the sprite's top-left corner.
 ---@class Cel
----@field bounds Rectangle The rectangle of the cel bounds
----@field color Color The use-defined color of this cel in the timeline
----@field data string The user-defined data related to this cel
+---@field bounds Rectangle The rectangle of the cel bounds.
+---@field color Color The color of the cel in the timeline.
+---@field data string The user-defined data related to the cel.
 ---@field frame Frame|nil The frame to which the cel belongs. When set, the cel will be moved to the given frame.
----@field image Image The image with the pixels of this cel
----@field layer Layer The layer where the cel is located
----@field opacity integer The cel opacity between 0 (transparent) and 255 (opaque)
----@field position Point The cel position
----@field sprite Sprite The sprite the cel belongs to
+---@field image Image The cel's image.
+---@field layer Layer The layer where the cel is located.
+---@field opacity integer The cel opacity between 0 (transparent) and 255 (opaque).
+---@field position Point The cel position.
+---@field sprite Sprite The sprite to which the cel belongs.
 ---@NOTE also includes frameNumber property, but unclear what happens if frame is nil
 Cel = {}
 
@@ -603,7 +604,7 @@ Color = {}
 ---@return Color
 ---@overload fun(options: {h: number, s: number, v: number, a: integer}): Color
 ---@overload fun(options: {h: number, s: number, l: number, a: integer}): Color
----@overload fun(options: {red: integer, green: integer, blue: integer, a: integer}): Color
+---@overload fun(options: {red: integer, green: integer, blue: integer, alpha: integer}): Color
 ---@overload fun(options: {hue: number, saturation: number, value: number, alpha: integer}): Color
 ---@overload fun(options: {hue: number, saturation: number, lightness: number, alpha: integer}): Color
 ---@overload fun(options: {gray: integer, a: integer}): Color
@@ -737,7 +738,7 @@ Dialog = {
     ---They can be sorted and accessed as an array when
     ---the mode is "sort". The default mode is "pick".
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, mode: "pick"|"sort", colors: Color[], onclick?: fun(event: {color: Color, button: MouseButton})}
+    ---@param options {id?: string, label?: string, colors?: Color[], mode?: "pick"|"sort", onclick?: fun(event: {color: Color, button: MouseButton})}
     ---@return Dialog
     shades = function(dialog, options)
     end,
@@ -999,7 +1000,7 @@ Image = {
     clear = function(image, color)
     end,
 
-    ---Creates a copy of the image
+    ---Creates a copy of the image.
     ---@param image Image
     ---@return Image
     clone = function(image)
@@ -1015,7 +1016,7 @@ Image = {
     drawImage = function(destinationImage, sourceImage, position, opacity, blendMode)
     end,
 
-    ---Sets the pixel in the xy-coordinate to the given integer pixel value
+    ---Sets the pixel in the xy-coordinate to the given integer pixel value.
     ---@param image Image
     ---@param x integer
     ---@param y integer
@@ -1200,7 +1201,7 @@ KeyEvent = {
 ---@field stackIndex integer The layer's index in its parent's layers table.
 ---@field tileset Tileset|nil If the layer is a tile map, gets or sets the layer's tile set.
 Layer = {
-    ---Returns a cel, if any, at the intersection of the layer and a frame
+    ---Returns a cel, if any, at the intersection of the layer and a frame.
     ---@param layer Layer
     ---@param frame Frame|integer
     ---@return Cel|nil
@@ -1235,13 +1236,13 @@ Palette = {
     getColor = function(palette, index)
     end,
 
-    ---Changes the number of the palette colors to `ncolors`
+    ---Changes the number of the palette colors to `ncolors`.
     ---@param palette Palette
     ---@param ncolors integer
     resize = function(palette, ncolors)
     end,
 
-    ---Saves the palette in the given `filename`
+    ---Saves the palette in the given `filename`.
     ---@param palette Palette
     ---@param filename string
     saveAs = function(palette, filename)
@@ -1283,8 +1284,8 @@ end
 Point = {}
 
 ---Creates a new `Point` instance.
----@param x? integer Default is 0
----@param y? integer Default is 0
+---@param x? integer Defaults to zero.
+---@param y? integer Defaults to zero.
 ---@return Point
 ---@overload fun(otherPoint: Point): Point
 ---@overload fun(options: {x: integer, y: integer}): Point
@@ -1292,8 +1293,8 @@ Point = {}
 function Point(x, y)
 end
 
----The range of selected objects. It may contain layers, frames, cels,
----images, tiles and/or colors. Tiles and colors are references indirectly
+---A range of selected objects. It may contain layers, frames, cels,
+---images, tiles and/or colors. Tiles and colors are referenced indirectly
 ---through `integer`s.
 ---@class Range
 ---@field cels Cel[] The table of cels.
@@ -1533,14 +1534,15 @@ Slice = {}
 ---@field transparentColor integer An integer that specifies which index is transparent for indexed sprites
 ---@field width integer The horizontal sprite dimension.
 Sprite = {
-    ---Assign a new color space to the sprite without modifying the sprite pixels
+    ---Assigns a new color space to the sprite without modifying
+    ---the sprite pixels.
     ---@param sprite Sprite
     ---@param colorSpace ColorSpace
     assignColorSpace = function(sprite, colorSpace)
     end,
 
-    ---Closes the sprite. This doesn't ask the user to save changes;
-    ---see: app.command.CloseFile()
+    ---Closes the sprite. Does not ask the user to save changes.
+    ---See app.command.CloseFile .
     ---@param sprite Sprite
     close = function(sprite)
     end,
@@ -1606,7 +1608,7 @@ Sprite = {
     deleteTile = function(sprite, tile)
     end,
 
-    ---Deletes the given tileset from the sprite's tilesets.
+    ---Deletes the given `Tileset` from the sprite's tilesets.
     ---@param sprite Sprite
     ---@param tileset Tileset
     ---@overload fun(sprite: Sprite, tilesetIndex: integer)
@@ -1619,21 +1621,24 @@ Sprite = {
     flatten = function(sprite)
     end,
 
-    ---Sets the sprite palette loading it from the given file
+    ---Sets the sprite palette to one loaded from a file path.
     ---@param sprite Sprite
     ---@param filename string
     loadPalette = function(sprite, filename)
     end,
 
-    ---Creates a new cel in the given `layer` and `frame` number.
-    ---If the image is not specified, a new image will be created with
+    ---Creates a new cel in the given layer. Throws an error if the
+    ---layer is a group.
+    ---If a frame is not provided, defaults to the first frame.
+    ---If an image is not provided, a new image will be created with
     ---the size of the sprite canvas.
-    ---The position is a point to locate the image.
+    ---If a position is not provided, the cel defaults to the sprite
+    ---top-left corner.
     ---@param sprite Sprite
-    ---@param layer Layer
-    ---@param frame? Frame|integer
-    ---@param image? Image
-    ---@param position? Point
+    ---@param layer Layer Leaf layer.
+    ---@param frame? Frame|integer Defaults to frame one.
+    ---@param image? Image Defaults to empty image.
+    ---@param position? Point Defaults to top-left corner.
     ---@return Cel
     newCel = function(sprite, layer, frame, image, position)
     end,
@@ -1724,14 +1729,14 @@ Sprite = {
     saveCopyAs = function(sprite, filename)
     end,
 
-    ---Changes the sprite palette.
+    ---Sets the sprite's first palette.
     ---@param sprite Sprite
     ---@param palette Palette
     setPalette = function(sprite, palette)
     end,
 }
 
----Creates a new sprite with `Sprite` instance.
+---Creates a new `Sprite` instance.
 ---Sprites loaded fromFile may be `nil`.
 ---@param width integer
 ---@param height integer
@@ -1749,11 +1754,11 @@ end
 ---@field aniDir AniDir The Animation Direction property of the tag.
 ---@field color Color The user-defined color of this tag in the timeline.
 ---@field frames integer The number of frames that this tag contains.
----@field fromFrame Frame|nil The `Frame` where this tag starts.
+---@field fromFrame Frame|nil The `Frame` where the tag starts.
 ---@field name string The name of the tag.
----@field repeats integer Gets or sets the number of times the tag is repeated/looped.
+---@field repeats integer Gets or sets the number of times the tag is repeated.
 ---@field sprite Sprite The sprite to which this tag belongs.
----@field toFrame Frame|nil The `Frame` where this tag ends.
+---@field toFrame Frame|nil The `Frame` where the tag ends.
 Tag = {}
 
 
@@ -1820,7 +1825,8 @@ end
 Tool = {}
 
 
----Received as first parameter in the function associated to ontouch event of a canvas widget.
+---Received as the first parameter in the function associated to a
+---canvas widget ontouch event.
 ---@class TouchEvent
 ---@field magnification number Magnification factor to apply.
 ---@field x integer Horizontal coordinate, starting from the top-left corner.
