@@ -41,7 +41,7 @@ app = {
     bgColor = undefined --[[@as Color]],
 
     ---The `Events` object to associate functions that can act like
-    ---listeners of specific app events
+    ---listeners of specific app events.
     events = undefined --[[@as Events]],
 
     ---The foreground color.
@@ -51,7 +51,7 @@ app = {
     isUIAvailable = undefined --[[@as boolean]],
 
     ---A table with parameters specified as `--script-param key=value` in the
-    ---CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file
+    ---CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file.
     params = undefined --[[@as {[string]: string}]],
 
     ---The range of elements chosen in the timeline or palette bar.
@@ -75,7 +75,7 @@ app = {
     ---If `buttons` are not specified, it will show a message box with the OK button only.
     ---@param text string
     ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]})
-    ---@return integer buttonIndex the selected button, e.g., 1 if the first button was clicked
+    ---@return integer buttonIndex The selected button, e.g., 1 if the first button was clicked.
     alert = function(text)
     end,
 
@@ -129,6 +129,7 @@ app = {
         ColorCurve = function(options)
         end,
 
+        ---Extracts a palette from the sprite canvas.
         ---For the algorithm, 0 is default, 1 is RGB table, 2 is octree.
         ---@param options {ui?: boolean, withAlpha?: boolean, maxColors?: integer, useRange?: boolean, algorithm?:0|1|2}
         ColorQuantization = function(options)
@@ -564,15 +565,15 @@ end
 ---A cel contains an image at the intersection of a layer and a frame.
 ---Its position offsets the image from the sprite's top-left corner.
 ---@class Cel
----@field bounds Rectangle The rectangle of the cel bounds.
----@field color Color The color of the cel in the timeline.
----@field data string The user-defined data related to the cel.
----@field frame Frame|nil The frame to which the cel belongs. When set, the cel will be moved to the given frame.
----@field image Image The cel's image.
----@field layer Layer The layer where the cel is located.
----@field opacity integer The cel opacity between 0 (transparent) and 255 (opaque).
----@field position Point The cel position.
----@field sprite Sprite The sprite to which the cel belongs.
+---@field bounds Rectangle Gets the cel bounds.
+---@field color Color Gets or sets the cel color in the timeline.
+---@field data string Gets or sets custom data assigned to the cel.
+---@field frame Frame|nil Gets or sets the frame to which the cel belongs. When set, the cel will be moved to the given frame.
+---@field image Image Gets or sets the cel's image.
+---@field layer Layer Gets the layer to which the cel belongs.
+---@field opacity integer Gets or sets the cel opacity.
+---@field position Point Gets or sets the cel position.
+---@field sprite Sprite Gets the sprite to which the cel belongs.
 ---@NOTE also includes frameNumber property, but unclear what happens if frame is nil
 Cel = {}
 
@@ -600,8 +601,12 @@ Cel = {}
 Color = {}
 
 ---Creates a new `Color` instance. Performs no bounds checking on arguments.
----@param options {r: integer, g: integer, b: integer, a: integer}
+---@param red integer
+---@param green integer
+---@param blue integer
+---@param alpha integer?
 ---@return Color
+---@overload fun(options: {r: integer, g: integer, b: integer, a: integer}): Color
 ---@overload fun(options: {h: number, s: number, v: number, a: integer}): Color
 ---@overload fun(options: {h: number, s: number, l: number, a: integer}): Color
 ---@overload fun(options: {red: integer, green: integer, blue: integer, alpha: integer}): Color
@@ -610,7 +615,7 @@ Color = {}
 ---@overload fun(options: {gray: integer, a: integer}): Color
 ---@overload fun(options: {index: integer}): Color
 ---@overload fun(index: integer): Color
-function Color(options)
+function Color(red, green, blue, alpha)
 end
 
 ---Represents the color space/profile of a sprite, image, or image spec
@@ -788,12 +793,13 @@ Events = {
 }
 
 
+---Represents a discrete unit of time in a sprite.
 ---@class Frame
----@field duration number Duration of the frame in seconds.
----@field frameNumber integer The frame number.
----@field next Frame|nil The next frame, if any.
----@field previous Frame|nil The previous frame, if any.
----@field sprite Sprite The sprite of this frame.
+---@field duration number Gets or sets the frame duration in seconds.
+---@field frameNumber integer Gets the frame number.
+---@field next Frame|nil Gets the next frame, if any.
+---@field previous Frame|nil Gets the previous frame, if any.
+---@field sprite Sprite Gets the sprite of this frame.
 Frame = {}
 
 
@@ -983,15 +989,16 @@ function Grid()
 end
 
 ---@class Image
----@field bounds Rectangle Returns a rectangle with the bounds of the image with origin equal to (0, 0).
----@field bytes string A byte string that contains raw image data.
----@field cel Cel The cel to which this image belongs or `nil`.
----@field colorMode ColorMode The image color mode.
----@field height integer The image height.
----@field rowStride integer Number of bytes for each row in the image.
----@field spec ImageSpec The specification for this image.
----@field version integer Version assigned to the image inside the program, updated with each image change.
----@field width integer The image width.
+---@field bounds Rectangle Gets the image bounds with origin equal to (0, 0).
+---@field bytes string Gets or sets a byte string that contains raw image data.
+---@field cel Cel Gets the cel to which this image belongs or `nil`.
+---@field colorMode ColorMode Gets the image color mode.
+---@field height integer Gets the image height.
+---@field id integer Gets the image identifier.
+---@field rowStride integer Gets the number of bytes for each row in the image.
+---@field spec ImageSpec Gets the specification for this image.
+---@field version integer Gets the version assigned to the image inside the program, updated with each image change.
+---@field width integer Gets the image width.
 Image = {
     ---Clear all pixels in the image with given color
     ---(or `image.spec.transparentColor` if no color is specified).
@@ -1067,7 +1074,7 @@ Image = {
     ---Returns a pixel iterator for the whole image or the given rectangle.
     ---@param image Image
     ---@param rectangle? Rectangle
-    ---@return fun(): integer|fun(integer)|{x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates
+    ---@return fun(): integer|fun(integer)|{x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates.
     pixels = function(image, rectangle)
     end,
 
@@ -1080,7 +1087,7 @@ Image = {
     resize = function(image, width, height)
     end,
 
-    ---Saves the image as a sprite in the given `filename`
+    ---Saves the image as a sprite in the given `filename`.
     ---@param image Image
     ---@param filename string
     ---@overload fun(image: Image, options: {filename: string, palette: Palette})
@@ -1158,7 +1165,7 @@ end
 
 ---@class KeyEvent
 ---@field altKey boolean
----@field code string A string identifier for the key. See https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values
+---@field code string A string identifier for the key. See https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values .
 ---@field ctrlKey boolean
 ---@field key string A string containing the pressed/released Unicode character.
 ---@field metaKey boolean
@@ -1176,29 +1183,33 @@ KeyEvent = {
 }
 
 
+---Represents a layer in the timeline. Can be one of many subtypes:
+---background, group, reference or tilemap.
 ---@class Layer
----@field blendMode BlendMode|nil The blend mode of the layer, or `nil` if the `layer` is a group.
----@field cels Cel[] Table of cels in the layer.
----@field color Color User-defined color of this layer in the timeline.
----@field data string The user-defined data related to this layer.
----@field id integer The layer's id.
+---@field blendMode BlendMode|nil Gets or sets the layer blend mode. `nil` if the `layer` is a group.
+---@field cels Cel[] Gets the cels table in the layer.
+---@field color Color Gets or sets the layer's color in the timeline.
+---@field data string Gets or sets the layer's custom user data.
+---@field id integer Gets the layer's id.
 ---@field isBackground boolean Whether or not a layer is a background.
----@field isCollapsed boolean Whether or not a group's children are hidden in the timeline.
----@field isContinuous boolean Whether a layer biases toward linked cels when a new cel is created.
----@field isEditable boolean Whether a layer is editable (unlocked).
----@field isExpanded boolean Whether or not a group's child layers are visible in the timeline.
----@field isGroup boolean Whether or not the layer is a group and can be a parent to other layers.
----@field isImage boolean Whether or not the layer contains cels with images.
----@field isReference boolean Whether or not the layer is a reference layer.
----@field isTilemap boolean Whether or not the layer is a tile map.
----@field isTransparent boolean Whether or not a layer supports transparency.
----@field isVisible boolean Whether or not the layer is visible.
+---@field isCollapsed boolean Gets or sets a layer's collapsed state in the timeline.
+---@field isContinuous boolean Gets or sets a layer's continuous state in the timeline.
+---@field isEditable boolean Gets or sets a layer's editability in the timeline.
+---@field isExpanded boolean Gets or sets a layer's expanded state in the timeline.
+---@field isGroup boolean Whether the layer is a group and can be a parent to other layers.
+---@field isImage boolean Whether the layer contains cels with images.
+---@field isReference boolean Whether the layer is a reference layer.
+---@field isTilemap boolean Whether the layer is a tile map.
+---@field isTransparent boolean Gets a layer's support for transparency.
+---@field isVisible boolean Gets or sets the layer's visibility state in the timeline.
 ---@field layers Layer[]|nil If a layer is a group, gets the table of child layers.
----@field name string The layer's name. Should not be treated as a unique identifier.
----@field opacity integer|nil The layer opacity, or `nil` if the `Layer` is a group.
----@field parent Sprite|Layer The layer's parent. May be a `Sprite` for top-level layers.
----@field sprite Sprite The sprite to which the layer belongs.
----@field stackIndex integer The layer's index in its parent's layers table.
+---@field name string Gets or sets the layer's name. Should not be treated as a unique identifier.
+---@field next Layer|nil Gets the next layer, if any.
+---@field opacity integer|nil Gets or sets the layer opacity. `nil` if the `Layer` is a group.
+---@field parent Sprite|Layer Gets or sets the layer's parent. May be a `Sprite` for top-level layers.
+---@field previous Layer|nil Gets the previous layer, if any.
+---@field sprite Sprite Gets the sprite to which the layer belongs.
+---@field stackIndex integer Gets or sets the layer's index in its parent's layers table.
 ---@field tileset Tileset|nil If the layer is a tile map, gets or sets the layer's tile set.
 Layer = {
     ---Returns a cel, if any, at the intersection of the layer and a frame.
@@ -1270,9 +1281,10 @@ Palette = {
 function Palette()
 end
 
+---A 2D integer coordinate pair.
 ---@class Point
----@field x integer
----@field y integer
+---@field x integer Gets or sets integer on the horizontal axis.
+---@field y integer Gets or sets integer on the vertical axis.
 ---@operator add(Point): Point
 ---@operator div(integer): Point
 ---@operator idiv(integer): Point
@@ -1297,17 +1309,17 @@ end
 ---images, tiles and/or colors. Tiles and colors are referenced indirectly
 ---through `integer`s.
 ---@class Range
----@field cels Cel[] The table of cels.
----@field colors integer[] The table of indices in the color bar.
----@field editableImages Image[] The table of unique, editable images.
----@field frames Frame[] The table of frames.
----@field images Image[] The table of unique images.
----@field isEmpty boolean Whether or not the range is empty.
----@field layers Layer[] The table of layers.
----@field slices Slice[] The table of slices.
----@field sprite Sprite Sprite to which the range is pointing.
----@field tiles integer[] The table of indices in the tileset bar.
----@field type RangeType
+---@field cels Cel[] Gets a table of cels.
+---@field colors integer[] Gets or sets a table of indices in the color bar.
+---@field editableImages Image[] Gets a table of unique, editable images.
+---@field frames Frame[] Gets or sets a table of frames.
+---@field images Image[] Gets a table of unique images.
+---@field isEmpty boolean Gets whether or not the range is empty.
+---@field layers Layer[] Gets or sets a table of layers.
+---@field slices Slice[] Gets or sets a table of slices.
+---@field sprite Sprite Gets the sprite to which the range is pointing.
+---@field tiles integer[] Gets or sets a table of indices in the tileset bar.
+---@field type RangeType Gets the type of range.
 Range = {
     ---Clears the current range's contents.
     ---@param range Range
@@ -1339,12 +1351,12 @@ Range = {
 
 ---Creates a new `Rectangle` instance.
 ---@class Rectangle
----@field height integer
----@field origin Point
----@field size Size
----@field width integer
----@field x integer
----@field y integer
+---@field height integer Gets or sets the vertical dimension.
+---@field origin Point Gets or sets the top-left corner.
+---@field size Size Gets or sets the width and height.
+---@field width integer Gets or sets the horizontal dimension.
+---@field x integer Gets or sets the top-left corner x.
+---@field y integer Gets or sets the top-left corner y.
 ---@operator band(Rectangle): Rectangle
 ---@operator bor(Rectangle): Rectangle
 Rectangle = {
@@ -1364,7 +1376,7 @@ Rectangle = {
     intersect = function(rectangle, otherRectangle)
     end,
 
-    ---Returns true if `rectangle` intersects in some way `otherRectangle`
+    ---Returns true if `rectangle` intersects in some way `otherRectangle`.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return boolean
@@ -1379,7 +1391,7 @@ Rectangle = {
     end,
 
     ---Returns a new rectangle big enough to contains both given
-    ---rectangles `rectangle` and `otherRectangle`
+    ---rectangles `rectangle` and `otherRectangle`.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return Rectangle
@@ -1387,7 +1399,7 @@ Rectangle = {
     end
 }
 
----Creates a new `Rectangle` instance
+---Creates a new `Rectangle` instance.
 ---@return Rectangle
 ---@overload fun(otherRectangle: Rectangle): Rectangle
 ---@overload fun(x: integer, y: integer, width: integer, height: integer): Rectangle
@@ -1396,18 +1408,21 @@ Rectangle = {
 function Rectangle()
 end
 
+---Represents a user defined region of selected pixels
+---on the sprite canvas.
 ---@class Selection
----@field bounds Rectangle A rectangle with the bounds of the selection
----@field origin Point The selection origin/position
+---@field bounds Rectangle Gets a rectangle of the selection bounds.
+---@field isEmpty boolean Returns true if the selection is empty.
+---@field origin Point Gets or sets the selection origin.
 Selection = {
-    ---Adds a new `rectangle` (or `otherSelection`) to the selection
+    ---Adds a new `rectangle` (or `otherSelection`) to the selection.
     ---@param selection Selection
     ---@param rectangle Rectangle
     ---@overload fun(selection: Selection, otherSelection: Selection)
     add = function(selection, rectangle)
     end,
 
-    ---Returns true or false if the given point is inside the selection
+    ---Returns true if the given point is inside the selection.
     ---@param selection Selection
     ---@param point Point
     ---@return boolean
@@ -1415,35 +1430,31 @@ Selection = {
     contains = function(selection, point)
     end,
 
-    ---Deselects the selection
+    ---Deselects the selection.
     ---@param selection Selection
     deselect = function(selection)
     end,
 
-    ---Creates an intersection in `selection` between the given `rectangle` (or `otherSelection`)
+    ---Creates an intersection in `selection` between
+    ---the given `rectangle` or `otherSelection`.
     ---@param selection Selection
     ---@param rectangle Rectangle
     ---@overload fun(selection: Selection, otherSelection: Selection)
     intersect = function(selection, rectangle)
     end,
 
-    ---Returns true if the selection is empty i.e. there are no pixels selected
-    ---@param selection Selection
-    isEmpty = function(selection)
-    end,
-
-    ---Replaces the selection with the given rectangle
+    ---Replaces the selection with the given rectangle.
     ---@param selection Selection
     ---@param rectangle Rectangle
     select = function(selection, rectangle)
     end,
 
-    ---Selected the whole sprite canvas; Only valid for a sprite.selection
+    ---Selects the whole sprite canvas. Only valid for a sprite selection.
     ---@param selection Selection
     selectAll = function(selection)
     end,
 
-    ---Subtracts the given `rectangle` (or `otherSelection`) from `selection`
+    ---Subtracts the given `rectangle`, or `otherSelection`, from `selection`.
     ---@param selection Selection
     ---@param rectangle Rectangle
     ---@overload fun(selection: Selection, otherSelection: Selection)
@@ -1451,7 +1462,7 @@ Selection = {
     end,
 }
 
----Creates a new Selection
+---Creates a new `Selection` instance.
 ---@param rectangle? Rectangle
 ---@return Selection
 function Selection(rectangle)
@@ -1461,15 +1472,18 @@ end
 ---Cel, frame, image, layer or sprite may be nil if no sprite is open or if
 ---the active layer is a group.
 ---@class Site
----@field cel Cel|nil The active cel
----@field frame Frame|nil The active frame
----@field image Image|nil The active image
----@field layer Layer|nil The active layer
----@field sprite Sprite|nil The active sprite
+---@field cel Cel|nil Gets the active cel, if any.
+---@field frame Frame|nil Gets the active frame, if any.
+---@field image Image|nil Gets the active image, if any.
+---@field layer Layer|nil Gets the active layer, if any.
+---@field sprite Sprite|nil Gets the active sprite, if any.
 ---@NOTE As with other classes, omit frameNumber property.
 Site = {}
 
 
+---Represents a non-uniform scalar with two dimensions,
+---i.e., width and height. Dimensions may be negative or
+---zero; they are not validated by the constructor.
 ---@class Size
 ---@field height integer
 ---@field width integer
@@ -1482,6 +1496,8 @@ Site = {}
 ---@operator sub(Size): Size
 ---@operator unm(): Size
 Size {
+    ---Returns the new size which will be big enough to contain
+    ---both given dimensions, `size` and `otherSize`.
     ---@param size Size
     ---@param otherSize Size
     ---@return Size
@@ -1489,38 +1505,40 @@ Size {
     end
 }
 
----Creates a new `Size` instance with the given dimensions
----(or width=height=0 if they are not specified).
+---Creates a new `Size` instance with the given dimensions.
+---
+---Width and height default to zero.
+---@param width integer? horizontal dimension
+---@param height integer? vertical dimension
 ---@return Size
 ---@overload fun(otherSize: Size): Size
----@overload fun(width: integer, height: integer): Size
 ---@overload fun(options: {width: integer, height: integer}): Size
 ---@overload fun(options: integer[]): Size
-function Size()
+function Size(width, height)
 end
 
 ---An object that allows for nine-slice scaling.
 ---@class Slice
 ---@field bounds Rectangle|nil The slice's bounding rectangle, if any.
 ---@field center Rectangle|nil The central rectangle of a slice's nine-slice, if any.
----@field color Color The user-defined color of this slice in the timeline
----@field data string The user-defined data related to this slice
----@field name string The slice's name
+---@field color Color The user-defined color of the slice in the timeline.
+---@field data string The user-defined data of the slice.
+---@field name string Gets or sets the slice's name.
 ---@field pivot Point|nil The slice's pivot, if any.
----@field sprite Sprite The sprite to which a slice belongs
+---@field sprite Sprite The sprite to which the slice belongs.
 Slice = {}
 
 
 ---@class Sprite
 ---@field backgroundLayer Layer|nil The background layer, if any.
----@field bounds Rectangle The bounds of the sprite as a rectangle in the position `0, 0`
+---@field bounds Rectangle The bounds of the sprite as a `Rectangle` in the position `0, 0`.
 ---@field cels Cel[] The cels contained by the sprite.
 ---@field colorMode ColorMode The sprite's color mode.
----@field colorSpace ColorSpace The color space of the sprite
+---@field colorSpace ColorSpace The color space of the sprite.
 ---@field events Events events to associate functions that can act like listeners of specific Sprite events.
----@field filename string The name of the file from where this sprite was loaded or saved or an empty string
+---@field filename string The name of the file from where this sprite was loaded or saved or an empty string.
 ---@field frames Frame[] The frames contained by the sprite.
----@field gridBounds Rectangle The bounds of the sprite grid
+---@field gridBounds Rectangle The sprite grid offset and size as a `Rectangle`.
 ---@field height integer The vertical sprite dimension.
 ---@field isModified boolean Returns true if the sprite is modified compared to the latest saved state on disk.
 ---@field layers Layer[] The layers contained by the sprite.
@@ -1531,7 +1549,7 @@ Slice = {}
 ---@field spec ImageSpec The sprite's image specification.
 ---@field tags Tag[] The tags contained by the sprite.
 ---@field tilesets Tileset[] The tilesets contained by the sprite.
----@field transparentColor integer An integer that specifies which index is transparent for indexed sprites
+---@field transparentColor integer An integer that specifies which index is transparent for indexed sprites.
 ---@field width integer The horizontal sprite dimension.
 Sprite = {
     ---Assigns a new color space to the sprite without modifying
@@ -1564,10 +1582,10 @@ Sprite = {
     crop = function(sprite, x, y, width, height)
     end,
 
-    ---Deletes the given `cel`; If the cel is from a transparent
+    ---Deletes the given `cel`. If the cel is from a transparent
     ---layer, the cel is completely deleted, but if the cel is
-    ---from a background layer, the cel will be delete with
-    ---the background color
+    ---from a background layer, the cel will be deleted with
+    ---the background color.
     ---@param sprite Sprite
     ---@param cel Cel
     ---@overload fun(sprite: Sprite, layer: Layer, frame: Frame)
@@ -1643,7 +1661,7 @@ Sprite = {
     newCel = function(sprite, layer, frame, image, position)
     end,
 
-    ---Creates a new empty frame in the given `frameNumber` (default: #sprite.frames + 1)
+    ---Creates a new empty frame in the given `frameNumber` (default: #sprite.frames + 1).
     ---@param sprite Sprite
     ---@param frameNumber? integer
     ---@return Frame
@@ -1755,28 +1773,29 @@ end
 ---@field color Color The user-defined color of this tag in the timeline.
 ---@field frames integer The number of frames that this tag contains.
 ---@field fromFrame Frame|nil The `Frame` where the tag starts.
----@field name string The name of the tag.
+---@field name string Gets or sets the tag name.
 ---@field repeats integer Gets or sets the number of times the tag is repeated.
 ---@field sprite Sprite The sprite to which this tag belongs.
 ---@field toFrame Frame|nil The `Frame` where the tag ends.
 Tag = {}
 
 
--- Represents a tile from a Tileset.
+---A tile from a `Tileset`.
 ---@class Tile
 ---@field color Color Gets or sets the user-defined color of this tile.
----@field data string Gets or sets the user-defined data related to this tile, a string.
+---@field data string Gets or sets the user-defined data string of this tile.
 ---@field image Image Gets or sets the image of this tile.
----@field index integer The index of the tile in its tileset.
+---@field index integer Gets the index of the tile in its tileset.
 Tile = {}
 
 
+---An unordered set of unique `Tile`s.
 ---@class Tileset
----@field baseIndex integer
----@field color Color
----@field data string
----@field grid Grid
----@field name string
+---@field baseIndex integer Gets or sets the base index.
+---@field color Color Gets or sets the user-defined color of this tileset.
+---@field data string Gets or sets the user-defined data string of this tileset.
+---@field grid Grid Gets the grid offset and size.
+---@field name string Gets or sets the tileset name.
 Tileset = {
     ---Returns the tile in the given index.
     ---@param tileset Tileset
@@ -1821,7 +1840,7 @@ end
 ---to get and set the active tool (`app.activeTool`), or to paint
 ---on the canvas (`tool` parameter in `app.useTool()`).
 ---@class Tool
----@field id string the identifier of the specified in the `gui.xml` file
+---@field id string The identifier specified in the `gui.xml` file.
 Tool = {}
 
 
@@ -1851,7 +1870,7 @@ Version = {}
 function Version(version)
 end
 
----WebSocket
+
 ---@class WebSocket
 ---@field url string Address of the server. Read-only. The url is specified when creating the websocket.
 WebSocket = {
@@ -1871,7 +1890,7 @@ WebSocket = {
     sendBinary = function(webSocket, ...)
     end,
 
-    ---Sends a very short ping message to the server
+    ---Sends a very short ping message to the server.
     ---There's a limit to the length of data that can be sent.
     ---@param webSocket WebSocket
     ---@param str string
@@ -1886,7 +1905,7 @@ WebSocket = {
     end,
 }
 
----Creates as websocket client.
+---Creates a websocket client.
 ---@param options? {url: string, onreceive: fun(message: string, data: string), deflate: boolean, minreconnectwait: integer, maxreconnectwait: integer}
 ---@return WebSocket
 function WebSocket(options)
