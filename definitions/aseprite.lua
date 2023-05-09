@@ -545,14 +545,16 @@ WebSocketMessageType = {
 
 ---Identifies a brush to paint with `app.useTool()` function.
 ---@class Brush
----@field angle integer Angle of brush pattern between -180 and 180.
----@field center Point
----@field image Image
----@field pattern BrushPattern
----@field patternOrigin Point
----@field size integer
----@field type BrushType
-Brush = {}
+---@field angle integer Gets the angle between -180 and 180.
+---@field center Point Gets the center.
+---@field image Image Gets the image.
+---@field pattern BrushPattern Gets the pattern.
+---@field patternOrigin Point Gets the pattern origin.
+---@field size integer Gets the brush size.
+---@field type BrushType Gets the brush type.
+Brush = {
+    ---@NOTE There are two methods, setFgColor and setBgColor. Not clear how they work, if at all.
+}
 
 ---Creates a new `Brush` instance.
 ---@return Brush
@@ -578,26 +580,30 @@ end
 Cel = {}
 
 
----Represents a color.
+---Represents a color. The expected range for alpha (opacity,
+---transparency) is [0, 255]. Expected ranges for red,
+---green and blue are [0, 255]. The expected range for hue
+---is [0.0, 360.0). Expected ranges for saturation, lightness
+---and value are [0.0, 1.0].
 ---@class Color
----@field alpha integer The alpha of color between 0 (transparent) and 255 (opaque).
----@field blue integer The blue color channel, in [0, 255].
----@field gray integer
----@field grayPixel integer The pixel color which is equivalent to the gray+alpha values of this color
----@field green integer The green color channel, in [0, 255].
----@field hslHue number
----@field hslLightness number
----@field hslSaturation number
----@field hsvHue number
----@field hsvSaturation number
----@field hsvValue number
----@field hue number The hue.
----@field index integer The nearest (or exact) match palette index for this color.
----@field lightness number The HSL Lightness.
----@field red integer The red color channel, in [0, 255].
----@field rgbaPixel integer The pixel color which is equivalent to the RGBA values of this color
----@field saturation number The HSV saturation or HSL saturation depending on the kind of color
----@field value number The HSV Value
+---@field alpha integer Gets or sets the transparency.
+---@field blue integer Gets or sets the blue color channel.
+---@field gray integer Gets or sets the color's gray value.
+---@field grayPixel integer Gets the 16-bit gray pixel (0xAAVV).
+---@field green integer Gets or sets the green color channel.
+---@field hslHue number Gets or sets the HSL hue.
+---@field hslLightness number Gets or sets the HSL lightness.
+---@field hslSaturation number Gets or sets the HSL saturation.
+---@field hsvHue number Gets or sets the HSV hue.
+---@field hsvSaturation number Gets or sets the HSV saturation.
+---@field hsvValue number Gets or sets the HSV value.
+---@field hue number Gets or sets the hue.
+---@field index integer Gets or sets the nearest (or exact) match palette index for this color.
+---@field lightness number Gets or sets the HSL lightness.
+---@field red integer Gets or sets the red color channel.
+---@field rgbaPixel integer Gets the 32-bit pixel (0xAABBGGRR).
+---@field saturation number Gets or sets the saturation; context-dependent.
+---@field value number Gets or sets the HSV value.
 Color = {}
 
 ---Creates a new `Color` instance. Performs no bounds checking on arguments.
@@ -620,7 +626,7 @@ end
 
 ---Represents the color space/profile of a sprite, image, or image spec
 ---@class ColorSpace
----@field name string The color space name
+---@field name string Gets or sets the color space name.
 ColorSpace = {}
 
 ---Creates an empty color space, sRGB color space, or loads a color
@@ -634,7 +640,7 @@ end
 ---A class can be used to show input controls/widgets in the screen
 ---to get some data from the user.
 ---@class Dialog
----@field bounds Rectangle The bounds of dialog
+---@field bounds Rectangle Gets or sets the dialog bounds.
 ---@field data {[string]: boolean|string|integer|number|Color|Color[]}
 Dialog = {
     ---Creates a button.
@@ -771,8 +777,7 @@ Dialog = {
 function Dialog()
 end
 
----A collection of listeners for specific events;
----see: `app.events`, `sprite.events`
+---A collection of listeners for specific events.
 ---@class Events
 Events = {
     ---Connects the given `function` with the given event.
@@ -807,10 +812,10 @@ Frame = {}
 ---text and shapes on the canvas.
 ---@class GraphicsContext
 ---@field antialias boolean Gets or sets whether paths and shapes are painted on using antialiasing.
----@field blendMode BlendMode Blend mode used in stroke(), fill(), drawImage(), etc.
+---@field blendMode BlendMode Gets or sets the blend mode used in stroke(), fill(), etc.
 ---@field color Color Gets or sets the color to paint with the path functions.
 ---@field height integer Gets the height of the visible area in pixels. Changes when the dialog is resized.
----@field opacity integer Opacity used in stroke(), fill(), drawImage(), etc.
+---@field opacity integer Gets or sets the opacity used in stroke(), fill(), etc.
 ---@field strokeWidth integer Gets or sets the width of lines painted with strokes.
 ---@field width integer Gets the width of the visible area in pixels. Changes when the dialog is resized.
 ---@NOTE Also contains the field 'theme', which in turn has an instance styleMetrics method.
@@ -975,9 +980,11 @@ GraphicsContext = {
 }
 
 
+---Represents the grid that governs how tiles are placed
+---in a tile map.
 ---@class Grid
----@field origin Point
----@field tileSize Size
+---@field origin Point Gets the grid offset relative to the canvas.
+---@field tileSize Size Gets the tile width and height.
 Grid = {}
 
 ---Creates a new `Grid` instance.
@@ -988,6 +995,9 @@ Grid = {}
 function Grid()
 end
 
+
+---Represents an image that contains an array of pixel data.
+---The organization of data depends on the color mode.
 ---@class Image
 ---@field bounds Rectangle Gets the image bounds with origin equal to (0, 0).
 ---@field bytes string Gets or sets a byte string that contains raw image data.
@@ -1149,17 +1159,17 @@ end
 
 ---Specifications of sprites or images.
 ---@class ImageSpec
----@field colorMode ColorMode
----@field colorSpace ColorSpace
----@field height integer
----@field width integer
----@field transparentColor integer The index that refers a transparent color in a palette when the image or sprite uses indexed color mode.
+---@field colorMode ColorMode Gets or sets the spec color mode.
+---@field colorSpace ColorSpace Gets or sets the spec color space.
+---@field height integer Gets or sets the spec height.
+---@field width integer Gets or sets the spec width.
+---@field transparentColor integer Gets or sets the index for a transparent color in a palette.
 ImageSpec = {}
 
 ---Creates a new `ImageSpec` instance.
 ---@return ImageSpec
 ---@overload fun(otherImageSpec: ImageSpec): ImageSpec
----@overload fun(options: {width: integer, height: integer, colorMode: ColorMode|number, transparentColor: number})
+---@overload fun(options: {width: integer, height: integer, colorMode: ColorMode|integer, transparentColor: number})
 function ImageSpec()
 end
 
@@ -1186,12 +1196,12 @@ KeyEvent = {
 ---Represents a layer in the timeline. Can be one of many subtypes:
 ---background, group, reference or tilemap.
 ---@class Layer
----@field blendMode BlendMode|nil Gets or sets the layer blend mode. `nil` if the `layer` is a group.
+---@field blendMode BlendMode|nil Gets or sets the layer blend mode. `nil` if the layer is a group.
 ---@field cels Cel[] Gets the cels table in the layer.
 ---@field color Color Gets or sets the layer's color in the timeline.
 ---@field data string Gets or sets the layer's custom user data.
 ---@field id integer Gets the layer's id.
----@field isBackground boolean Whether or not a layer is a background.
+---@field isBackground boolean Whether the layer is a background.
 ---@field isCollapsed boolean Gets or sets a layer's collapsed state in the timeline.
 ---@field isContinuous boolean Gets or sets a layer's continuous state in the timeline.
 ---@field isEditable boolean Gets or sets a layer's editability in the timeline.
@@ -1412,7 +1422,7 @@ end
 ---on the sprite canvas.
 ---@class Selection
 ---@field bounds Rectangle Gets a rectangle of the selection bounds.
----@field isEmpty boolean Returns true if the selection is empty.
+---@field isEmpty boolean Whether the selection is empty.
 ---@field origin Point Gets or sets the selection origin.
 Selection = {
     ---Adds a new `rectangle` (or `otherSelection`) to the selection.
@@ -1485,8 +1495,8 @@ Site = {}
 ---i.e., width and height. Dimensions may be negative or
 ---zero; they are not validated by the constructor.
 ---@class Size
----@field height integer
----@field width integer
+---@field height integer Gets or sets the height.
+---@field width integer Gets or sets the width.
 ---@operator add(Size): Size
 ---@operator div(integer): Size
 ---@operator idiv(integer): Size
@@ -1530,27 +1540,27 @@ Slice = {}
 
 
 ---@class Sprite
----@field backgroundLayer Layer|nil The background layer, if any.
----@field bounds Rectangle The bounds of the sprite as a `Rectangle` in the position `0, 0`.
----@field cels Cel[] The cels contained by the sprite.
----@field colorMode ColorMode The sprite's color mode.
----@field colorSpace ColorSpace The color space of the sprite.
----@field events Events events to associate functions that can act like listeners of specific Sprite events.
----@field filename string The name of the file from where this sprite was loaded or saved or an empty string.
----@field frames Frame[] The frames contained by the sprite.
----@field gridBounds Rectangle The sprite grid offset and size as a `Rectangle`.
----@field height integer The vertical sprite dimension.
----@field isModified boolean Returns true if the sprite is modified compared to the latest saved state on disk.
----@field layers Layer[] The layers contained by the sprite.
----@field palettes Palette[] The palettes contained by the sprite.
----@field pixelRatio Size The pixel ratio.
----@field selection Selection The active selection.
----@field slices Slice[] The slices contained by the sprite.
----@field spec ImageSpec The sprite's image specification.
----@field tags Tag[] The tags contained by the sprite.
----@field tilesets Tileset[] The tilesets contained by the sprite.
----@field transparentColor integer An integer that specifies which index is transparent for indexed sprites.
----@field width integer The horizontal sprite dimension.
+---@field backgroundLayer Layer|nil Gets the background layer, if any.
+---@field bounds Rectangle Gets the sprite bounds.
+---@field cels Cel[] Gets the cels contained by the sprite.
+---@field colorMode ColorMode Gets the sprite's color mode.
+---@field colorSpace ColorSpace Gets or sets the sprite color space.
+---@field events Events Events to associate functions that can act as listeners.
+---@field filename string Gets or sets the sprite file name.
+---@field frames Frame[] Gets the frames contained by the sprite.
+---@field gridBounds Rectangle Gets or sets grid offset and size.
+---@field height integer Gets or sets the height.
+---@field isModified boolean Returns true if the sprite is modified compared to the latest saved state.
+---@field layers Layer[] Gets the layers contained by the sprite.
+---@field palettes Palette[] Gets the palettes contained by the sprite.
+---@field pixelRatio Size Gets or sets the sprite pixel ratio.
+---@field selection Selection Gets or sets the active selection.
+---@field slices Slice[] Gets the slices contained by the sprite.
+---@field spec ImageSpec Gets the sprite's image specification.
+---@field tags Tag[] Gets the tags contained by the sprite.
+---@field tilesets Tileset[] Gets the tilesets contained by the sprite.
+---@field transparentColor integer Gets or sets the transparent color.
+---@field width integer Gets or sets the width.
 Sprite = {
     ---Assigns a new color space to the sprite without modifying
     ---the sprite pixels.
@@ -1767,25 +1777,25 @@ Sprite = {
 function Sprite(width, height, colorMode)
 end
 
----Represents a tag in the timeline.
+---A tag in the timeline to label and organize frames.
 ---@class Tag
----@field aniDir AniDir The Animation Direction property of the tag.
----@field color Color The user-defined color of this tag in the timeline.
----@field frames integer The number of frames that this tag contains.
----@field fromFrame Frame|nil The `Frame` where the tag starts.
+---@field aniDir AniDir Gets or sets the tag animation direction.
+---@field color Color Gets or sets the tag's color in the timeline.
+---@field frames integer Gets the number of frames contained by the tag.
+---@field fromFrame Frame|nil Gets or sets the `Frame` where the tag starts.
 ---@field name string Gets or sets the tag name.
----@field repeats integer Gets or sets the number of times the tag is repeated.
----@field sprite Sprite The sprite to which this tag belongs.
----@field toFrame Frame|nil The `Frame` where the tag ends.
+---@field repeats integer Gets or sets the number of repeats. Zero is infinity.
+---@field sprite Sprite Gets the sprite to which the tag belongs.
+---@field toFrame Frame|nil Gets or sets the `Frame` where the tag ends.
 Tag = {}
 
 
 ---A tile from a `Tileset`.
 ---@class Tile
----@field color Color Gets or sets the user-defined color of this tile.
----@field data string Gets or sets the user-defined data string of this tile.
----@field image Image Gets or sets the image of this tile.
----@field index integer Gets the index of the tile in its tileset.
+---@field color Color Gets or sets the user-defined color.
+---@field data string Gets or sets the user-defined data string.
+---@field image Image Gets or sets the tile image.
+---@field index integer Gets the tile's index in its tileset.
 Tile = {}
 
 
@@ -1816,8 +1826,8 @@ Tileset = {
 
 ---The Timer class can be used to execute a function periodically.
 ---@class Timer
----@field interval number Returns the interval of the timer in seconds.
----@field isRunning boolean Returns true if the timer is running.
+---@field interval number Gets or sets the timer interval in seconds.
+---@field isRunning boolean Whether the timer is running.
 Timer = {
     ---Starts the timer.
     ---@param timer Timer
