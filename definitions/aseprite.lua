@@ -32,7 +32,7 @@ app = {
     activeTag = undefined --[[@as Tag|nil]],
 
     ---The active tool.
-    activeTool = undefined --[[@as Tool]],
+    activeTool = undefined --[[@as Tool|string]],
 
     ---The API version.
     apiVersion = undefined --[[@as number]],
@@ -163,6 +163,10 @@ app = {
         end,
 
         Refresh = function()
+        end,
+
+        ---@param options {size: integer}
+        SetPaletteEntrySize = function(options)
         end,
 
         SwitchColors = function()
@@ -359,7 +363,7 @@ app = {
 
     preferences = {
         ---Returns the preferences of the given `Tool`.
-        ---@param tool Tool
+        ---@param tool Tool|string
         ---@return any
         tool = function(tool)
         end,
