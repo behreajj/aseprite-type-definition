@@ -20,7 +20,7 @@ app = {
     ---when the active layer is a group.
     cel = undefined --[[@as Cel|nil]],
 
-    ---The editor, if any.
+    ---The editor. `nil` when no sprite is active.
     editor = undefined --[[@as Editor|nil]],
 
     ---The `Events` object to associate functions that can act like
@@ -77,7 +77,7 @@ app = {
     ---Displays an alert message.
     ---If `buttons` are not specified, it will show a message box with the OK button only.
     ---@param text string
-    ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]})
+    ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]}): integer
     ---@return integer buttonIndex The selected button, e.g., 1 if the first button was clicked.
     alert = function(text)
     end,
@@ -102,8 +102,8 @@ app = {
 
     ---Creates a new transaction so as to group several sprite modifications
     ---in just one undo/redo operation.
-    ---@param func fun(...): any a function called inside the transaction
-    ---@overload fun(name: string, func: fun(...): any)
+    ---@param func function a function called inside the transaction
+    ---@overload fun(name: string, func: function)
     transaction = function(func)
     end,
 
@@ -113,7 +113,7 @@ app = {
 
     ---Simulates a user stroke in the canvas using the given tool.
     ---See https://www.aseprite.org/api/app#app-usetool .
-    ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection?: SelectionMode}
+    ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection: SelectionMode}
     usetool = function(options)
     end,
 
@@ -123,18 +123,18 @@ app = {
         BackgroundFromLayer = function()
         end,
 
-        ---@param options {format?: "rgb"|"gray"|"grayscale"|"indexed", dithering?: "ordered"|"old"|"error-diffusion", rgbmap?: "octree"|"rgb5a3"|"default", toGray?: "luma"|"hsv"|"hsl"}
+        ---@param options {format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
         ---@NOTE How to handle dither-matrix param containing a hyphen?
         ChangePixelFormat = function(options)
         end,
 
-        ---@param options {ui?: boolean, channels?: integer, curve?: Point[]|integer[][] }
+        ---@param options {ui: boolean, channels: integer, curve: Point[]|integer[][] }
         ColorCurve = function(options)
         end,
 
         ---Extracts a palette from the sprite canvas.
         ---For the algorithm, 0 is default, 1 is RGB table, 2 is octree.
-        ---@param options {ui?: boolean, withAlpha?: boolean, maxColors?: integer, useRange?: boolean, algorithm?:0|1|2}
+        ---@param options {ui: boolean, withAlpha: boolean, maxColors: integer, useRange: boolean, algorithm:0|1|2}
         ColorQuantization = function(options)
         end,
 
@@ -157,11 +157,11 @@ app = {
         end,
 
         ---To load the default palette, assign "default" to the "preset" option.
-        ---@param options {preset?: string|"default", filename?: string}
+        ---@param options {preset: string|"default", filename: string}
         LoadPalette = function(options)
         end,
 
-        ---@param options {brush?: "circle"|"square", modifier?: "border"|"contract"|"expand", quantity?: integer}
+        ---@param options {brush: "circle"|"square", modifier: "border"|"contract"|"expand", quantity: integer}
         ModifySelection = function(options)
         end,
 
@@ -175,7 +175,7 @@ app = {
         SwitchColors = function()
         end,
 
-        ---@param options {close?: boolean, open?: boolean, switch?: boolean}
+        ---@param options {close: boolean, open: boolean, switch: boolean}
         Timeline = function(options)
         end,
     },
@@ -493,6 +493,13 @@ FilterChannels = {
 }
 
 
+---@enum FlipType
+FlipType = {
+    HORIZONTAL = 0,
+    VERTICAL = 1
+}
+
+
 ---@enum Ink
 Ink = {
     SIMPLE = 0,
@@ -650,21 +657,18 @@ Cel = {}
 Color = {}
 
 ---Creates a new `Color` instance. Performs no bounds checking on arguments.
----@param red integer
----@param green integer
----@param blue integer
----@param alpha integer?
 ---@return Color
+---@overload fun(red: integer, green: integer, blue: integer, alpha?: integer): Color
+---@overload fun(index: integer): Color
 ---@overload fun(options: {r: integer, g: integer, b: integer, a: integer}): Color
 ---@overload fun(options: {h: number, s: number, v: number, a: integer}): Color
 ---@overload fun(options: {h: number, s: number, l: number, a: integer}): Color
 ---@overload fun(options: {red: integer, green: integer, blue: integer, alpha: integer}): Color
 ---@overload fun(options: {hue: number, saturation: number, value: number, alpha: integer}): Color
 ---@overload fun(options: {hue: number, saturation: number, lightness: number, alpha: integer}): Color
----@overload fun(options: {gray: integer, a: integer}): Color
+---@overload fun(options: {gray: integer, alpha: integer}): Color
 ---@overload fun(options: {index: integer}): Color
----@overload fun(index: integer): Color
-function Color(red, green, blue, alpha)
+function Color()
 end
 
 ---Represents the color space/profile of a sprite, image, or image spec
@@ -688,21 +692,21 @@ end
 Dialog = {
     ---Creates a button.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, text: string, selected?: boolean, focus?: boolean, onclick?: fun()}
+    ---@param options {id: string, label: string, text: string, selected: boolean, focus: boolean, onclick: function}
     ---@return Dialog
     button = function(dialog, options)
     end,
 
     ---Creates a canvas.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, width?: integer, height?: integer, visible?: boolean, autoScaling?: boolean, onpaint?: fun(event: {context: GraphicsContext}), onkeydown?: fun(event: KeyEvent), onkeyup?: fun(event: KeyEvent), onmousemove?: fun(event: MouseEvent), onmousedown?: fun(event: MouseEvent), onmouseup?: fun(event: MouseEvent), ondblclick?: fun(event: MouseEvent), onwheel?: fun(event: MouseEvent), ontouchmagnify?: fun(event: TouchEvent)}
+    ---@param options {id: string, label: string, width: integer, height: integer, visible: boolean, autoScaling: boolean, onpaint: fun(event: {context: GraphicsContext}), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousemove: fun(event: MouseEvent), onmousedown: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), ondblclick: fun(event: MouseEvent), onwheel: fun(event: MouseEvent), ontouchmagnify: fun(event: TouchEvent)}
     ---@return Dialog
     canvas = function(dialog, options)
     end,
 
     ---Creates a check box.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, text?: string, selected?: boolean, onclick?: function}
+    ---@param options {id: string, label: string, text: string, selected: boolean, onclick: function}
     ---@return Dialog
     check = function(dialog, options)
     end,
@@ -714,63 +718,65 @@ Dialog = {
 
     ---Creates a color picker.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, color?: Color, onchange?: function}
+    ---@param options {id: string, label: string, color: Color, onchange: function}
     ---@return Dialog
     color = function(dialog, options)
     end,
 
     ---Creates a combo box, or drop down list.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, option?: string, options?: string[], onchange?: fun()}
+    ---@param options {id: string, label: string, option: string, options: string[], onchange: function}
     ---@return Dialog
     combobox = function(dialog, options)
     end,
 
     ---Creates a text entry field.
     ---@param dialog Dialog
-    ---@param options {id?: string, label: string, text: string, focus: boolean, onchange: function}
+    ---@param options {id: string, label: string, text: string, focus: boolean, onchange: function}
     ---@return Dialog
     entry = function(dialog, options)
     end,
 
     ---Creates a button to select one file to open or save.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, title?: string, open?: boolean, save?: boolean, filename: string|string[], filetypes?: string[], onchange?:fun()}
+    ---@param options {id: string, label: string, title: string, open: boolean, save: boolean, filename: string|string[], filetypes: string[], onchange:function}
     ---@return Dialog
     file = function(dialog, options)
     end,
 
     ---Creates a static label.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, text?: string}
+    ---@param options {id: string, label: string, text: string}
     ---@return Dialog
     label = function(dialog, options)
     end,
 
     ---Changes properties of the given widget given by identifier.
     ---@param dialog Dialog
-    ---@param options {id: string, visible?: boolean, enabled?: boolean}|{[string]: any}
+    ---@param options {id: string, visible: boolean, enabled: boolean}|{[string]: any}
     modify = function(dialog, options)
     end,
 
     ---Creates a new row.
     ---@param dialog Dialog
-    ---@param options {always?: boolean}
+    ---@param options {always: boolean}
     ---@return Dialog
     ---@overload fun(): Dialog
     newrow = function(dialog, options)
     end,
 
     ---Creates an entry field to input a number.
+    ---When assigning the text option, the number should
+    ---be formatted to a string.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, text?: string, decimals?: integer, onchange?: fun()}
+    ---@param options {id: string, label: string, text: string, decimals: integer, onchange: function}
     ---@return Dialog
     number = function(dialog, options)
     end,
 
     ---Creates a radio button.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, text?: string, selected?: boolean, onchange?: fun()}
+    ---@param options {id: string, label: string, text: string, selected: boolean, onchange: function}
     ---@return Dialog
     radio = function(dialog, options)
     end,
@@ -782,7 +788,7 @@ Dialog = {
 
     ---Creates a separator.
     ---@param dialog Dialog
-    ---@param options {id?: string, text?: string}
+    ---@param options {id: string, text: string}
     ---@return Dialog
     separator = function(dialog, options)
     end,
@@ -792,7 +798,7 @@ Dialog = {
     ---They can be sorted and accessed as an array when
     ---the mode is "sort". The default mode is "pick".
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, colors?: Color[], mode?: "pick"|"sort", onclick?: fun(event: {color: Color, button: MouseButton})}
+    ---@param options {id: string, label: string, colors: Color[], mode: "pick"|"sort", onclick: fun(event: {color: Color, button: MouseButton})}
     ---@return Dialog
     shades = function(dialog, options)
     end,
@@ -800,14 +806,14 @@ Dialog = {
     ---Makes the dialog visible to the user.
     ---When wait is true, blocks other user interactions.
     ---@param dialog Dialog
-    ---@param options {wait?: boolean, bounds?: Rectangle}
+    ---@param options {wait: boolean, bounds: Rectangle}
     ---@overload fun(dialog: Dialog)
     show = function(dialog, options)
     end,
 
     ---Creates a slider.
     ---@param dialog Dialog
-    ---@param options {id?: string, label?: string, min?: integer, max?: integer, value?: integer, onchange?: function, onrelease?: function}
+    ---@param options {id: string, label: string, min: integer, max: integer, value: integer, onchange: function, onrelease: function}
     ---@return Dialog
     slider = function(dialog, options)
     end,
@@ -816,7 +822,7 @@ Dialog = {
 ---Creates a new `Dialog` instance.
 ---@return Dialog
 ---@overload fun(title: string): Dialog
----@overload fun(options: {title: string, onclose: fun()}): Dialog
+---@overload fun(options: {title: string, onclose: function}): Dialog
 function Dialog()
 end
 
@@ -827,7 +833,7 @@ end
 ---@field spritePos Point Gets a point of the the mouse position on the sprite.
 Editor = {
     ---Asks the user to select a pixel/point on the sprite.
-    ---@param options {title?: string, point?: Point, onclick?: function, onchange?: function, oncancel?: function}
+    ---@param options {title: string, point: Point, onclick: function, onchange: function, oncancel: function}
     askPoint = function(options)
     end,
 
@@ -844,7 +850,7 @@ Events = {
     ---Connects the given `function` with the given event.
     ---Returns the listenerCode.
     ---@param eventName string the event name/code/identifier
-    ---@param func fun()
+    ---@param func function
     ---@return integer
     on = function(eventName, func)
     end,
@@ -853,7 +859,7 @@ Events = {
     --or stops/breaks only the specific connection
     --identified by listenerCode
     ---@param listenerCode integer
-    ---@overload fun(func: fun())
+    ---@overload fun(func: function)
     off = function(listenerCode)
     end,
 }
@@ -1111,6 +1117,12 @@ Image = {
     drawSprite = function(destinationImage, sourceSprite, frame, position)
     end,
 
+    ---Flips an image in-place on either the horizontal or vertical axis.
+    ---@param image Image
+    ---@param flipType FlipType
+    flip = function(image, flipType)
+    end,
+
     ---Returns a integer pixel value for the given coordinate related to the Image itself.
     ---When the coordinates are out-of-bounds, Returns `0xffffffff`,
     ---which is white for RGB images.
@@ -1150,11 +1162,12 @@ Image = {
     end,
 
     ---Resizes the image; The pivot is Point(0, 0) by default.
+    ---If no method is specified, defaults to nearest-neighbor.
     ---@param image Image
     ---@param width integer
     ---@param height integer
-    ---@overload fun(image: Image, options: {width: integer, height: integer, method?: "bilinear"|"rotsprite", pivot?: Point})
-    ---@overload fun(image: Image, options: {size: Size, method?: "bilinear"|"rotsprite", pivot?: Point})
+    ---@overload fun(image: Image, options: {width: integer, height: integer, method: "bilinear"|"rotsprite", pivot: Point})
+    ---@overload fun(image: Image, options: {size: Size, method: "bilinear"|"rotsprite", pivot: Point})
     resize = function(image, width, height)
     end,
 
@@ -1230,7 +1243,7 @@ ImageSpec = {}
 ---Creates a new `ImageSpec` instance.
 ---@return ImageSpec
 ---@overload fun(otherImageSpec: ImageSpec): ImageSpec
----@overload fun(options: {width: integer, height: integer, colorMode: ColorMode|integer, transparentColor: number})
+---@overload fun(options: {width: integer, height: integer, colorMode: ColorMode, transparentColor: number})
 function ImageSpec()
 end
 
@@ -1352,7 +1365,7 @@ Palette = {
 function Palette()
 end
 
----Structures an Aseprite plug-in.
+---Structures an Aseprite plug-in, or extension.
 ---@class Plugin
 ---@field name string Gets the extension name.
 ---@field path string Gets the path where the extension is installed.
@@ -1373,20 +1386,20 @@ Plugin = {
     ---Creates a new command that can be associated to keyboard shortcuts
     ---and is added in the app menu in a group.
     ---@param plugin Plugin
-    ---@param options {id?: string, title?: string, group?: string, onclick?: function, onenabled?: function}
+    ---@param options {id: string, title: string, group: string, onclick: function, onenabled: function}
     newCommand = function(plugin, options)
     end,
 
     ---Creates a new menu item which will contain a submenu grouping several
     ---plugin commands.
     ---@param plugin Plugin
-    ---@param options {id?: string, title?: string, group?: string}
+    ---@param options {id: string, title: string, group: string}
     newMenuGroup = function(plugin, options)
     end,
 
     ---Creates a menu separator in the given menu group.
     ---@param plugin Plugin
-    ---@param options {group?: string}
+    ---@param options {group: string}
     newMenuSeparator = function(plugin, options)
     end
 }
@@ -1407,13 +1420,12 @@ Plugin = {
 Point = {}
 
 ---Creates a new `Point` instance.
----@param x? integer Defaults to zero.
----@param y? integer Defaults to zero.
 ---@return Point
 ---@overload fun(otherPoint: Point): Point
+---@overload fun(x: integer, y: integer): Point
 ---@overload fun(options: {x: integer, y: integer}): Point
 ---@overload fun(numbers: {[1]: integer, [2]: integer}): Point
-function Point(x, y)
+function Point()
 end
 
 ---A range of selected objects. It may contain layers, frames, cels,
@@ -1623,13 +1635,12 @@ Size {
 ---Creates a new `Size` instance with the given dimensions.
 ---
 ---Width and height default to zero.
----@param width integer? horizontal dimension
----@param height integer? vertical dimension
 ---@return Size
 ---@overload fun(otherSize: Size): Size
+---@overload fun(width: integer, height: integer): Size
 ---@overload fun(options: {width: integer, height: integer}): Size
----@overload fun(options: integer[]): Size
-function Size(width, height)
+---@overload fun(numbers: {[1]: integer, [2]: integer}): Size
+function Size()
 end
 
 ---An object that allows for nine-slice scaling.
@@ -1876,9 +1887,9 @@ Sprite = {
 ---@param colorMode? ColorMode
 ---@return Sprite
 ---@overload fun(spec: ImageSpec): Sprite
----@overload fun (otherSprite: Sprite): Sprite
----@overload fun(options: { fromFile: string }): Sprite
----@overload fun(options: { fromFile: string, oneFrame: boolean }): Sprite
+---@overload fun(otherSprite: Sprite): Sprite
+---@overload fun(options: {fromFile: string}): Sprite
+---@overload fun(options: {fromFile: string, oneFrame: boolean}): Sprite
 function Sprite(width, height, colorMode)
 end
 
@@ -1975,7 +1986,7 @@ TouchEvent = {}
 Uuid = {}
 
 ---@overload fun(otherUuid: Uuid): Uuid
----@overload fun(str: string) : Uuid
+---@overload fun(str: string): Uuid
 function Uuid()
 end
 
