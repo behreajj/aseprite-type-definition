@@ -7,38 +7,21 @@ local undefined
 
 ---The `app` global namespace.
 app = {
-    ---The active brush.
-    activeBrush = undefined --[[@as Brush]],
-
-    ---The active cel. `nil` when no sprite is active or
-    ---when the active layer is a group.
-    activeCel = undefined --[[@as Cel|nil]],
-
-    ---The active frame. `nil` when no sprite is active.
-    ---Can be assigned an integer frame number.
-    activeFrame = undefined --[[@as Frame|nil]],
-
-    ---The active image. `nil` when no sprite is active or
-    ---when the active layer is a group.
-    activeImage = undefined --[[@as Image|nil]],
-
-    ---The active layer. `nil` when no sprite is active.
-    activeLayer = undefined --[[@as Layer|nil]],
-
-    ---The active sprite.
-    activeSprite = undefined --[[@as Sprite|nil]],
-
-    ---The active tag. `nil` when no sprite is active.
-    activeTag = undefined --[[@as Tag|nil]],
-
-    ---The active tool.
-    activeTool = undefined --[[@as Tool|string]],
-
     ---The API version.
     apiVersion = undefined --[[@as number]],
 
     ---The background color.
     bgColor = undefined --[[@as Color]],
+
+    ---The active brush.
+    brush = undefined --[[@as Brush]],
+
+    ---The active cel. `nil` when no sprite is active or
+    ---when the active layer is a group.
+    cel = undefined --[[@as Cel|nil]],
+
+    ---The editor, if any.
+    editor = undefined --[[@as Editor|nil]],
 
     ---The `Events` object to associate functions that can act like
     ---listeners of specific app events.
@@ -47,8 +30,19 @@ app = {
     ---The foreground color.
     fgColor = undefined --[[@as Color]],
 
+    ---The active frame. `nil` when no sprite is active.
+    ---Can be assigned an integer frame number.
+    frame = undefined --[[@as Frame|nil]],
+
+    ---The active image. `nil` when no sprite is active or
+    ---when the active layer is a group.
+    image = undefined --[[@as Image|nil]],
+
     ---Whether the UI is available.
     isUIAvailable = undefined --[[@as boolean]],
+
+    ---The active layer. `nil` when no sprite is active.
+    layer = undefined --[[@as Layer|nil]],
 
     ---A table with parameters specified as `--script-param key=value` in the
     ---CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file.
@@ -61,8 +55,17 @@ app = {
     ---The active site.
     site = undefined --[[@as Site]],
 
+    ---The active sprite.
+    sprite = undefined --[[@as Sprite|nil]],
+
     ---Opened sprites in the application.
     sprites = undefined --[=[@as Sprite[]]=],
+
+    ---The active tag. `nil` when no sprite is active.
+    tag = undefined --[[@as Tag|nil]],
+
+    ---The active tool.
+    tool = undefined --[[@as Tool|string]],
 
     ---Returns the UI Elements scaling specified in Edit > Preferences,
     ---e.g., 1 for 100%, 2 for 200%.
@@ -374,6 +377,41 @@ app = {
         document = function(sprite)
         end
     },
+
+    ---The active brush.
+    ---@deprecated
+    activeBrush = undefined --[[@as Brush]],
+
+    ---The active cel. `nil` when no sprite is active or
+    ---when the active layer is a group.
+    ---@deprecated
+    activeCel = undefined --[[@as Cel|nil]],
+
+    ---The active frame. `nil` when no sprite is active.
+    ---Can be assigned an integer frame number.
+    ---@deprecated
+    activeFrame = undefined --[[@as Frame|nil]],
+
+    ---The active image. `nil` when no sprite is active or
+    ---when the active layer is a group.
+    ---@deprecated
+    activeImage = undefined --[[@as Image|nil]],
+
+    ---The active layer. `nil` when no sprite is active.
+    ---@deprecated
+    activeLayer = undefined --[[@as Layer|nil]],
+
+    ---The active sprite.
+    ---@deprecated
+    activeSprite = undefined --[[@as Sprite|nil]],
+
+    ---The active tag. `nil` when no sprite is active.
+    ---@deprecated
+    activeTag = undefined --[[@as Tag|nil]],
+
+    ---The active tool.
+    ---@deprecated
+    activeTool = undefined --[[@as Tool|string]],
 }
 
 
@@ -580,6 +618,7 @@ end
 ---@field opacity integer Gets or sets the cel opacity.
 ---@field position Point Gets or sets the cel position.
 ---@field sprite Sprite Gets the sprite to which the cel belongs.
+---@field zIndex integer Gets or sets the cel's z offset in [-32768, 32767].
 ---@NOTE also includes frameNumber property, but unclear what happens if frame is nil
 Cel = {}
 
@@ -780,6 +819,24 @@ Dialog = {
 ---@overload fun(options: {title: string, onclose: fun()}): Dialog
 function Dialog()
 end
+
+---Represents a sprite editor.
+---@class Editor
+---@field mousePos Point Gets the mouse's screen position.
+---@field sprite Sprite Gets the active sprite.
+---@field spritePos Point Gets a point of the the mouse position on the sprite.
+Editor = {
+    ---Asks the user to select a pixel/point on the sprite.
+    ---@param options {title?: string, point?: Point, onclick?: function, onchange?: function, oncancel?: function}
+    askPoint = function(options)
+    end,
+
+    ---Cancels the askPoint action.
+    ---@param editor Editor
+    cancel = function(editor)
+    end
+}
+
 
 ---A collection of listeners for specific events.
 ---@class Events
@@ -999,7 +1056,6 @@ Grid = {}
 function Grid()
 end
 
-
 ---Represents an image that contains an array of pixel data.
 ---The organization of data depends on the color mode.
 ---@class Image
@@ -1018,6 +1074,7 @@ Image = {
     ---(or `image.spec.transparentColor` if no color is specified).
     ---@param image Image
     ---@param color? Color|integer
+    ---@overload fun(image: Image, bounds: Rectangle, color?: Color|integer)
     clear = function(image, color)
     end,
 
@@ -1295,6 +1352,46 @@ Palette = {
 function Palette()
 end
 
+---Structures an Aseprite plug-in.
+---@class Plugin
+---@field name string Gets the extension name.
+---@field path string Gets the path where the extension is installed.
+---@field preferences table Gets or sets user preferences.
+Plugin = {
+    ---Removes a command.
+    ---@param plugin Plugin
+    ---@param id string
+    deleteCommand = function(plugin, id)
+    end,
+
+    ---Removes a menu group.
+    ---@param plugin Plugin
+    ---@param id string
+    deleteMenuGroup = function(plugin, id)
+    end,
+
+    ---Creates a new command that can be associated to keyboard shortcuts
+    ---and is added in the app menu in a group.
+    ---@param plugin Plugin
+    ---@param options {id?: string, title?: string, group?: string, onclick?: function, onenabled?: function}
+    newCommand = function(plugin, options)
+    end,
+
+    ---Creates a new menu item which will contain a submenu grouping several
+    ---plugin commands.
+    ---@param plugin Plugin
+    ---@param options {id?: string, title?: string, group?: string}
+    newMenuGroup = function(plugin, options)
+    end,
+
+    ---Creates a menu separator in the given menu group.
+    ---@param plugin Plugin
+    ---@param options {group?: string}
+    newMenuSeparator = function(plugin, options)
+    end
+}
+
+
 ---A 2D integer coordinate pair.
 ---@class Point
 ---@field x integer Gets or sets integer on the horizontal axis.
@@ -1365,9 +1462,11 @@ Range = {
 
 ---Creates a new `Rectangle` instance.
 ---@class Rectangle
+---@field h integer Gets or sets the vertical dimension.
 ---@field height integer Gets or sets the vertical dimension.
 ---@field origin Point Gets or sets the top-left corner.
 ---@field size Size Gets or sets the width and height.
+---@field w integer Gets or sets the horizontal dimension.
 ---@field width integer Gets or sets the horizontal dimension.
 ---@field x integer Gets or sets the top-left corner x.
 ---@field y integer Gets or sets the top-left corner y.
@@ -1499,7 +1598,9 @@ Site = {}
 ---i.e., width and height. Dimensions may be negative or
 ---zero; they are not validated by the constructor.
 ---@class Size
+---@field h integer Gets or sets the height.
 ---@field height integer Gets or sets the height.
+---@field w integer Gets or sets the width.
 ---@field width integer Gets or sets the width.
 ---@operator add(Size): Size
 ---@operator div(integer): Size
@@ -1867,6 +1968,17 @@ Tool = {}
 TouchEvent = {}
 
 
+---Represents a Universally unique identifier.
+---May be indexed, converted to a string or checked
+---for equality.
+---@class Uuid
+Uuid = {}
+
+---@overload fun(otherUuid: Uuid): Uuid
+---@overload fun(str: string) : Uuid
+function Uuid()
+end
+
 ---Represents a version number and provides an easy way to
 ---compare if the `app.version` is greater or equal than an
 ---expected version. See https://semver.org/ .
@@ -1883,7 +1995,6 @@ Version = {}
 ---@return Version
 function Version(version)
 end
-
 
 ---@class WebSocket
 ---@field url string Address of the server. Read-only. The url is specified when creating the websocket.
