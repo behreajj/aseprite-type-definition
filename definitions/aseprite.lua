@@ -65,6 +65,7 @@ app = {
     tag = undefined --[[@as Tag|nil]],
 
     ---The active tool.
+    ---@NOTE Unlike frame, this accepts a string bc there's no clear alternative.
     tool = undefined --[[@as Tool|string]],
 
     ---Returns the UI Elements scaling specified in Edit > Preferences,
@@ -168,6 +169,7 @@ app = {
         Refresh = function()
         end,
 
+        ---Sets the palette swatch display size in the color bar.
         ---@param options {size: integer}
         SetPaletteEntrySize = function(options)
         end,
@@ -615,6 +617,8 @@ end
 
 ---A cel contains an image at the intersection of a layer and a frame.
 ---Its position offsets the image from the sprite's top-left corner.
+---See https://github.com/aseprite/aseprite/blob/main/docs/ase-file-specs.md#note5
+---for how to process a cel's zIndex.
 ---@class Cel
 ---@field bounds Rectangle Gets the cel bounds.
 ---@field color Color Gets or sets the cel color in the timeline.
@@ -1118,8 +1122,9 @@ Image = {
     end,
 
     ---Flips an image in-place on either the horizontal or vertical axis.
+    ---Defaults to horizontal.
     ---@param image Image
-    ---@param flipType FlipType
+    ---@param flipType? FlipType
     flip = function(image, flipType)
     end,
 
@@ -1157,7 +1162,8 @@ Image = {
     ---Returns a pixel iterator for the whole image or the given rectangle.
     ---@param image Image
     ---@param rectangle? Rectangle
-    ---@return fun(): integer|fun(integer)|{x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates.
+    ---@return fun(integer)|fun(): integer|{x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates.
+    ---@NOTE To parse correctly, fun(): integer cannot be at the start of the union above.
     pixels = function(image, rectangle)
     end,
 
