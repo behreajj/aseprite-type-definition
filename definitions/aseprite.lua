@@ -132,6 +132,7 @@ app = {
         BackgroundFromLayer = function()
         end,
 
+        ---When trimOutside is true, trims cels of excess alpha and trims cels to sprite bounds.
         ---@param options {bottom: integer, bounds: Rectangle, left: integer, right: integer, top: integer, trimOutside: boolean, ui: boolean}
         CanvasSize = function(options)
         end,
@@ -166,11 +167,6 @@ app = {
         end,
 
         LinkCels = function()
-        end,
-
-        ---To load the default palette, assign "default" to the "preset" option.
-        ---@param options {preset: string|"default", filename: string}
-        LoadPalette = function(options)
         end,
 
         ---@param options {brush: "circle"|"square", modifier: "border"|"contract"|"expand", quantity: integer}
@@ -1838,12 +1834,13 @@ Sprite = {
     newSlice = function(sprite, rectangle)
     end,
 
-    ---Creates a new tag in the given frame range and with the given name.
+    ---Creates a new tag that contains the frames between `fromFrame`
+    ---and `toFrame`, lower and upper bound inclusive.
     ---@param sprite Sprite
-    ---@param fromFrameNumber integer
-    ---@param toFrameNumber integer
+    ---@param fromFrame Frame|integer
+    ---@param toFrame Frame|integer
     ---@return Tag
-    newTag = function(sprite, fromFrameNumber, toFrameNumber)
+    newTag = function(sprite, fromFrame, toFrame)
     end,
 
     ---Inserts an empty tile into the given tileset at a tileIndex.
