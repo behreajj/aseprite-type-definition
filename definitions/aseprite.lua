@@ -6,73 +6,81 @@ local undefined
 
 
 ---The `app` global namespace.
+---@NOTE app.theme still needs to be defined.
 app = {
-    ---The API version.
+    ---Gets the API version.
     apiVersion = undefined --[[@as number]],
 
-    ---The background color.
+    ---Gets or sets the background color.
     bgColor = undefined --[[@as Color]],
 
-    ---The active brush.
+    ---Gets or sets the active brush.
     brush = undefined --[[@as Brush]],
 
-    ---The active cel. `nil` when no sprite is active or
-    ---when the active layer is a group.
+    ---Gets or sets the active cel.
+    ---`nil` when no sprite is active or when the active layer is a group.
     cel = undefined --[[@as Cel|nil]],
 
-    ---The editor. `nil` when no sprite is active.
+    ---Gets or sets the default palette.
+    defaultPalette = undefined --[[@as Palette|nil]],
+
+    ---Gets the active editor.
+    ---`nil` when no sprite is active.
     editor = undefined --[[@as Editor|nil]],
 
-    ---The `Events` object to associate functions that can act like
-    ---listeners of specific app events.
+    ---Gets the `Events` object to so as to add
+    ---listener methods.
     events = undefined --[[@as Events]],
 
-    ---The foreground color.
+    ---Gets or sets the foreground color.
     fgColor = undefined --[[@as Color]],
 
-    ---The active frame. `nil` when no sprite is active.
-    ---Can be assigned an integer frame number.
+    ---Gets or sets the active frame.
+    ---`nil` when no sprite is active.
+    ---Setter acceps an integer frame number.
     frame = undefined --[[@as Frame|nil]],
 
-    ---The active image. `nil` when no sprite is active or
+    ---Gets or sets the active image.
+    ---`nil` when no sprite is active or
     ---when the active layer is a group.
     image = undefined --[[@as Image|nil]],
 
     ---Whether the UI is available.
     isUIAvailable = undefined --[[@as boolean]],
 
-    ---The active layer. `nil` when no sprite is active.
+    ---Gets or sets the active layer.
+    ---`nil` when no sprite is active.
     layer = undefined --[[@as Layer|nil]],
 
     ---A table with parameters specified as `--script-param key=value` in the
     ---CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file.
     params = undefined --[[@as {[string]: string}]],
 
-    ---The range of elements chosen in the timeline or palette bar.
-    ---Contains a list of frames, cels, layers, or colors.
+    ---Gets the range of elements chosen in the timeline or palette bar.
     range = undefined --[[@as Range]],
 
-    ---The active site.
+    ---Gets the active site.
     site = undefined --[[@as Site]],
 
-    ---The active sprite.
+    ---Gets or sets the active sprite.
     sprite = undefined --[[@as Sprite|nil]],
 
-    ---Opened sprites in the application.
+    ---Gets an array of sprites open in the application.
     sprites = undefined --[=[@as Sprite[]]=],
 
-    ---The active tag. `nil` when no sprite is active.
+    ---Gets the active tag.
+    ---`nil` when no sprite is active.
     tag = undefined --[[@as Tag|nil]],
 
-    ---The active tool.
+    ---Gets or sets the active tool.
     ---@NOTE Unlike frame, this accepts a string bc there's no clear alternative.
     tool = undefined --[[@as Tool|string]],
 
-    ---Returns the UI Elements scaling specified in Edit > Preferences,
+    ---Gets the UI Elements scaling specified in Preferences,
     ---e.g., 1 for 100%, 2 for 200%.
     uiScale = undefined --[[@as integer]],
 
-    ---The Aseprite version number, e.g., Version("1.2.10-beta1").
+    ---Gets the Aseprite version number, e.g., Version("1.2.10-beta1").
     version = undefined --[[@as Version]],
 
     ---Displays an alert message.
@@ -124,8 +132,11 @@ app = {
         BackgroundFromLayer = function()
         end,
 
-        ---@param options {format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
-        ---@NOTE How to handle dither-matrix param containing a hyphen?
+        ---@param options {bottom: integer, bounds: Rectangle, left: integer, right: integer, top: integer, trimOutside: boolean, ui: boolean}
+        CanvasSize = function(options)
+        end,
+
+        ---@param options {format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", ["dithering-matrix"]: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
         ChangePixelFormat = function(options)
         end,
 
