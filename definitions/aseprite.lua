@@ -37,12 +37,11 @@ app = {
 
     ---Gets or sets the active frame.
     ---`nil` when no sprite is active.
-    ---Setter acceps an integer frame number.
+    ---Setter accepts an integer frame number.
     frame = undefined --[[@as Frame|nil]],
 
     ---Gets or sets the active image.
-    ---`nil` when no sprite is active or
-    ---when the active layer is a group.
+    ---`nil` when no sprite is active or when the active layer is a group.
     image = undefined --[[@as Image|nil]],
 
     ---Whether the UI is available.
@@ -181,9 +180,12 @@ app = {
         SetPaletteEntrySize = function(options)
         end,
 
+        ---Switches the foreground and background color.
+        ---Reverses the order of swatches in shading ink.
         SwitchColors = function()
         end,
 
+        ---Shows, hides or toggles the visibility of the timeline.
         ---@param options {close: boolean, open: boolean, switch: boolean}
         Timeline = function(options)
         end,
@@ -899,7 +901,6 @@ Frame = {}
 ---@NOTE Also contains the field 'theme', which in turn has an instance styleMetrics method.
 GraphicsContext = {
     ---Starts a new path, emptying the list of tracked sub-paths.
-    ---This is the first method to call when drawing paths.
     ---@param gc GraphicsContext
     beginPath = function(gc)
     end,
@@ -916,9 +917,8 @@ GraphicsContext = {
     closePath = function(gc)
     end,
 
-    ---Adds a cubic Bézier curve to the current sub-path, from the last
-    ---point to the specified xy-coordinates, with two control points
-    ---(specified by cp1x/cp1y and cp2x/cp2y coordinates).
+    ---Appends a cubic Bézier curve to the current sub-path, from the last
+    ---point to the specified xy-coordinates, with two control points.
     ---@param gc GraphicsContext
     ---@param cp1x number first control point x
     ---@param cp1y number first control point y
@@ -929,13 +929,10 @@ GraphicsContext = {
     cubicTo = function(gc, cp1x, cp1y, cp2x, cp2y, x, y)
     end,
 
-    ---Draws on the canvas the given image. If given xy-coordinates, the
+    ---Draws on the canvas the given image. If given coordinates, the
     ---full image will be drawn at the specified position, in it's original scale.
-    ---If given source and destination bounds (or their respective values),
-    ---a part of the image is drawn (specified by the srcRect, or srcX/srcY/
-    ---srcW/srcH, relative to the image) on the canvas (specified by the
-    ---dstRect or dstX/dstY/dstW/dstH). This allows drawing only a part
-    ---of and/or scaling the image.
+    ---If given source and destination bounds, a part of the image is drawn on
+    ---the canvas.
     ---@param gc GraphicsContext
     ---@param image Image
     ---@param x integer
@@ -946,7 +943,7 @@ GraphicsContext = {
     end,
 
     ---Draws on the canvas a theme part specified by the given partId,
-    ---at a given Point or at specified xy-coordinates.
+    ---at a given Point or at specified coordinates.
     ---@param gc GraphicsContext
     ---@param partId string
     ---@param point Point
@@ -955,7 +952,7 @@ GraphicsContext = {
     end,
 
     ---Draws on the canvas a theme part specified by the given partId,
-    ---filling a given Rectangle or at specified xy-coordinates, with
+    ---filling a given Rectangle or at specified coordinates, with
     ---given width and height. This method uses nine-slice scaling for
     ---parts that have their Slice's center defined.
     ---@param gc GraphicsContext
@@ -977,7 +974,7 @@ GraphicsContext = {
     end,
 
     ---Draws on the canvas the given text string
-    ---at a position specified by the xy-coordinates.
+    ---at a position specified by the coordinates.
     ---@param gc GraphicsContext
     ---@param text string
     ---@param x integer
@@ -985,8 +982,8 @@ GraphicsContext = {
     fillText = function(gc, text, x, y)
     end,
 
-    ---Adds a line to the current sub-path, from the last point
-    ---to the specified xy-coordinates.
+    ---Appends a line to the current sub-path, from the last point
+    ---to the specified coordinates.
     ---@param gc GraphicsContext
     ---@param x number
     ---@param y number
@@ -1000,20 +997,20 @@ GraphicsContext = {
     measureText = function(gc, text)
     end,
 
-    ---Starts a new sub-path at the specified xy-coordinates.
+    ---Starts a new sub-path at the specified coordinates.
     ---@param gc GraphicsContext
     ---@param x number
     ---@param y number
     moveTo = function(gc, x, y)
     end,
 
-    ---Adds an oval enclosed by the given Rectangle to the current sub-path.
+    ---Appends an oval enclosed by the given Rectangle to the current sub-path.
     ---@param gc GraphicsContext
     ---@param rectangle Rectangle
     oval = function(gc, rectangle)
     end,
 
-    ---Adds a given Rectangle to the current sub-path.
+    ---Appends a given Rectangle to the current sub-path.
     ---@param gc GraphicsContext
     ---@param rectangle Rectangle
     rect = function(gc, rectangle)
@@ -1024,7 +1021,7 @@ GraphicsContext = {
     restore = function(gc)
     end,
 
-    ---Adds a given Rectangle to the current sub-path with rounded corners.
+    ---Appends a Rectangle to the current sub-path with rounded corners.
     ---If a single radius is specified, a rectangle with circular corners
     ---is created. This method can be used to easily draw circles.
     ---If two radii are specified, a rectangle with elliptical corners
@@ -1514,7 +1511,7 @@ Rectangle = {
     intersect = function(rectangle, otherRectangle)
     end,
 
-    ---Returns true if `rectangle` intersects in some way `otherRectangle`.
+    ---Returns true if `rectangle` intersects `otherRectangle`.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return boolean
@@ -1669,7 +1666,7 @@ Slice = {}
 
 
 ---@class Sprite
----@field backgroundLayer Layer|nil Gets the background layer, if any.
+---@field backgroundLayer Layer|nil Gets a background layer, if any, for which the sprite serves as a direct parent.
 ---@field bounds Rectangle Gets the sprite bounds.
 ---@field cels Cel[] Gets the cels contained by the sprite.
 ---@field colorMode ColorMode Gets the sprite's color mode.
@@ -1737,7 +1734,7 @@ Sprite = {
     deleteFrame = function(sprite, frame)
     end,
 
-    ---Deletes the given `Layer` or the layer with the given `layerName`.
+    ---Deletes the given `Layer`.
     ---@param sprite Sprite
     ---@param layer Layer
     ---@NOTE Also accepts a string name. Discouraged because names aren't unique.
@@ -1807,7 +1804,7 @@ Sprite = {
     newEmptyFrame = function(sprite, frameNumber)
     end,
 
-    ---Creates a copy of the given `frame` object or frame number and returns
+    ---Creates a copy of the given `Frame` object or frame number and returns
     ---a `Frame` that points to the newly created frame at `frameNumber`.
     ---@param sprite Sprite
     ---@param frame Frame|integer
@@ -1853,11 +1850,11 @@ Sprite = {
     newTile = function(sprite, tileset, tileIndex)
     end,
 
-    ---Returns a new tileset and adds it to the sprite's tilesets.
+    ---Appends a new tileset to the sprite's tilesets.
     ---If no parameters are given, the tileset has 1 tile of 16x16 pixels.
-    ---If Grid or Rectangle is specified, it is used to set the tileset's
+    ---If a `Grid` or `Rectangle` is specified, it is used to set the tileset's
     ---origin and tile size.
-    ---numTiles specifies the number of initial tiles.
+    ---`numTiles` specifies the number of initial tiles.
     ---@param sprite Sprite
     ---@return Tileset
     ---@overload fun(sprite: Sprite, grid: Grid, numTiles?: integer): Tileset
