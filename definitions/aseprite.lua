@@ -607,7 +607,7 @@ WebSocketMessageType = {
 ---@class Brush
 ---@field angle integer Gets the angle between -180 and 180.
 ---@field center Point Gets the center.
----@field image Image Gets the image.
+---@field image Image|nil Gets the image, if any, based on type.
 ---@field pattern BrushPattern Gets the pattern.
 ---@field patternOrigin Point Gets the pattern origin.
 ---@field size integer Gets the brush size.
@@ -1366,8 +1366,10 @@ Palette = {
 ---`fromResource` is an ID specified in one of the extensions
 ---palette (e.g. `DB16`, `DB32`, `Solarized`).
 ---
----Palettes loaded fromFile may be `nil`. The resource string should be
----validated as correct before the constructor is called.
+---Palettes loaded `fromFile` may be `nil`.
+---
+---The resource string given to `fromResource` should be validated as
+---correct before the constructor is called.
 ---@return Palette
 ---@overload fun(numberOfColors: integer): Palette
 ---@overload fun(options: {fromFile: string}): Palette
@@ -1503,8 +1505,8 @@ Rectangle = {
     end,
 
     ---Returns the new rectangle which is the intersection of
-    ---`rectangle` and `otherRectangle`; If both rectangles
-    ---don't intersect each other, the result will be empty.
+    ---`rectangle` and `otherRectangle`; If the rectangles
+    ---do not intersect, then the result will be empty.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return Rectangle
@@ -1543,8 +1545,7 @@ Rectangle = {
 function Rectangle()
 end
 
----Represents a user defined region of selected pixels
----on the sprite canvas.
+---Represents a region of selected pixels on the sprite canvas.
 ---@class Selection
 ---@field bounds Rectangle Gets a rectangle of the selection bounds.
 ---@field isEmpty boolean Whether the selection is empty.
@@ -1666,7 +1667,7 @@ Slice = {}
 
 
 ---@class Sprite
----@field backgroundLayer Layer|nil Gets a background layer, if any, for which the sprite serves as a direct parent.
+---@field backgroundLayer Layer|nil Gets a background layer, if any, for which the sprite is a direct parent.
 ---@field bounds Rectangle Gets the sprite bounds.
 ---@field cels Cel[] Gets the cels contained by the sprite.
 ---@field colorMode ColorMode Gets the sprite's color mode.
