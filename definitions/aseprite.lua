@@ -932,17 +932,18 @@ GraphicsContext = {
     cubicTo = function(gc, cp1x, cp1y, cp2x, cp2y, x, y)
     end,
 
-    ---Draws on the canvas the given image. If given coordinates, the
-    ---full image will be drawn at the specified position, in it's original scale.
+    ---Draws on the canvas the given image.
     ---If given source and destination bounds, a part of the image is drawn on
     ---the canvas.
+    ---If given coordinates, the full image will be drawn at the specified
+    ---position in its original scale.
     ---@param gc GraphicsContext
     ---@param image Image
-    ---@param x integer
-    ---@param y integer
-    ---@overload fun(gc: GraphicsContext, image: Image, srcRect: Rectangle, dstRect: Rectangle)
-    ---@overload fun(gc: GraphicsContext, image: Image, srcX: integer, srcY: integer, srcW: integer, srcH: integer, dstX: integer, dstY: integer, dstW: integer, dstH: integer)
-    drawImage = function(gc, image, x, y)
+    ---@param rectSrc Rectangle
+    ---@param rectDst Rectangle
+    ---@overload fun(gc: GraphicsContext, image: Image, xDst: integer, yDst: integer)
+    ---@overload fun(gc: GraphicsContext, image: Image, xSrc: integer, ySrc: integer, wSrc: integer, hSrc: integer, xDst: integer, yDst: integer, wDst: integer, hDst: integer)
+    drawImage = function(gc, image, rectSrc, rectDst)
     end,
 
     ---Draws on the canvas a theme part specified by the given partId,
