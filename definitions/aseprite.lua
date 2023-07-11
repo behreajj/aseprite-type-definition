@@ -303,7 +303,7 @@ app = {
     ---A set of functions to handle the color for Image pixels at the lowest level: an unsigned integer.
     pixelColor = {
         ---Constructs a 16-bit unsigned integer for grayscale images.
-        ---@param gray integer
+        ---@param gray integer Gray value. Black is 0, white is 255.
         ---@param alpha? integer Alpha. Default is 255, opaque.
         ---@return integer
         graya = function(gray, alpha)
@@ -322,9 +322,9 @@ app = {
         end,
 
         ---Constructs a 32-bit unsigned integer for RGBA images.
-        ---@param red integer
-        ---@param green integer
-        ---@param blue integer
+        ---@param red integer Red channel.
+        ---@param green integer Green channel.
+        ---@param blue integer Blue channel.
         ---@param alpha? integer Alpha. Default is 255, opaque.
         ---@return integer
         rgba = function(red, green, blue, alpha)
@@ -355,21 +355,21 @@ app = {
         end,
 
         ---Constructs a 32-bit unsigned integer for tile maps.
-        ---@param i integer tile set index
-        ---@param f integer tile map flags
+        ---@param i integer Tile set index.
+        ---@param f integer Tile map flags.
         ---@return integer
         tile = function(i, f)
         end,
 
         ---Returns the modifier flags for a tile in the map,
         ---such as whether it is flipped or rotated.
-        ---@param n integer pixel value
+        ---@param n integer Pixel value.
         ---@return integer
         tileF = function(n)
         end,
 
         ---Returns the tile set index.
-        ---@param n integer pixel value
+        ---@param n integer Pixel value.
         ---@return integer
         tileI = function(n)
         end,
@@ -668,7 +668,7 @@ Cel = {}
 ---@field lightness number Gets or sets the HSL lightness.
 ---@field red integer Gets or sets the red color channel.
 ---@field rgbaPixel integer Gets the 32-bit pixel (0xAABBGGRR).
----@field saturation number Gets or sets the saturation; context-dependent.
+---@field saturation number Gets or sets the saturation, context-dependent.
 ---@field value number Gets or sets the HSV value.
 Color = {}
 
@@ -848,7 +848,7 @@ end
 ---@field sprite Sprite Gets the active sprite.
 ---@field spritePos Point Gets a point of the the mouse position on the sprite.
 Editor = {
-    ---Asks the user to select a pixel/point on the sprite.
+    ---Asks the user to select a point on the sprite.
     ---@param options {title: string, point: Point, onclick: function, onchange: function, oncancel: function}
     askPoint = function(options)
     end,
@@ -1027,7 +1027,7 @@ GraphicsContext = {
 
     ---Appends a Rectangle to the current sub-path with rounded corners.
     ---If a single radius is specified, a rectangle with circular corners
-    ---is created. This method can be used to easily draw circles.
+    ---is created.
     ---If two radii are specified, a rectangle with elliptical corners
     ---is created.
     ---@param gc GraphicsContext
@@ -1152,7 +1152,9 @@ Image = {
     isEmpty = function(image)
     end,
 
-    ---Returns true if both images looks the same (spec is equal and all pixels are the same).
+    ---Evaluates whether the provided image has the same dimensions as the instance image,
+    ---is the same color mode, and contains the same pixel colors. Does not evaluate
+    ---potential difference color spaces.
     ---@param image Image
     ---@param otherImage Image
     ---@return boolean
