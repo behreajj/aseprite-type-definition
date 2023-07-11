@@ -212,56 +212,56 @@ app = {
         userDocsPath = undefined --[[@as string]],
 
         ---Returns the file extension of the given filename, excluding the `.`.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return string
         fileExtension = function(fn)
         end,
 
         ---Returns the file name, including the extension.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return string
         fileName = function(fn)
         end,
 
         ---Returns the path/directory part of the given filename.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return string
         filePath = function(fn)
         end,
 
         ---Returns the file path joined with the title, excluding the extension, of the given filename.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return string
         filePathAndTitle = function(fn)
         end,
 
         ---Returns the file size of the given filename `fn`.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return integer
         fileSize = function(fn)
         end,
 
         ---Returns the file title (without including the path nor the extension) of the given filename.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return string
         fileTitle = function(fn)
         end,
 
         ---Returns true if the given filename `fn` is a directory.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return boolean
         isDirectory = function(fn)
         end,
 
         ---Returns true if the given filename `fn` is a file.
-        ---@param fn string filename
+        ---@param fn string Filename.
         ---@return boolean
         isFile = function(fn)
         end,
 
         ---Joins together a number of string arguments
         ---with the path separator for the current platform.
-        ---@param ... string
+        ---@param ... string Strings.
         ---@return string
         joinPath = function(...)
         end,
@@ -269,32 +269,32 @@ app = {
         ---Returns a list of files in the given directory path.
         ---Each file name in the return table is relative to
         ---the given path.
-        ---@param path string
+        ---@param path string Directory path.
         ---@return string[]
         listFiles = function(path)
         end,
 
         ---Returns the file path converted to a canonical form
         ---for the current platform.
-        ---@param path string
+        ---@param path string File path.
         ---@return string
         normalizePath = function(path)
         end,
 
         ---Creates all directories needed to access to the path.
-        ---@param path string
+        ---@param path string String.
         ---@return boolean
         makeAllDirectories = function(path)
         end,
 
         ---Creates one directory.
-        ---@param path string
+        ---@param path string Directory path.
         ---@return boolean
         makeDirectory = function(path)
         end,
 
         ---Removes the given directory (it must be empty).
-        ---@param path string
+        ---@param path string Directory path.
         ---@return boolean success `true` if the directory was removed (or is already removed).
         removeDirectory = function(path)
         end
@@ -304,19 +304,19 @@ app = {
     pixelColor = {
         ---Constructs a 16-bit unsigned integer for grayscale images.
         ---@param gray integer
-        ---@param alpha integer alpha; default is 255 (opaque)
+        ---@param alpha? integer Alpha. Default is 255, opaque.
         ---@return integer
         graya = function(gray, alpha)
         end,
 
         ---Returns the alpha component.
-        ---@param grayPixelValue integer 16-bit integer
+        ---@param grayPixelValue integer 16-bit integer.
         ---@return integer
         grayaA = function(grayPixelValue)
         end,
 
         ---Returns the gray component.
-        ---@param grayPixelValue integer 16-bit integer
+        ---@param grayPixelValue integer 16-bit integer.
         ---@return integer
         grayaV = function(grayPixelValue)
         end,
@@ -325,31 +325,31 @@ app = {
         ---@param red integer
         ---@param green integer
         ---@param blue integer
-        ---@param alpha? integer alpha; default is 255 (opaque)
+        ---@param alpha? integer Alpha. Default is 255, opaque.
         ---@return integer
         rgba = function(red, green, blue, alpha)
         end,
 
         ---Returns the alpha component.
-        ---@param rgbaPixelValue integer 32-bit integer
+        ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaA = function(rgbaPixelValue)
         end,
 
         ---Returns the blue component.
-        ---@param rgbaPixelValue integer 32-bit integer
+        ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaB = function(rgbaPixelValue)
         end,
 
         ---Returns the green component.
-        ---@param rgbaPixelValue integer 32-bit integer
+        ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaG = function(rgbaPixelValue)
         end,
 
         ---Returns the red component.
-        ---@param rgbaPixelValue integer 32-bit integer
+        ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaR = function(rgbaPixelValue)
         end,
@@ -922,13 +922,13 @@ GraphicsContext = {
 
     ---Appends a cubic Bézier curve to the current sub-path, from the last
     ---point to the specified xy-coordinates, with two control points.
-    ---@param gc GraphicsContext
-    ---@param cp1x number first control point x
-    ---@param cp1y number first control point y
-    ---@param cp2x number second control point x
-    ---@param cp2y number second control point y
-    ---@param x number anchor point x
-    ---@param y number anchor point y
+    ---@param gc GraphicsContext Graphics context.
+    ---@param cp1x number First control point x.
+    ---@param cp1y number First control point y.
+    ---@param cp2x number Second control point x.
+    ---@param cp2y number Second control point y.
+    ---@param x number Anchor point x.
+    ---@param y number Anchor point y.
     cubicTo = function(gc, cp1x, cp1y, cp2x, cp2y, x, y)
     end,
 
@@ -937,12 +937,12 @@ GraphicsContext = {
     ---the canvas.
     ---If given coordinates, the full image will be drawn at the specified
     ---position in its original scale.
-    ---@param gc GraphicsContext
-    ---@param image Image
-    ---@param rectSrc Rectangle
-    ---@param rectDst Rectangle
-    ---@overload fun(gc: GraphicsContext, image: Image, xDst: integer, yDst: integer)
+    ---@param gc GraphicsContext Graphics context.
+    ---@param image Image Source image.
+    ---@param rectSrc Rectangle Source rectangle.
+    ---@param rectDst Rectangle Destination rectangle.
     ---@overload fun(gc: GraphicsContext, image: Image, xSrc: integer, ySrc: integer, wSrc: integer, hSrc: integer, xDst: integer, yDst: integer, wDst: integer, hDst: integer)
+    ---@overload fun(gc: GraphicsContext, image: Image, xDst: integer, yDst: integer)
     drawImage = function(gc, image, rectSrc, rectDst)
     end,
 
