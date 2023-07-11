@@ -1153,8 +1153,8 @@ Image = {
     end,
 
     ---Evaluates whether the provided image has the same dimensions as the instance image,
-    ---is the same color mode, and contains the same pixel colors. Does not evaluate
-    ---potential difference color spaces.
+    ---is the same color mode, and contains the same pixel colors. Does not check
+    ---color spaces.
     ---@param image Image
     ---@param otherImage Image
     ---@return boolean
