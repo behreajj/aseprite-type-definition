@@ -6,7 +6,7 @@ local undefined
 
 
 ---The `app` global namespace.
----@NOTE app.theme still needs to be defined.
+---@NOTE app.theme still needs to be defined. Depends on Theme object?
 app = {
     ---Gets the API version.
     apiVersion = undefined --[[@as number]],
@@ -375,6 +375,9 @@ app = {
         end,
     },
 
+    -- Allows document, application and tool preferences to be get or set.
+    -- See https://github.com/aseprite/api/blob/main/api/app_preferences.md 
+    -- and https://github.com/aseprite/aseprite/blob/main/data/pref.xml .
     preferences = {
         ---Returns the preferences of the given `Tool`.
         ---@param tool Tool|string
@@ -892,7 +895,7 @@ Frame = {}
 ---text and shapes on the canvas.
 ---@class GraphicsContext
 ---@field antialias boolean Gets or sets whether paths and shapes are painted on using antialiasing.
----@field blendMode BlendMode Gets or sets the blend mode used in stroke(), fill(), etc.
+---@field blendMode BlendMode|nil Gets or sets the canvas blend mode. May return nil.
 ---@field color Color Gets or sets the color to paint with the path functions.
 ---@field height integer Gets the height of the visible area in pixels. Changes when the dialog is resized.
 ---@field opacity integer Gets or sets the opacity used in stroke(), fill(), etc.
@@ -1504,8 +1507,8 @@ Rectangle = {
     contains = function(rectangle, otherRectangle)
     end,
 
-    ---Returns the new rectangle which is the intersection of
-    ---`rectangle` and `otherRectangle`; If the rectangles
+    ---Returns a new rectangle which is the intersection of
+    ---`rectangle` and `otherRectangle`. If the rectangles
     ---do not intersect, then the result will be empty.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
@@ -1527,7 +1530,7 @@ Rectangle = {
     isEmpty = function(rectangle)
     end,
 
-    ---Returns a new rectangle big enough to contains both given
+    ---Returns a new rectangle that contains both given
     ---rectangles `rectangle` and `otherRectangle`.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
