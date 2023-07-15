@@ -241,7 +241,7 @@ app = {
         fileSize = function(fn)
         end,
 
-        ---Returns the file title (without including the path nor the extension) of the given filename.
+        ---Returns the file title, excluding the path and extension, of the given filename.
         ---@param fn string Filename.
         ---@return string
         fileTitle = function(fn)
@@ -282,7 +282,7 @@ app = {
         end,
 
         ---Creates all directories needed to access to the path.
-        ---@param path string String.
+        ---@param path string Path.
         ---@return boolean
         makeAllDirectories = function(path)
         end,
@@ -300,7 +300,7 @@ app = {
         end
     },
 
-    ---A set of functions to handle the color for Image pixels at the lowest level: an unsigned integer.
+    ---A set of functions to handle the color for Image pixels as unsigned integers.
     pixelColor = {
         ---Constructs a 16-bit unsigned integer for grayscale images.
         ---@param gray integer Gray value. Black is 0, white is 255.
@@ -441,26 +441,28 @@ AniDir = {
 
 ---https://github.com/aseprite/aseprite/blob/main/src/doc/blend_mode.h#L26
 ---@enum BlendMode
+---@NOTE Internal enum is converted to public, leading to discrepancies.
 BlendMode = {
-    NORMAL = 0,
-    MULTIPLY = 1,
-    SCREEN = 2,
-    OVERLAY = 3,
-    DARKEN = 4,
-    LIGHTEN = 5,
-    COLOR_DODGE = 6,
-    COLOR_BURN = 7,
-    HARD_LIGHT = 8,
-    SOFT_LIGHT = 9,
-    DIFFERENCE = 10,
-    EXCLUSION = 11,
-    HSL_HUE = 12,
-    HSL_SATURATION = 13,
-    HSL_COLOR = 14,
-    HSL_LUMINOSITY = 15,
-    ADDITION = 16,
-    SUBTRACT = 17,
-    DIVIDE = 18
+    SRC = 1,
+    NORMAL = 3,
+    MULTIPLY = 14,
+    SCREEN = 15,
+    OVERLAY = 16,
+    DARKEN = 17,
+    LIGHTEN = 18,
+    COLOR_DODGE = 19,
+    COLOR_BURN = 20,
+    HARD_LIGHT = 21,
+    SOFT_LIGHT = 22,
+    DIFFERENCE = 23,
+    EXCLUSION = 24,
+    HSL_HUE = 25,
+    HSL_SATURATION = 26,
+    HSL_COLOR = 27,
+    HSL_LUMINOSITY = 28,
+    ADDITION = 29,
+    SUBTRACT = 30,
+    DIVIDE = 31
 }
 
 
@@ -629,6 +631,7 @@ end
 
 ---A cel contains an image at the intersection of a layer and a frame.
 ---Its position offsets the image from the sprite's top-left corner.
+---
 ---See https://github.com/aseprite/aseprite/blob/main/docs/ase-file-specs.md#note5
 ---for how to process a cel's zIndex.
 ---@class Cel
@@ -693,14 +696,14 @@ end
 ColorSpace = {}
 
 ---Creates an empty color space, sRGB color space, or loads a color
----profile from the given ICC file specified in "fromFile" parameter.
+---profile from the given ICC file specified in `fromFile` parameter.
 ---@return ColorSpace
 ---@overload fun(options: {sRGB: boolean}): ColorSpace
 ---@overload fun(options: {fromFile: string}): ColorSpace
 function ColorSpace()
 end
 
----A class can be used to show input controls/widgets in the screen
+---A class can be used to show input widgets in the screen
 ---to get some data from the user.
 ---@class Dialog
 ---@field bounds Rectangle Gets or sets the dialog bounds.
@@ -872,8 +875,7 @@ Events = {
     end,
 
     ---Disconnects the given function from all events in the object,
-    --or stops/breaks only the specific connection
-    --identified by listenerCode
+    ---or stops only the connection identified by listenerCode
     ---@param listenerCode integer
     ---@overload fun(func: function)
     off = function(listenerCode)
@@ -920,7 +922,7 @@ GraphicsContext = {
     closePath = function(gc)
     end,
 
-    ---Appends a cubic Bézier curve to the current sub-path, from the last
+    ---Appends a cubic Bezier curve to the current sub-path, from the last
     ---point to the specified xy-coordinates, with two control points.
     ---@param gc GraphicsContext Graphics context.
     ---@param cp1x number First control point x.
@@ -1088,8 +1090,8 @@ end
 ---@field version integer Gets the version assigned to the image inside the program, updated with each image change.
 ---@field width integer Gets the image width.
 Image = {
-    ---Clear all pixels in the image with given color
-    ---(or `image.spec.transparentColor` if no color is specified).
+    ---Clears all pixels in the image with given color
+    ---or `image.spec.transparentColor` if no color is specified.
     ---@param image Image
     ---@param color? Color|integer
     ---@overload fun(image: Image, bounds: Rectangle, color?: Color|integer)
@@ -1112,7 +1114,7 @@ Image = {
     drawImage = function(destinationImage, sourceImage, position, opacity, blendMode)
     end,
 
-    ---Sets the pixel in the xy-coordinate to the given integer pixel value.
+    ---Sets the pixel in the coordinate to the given integer pixel value.
     ---@param image Image
     ---@param x integer
     ---@param y integer
@@ -1136,8 +1138,8 @@ Image = {
     flip = function(image, flipType)
     end,
 
-    ---Returns a integer pixel value for the given coordinate related to the Image itself.
-    ---When the coordinates are out-of-bounds, Returns `0xffffffff`,
+    ---Returns an integer pixel value for the given coordinates local to the Image.
+    ---When the coordinates are out-of-bounds, returns `0xffffffff`,
     ---which is white for RGB images.
     ---@param image Image
     ---@param x integer
@@ -1162,11 +1164,11 @@ Image = {
     end,
 
     ---Returns true if all pixels in the image are equal to the
-    ---given color (which can be a pixel color or a `Color`).
+    ---given color.
     ---@param image Image
-    ---@param color Color|integer
+    ---@param refColor Color|integer
     ---@return boolean
-    isPlain = function(image, color)
+    isPlain = function(image, refColor)
     end,
 
     ---Returns a pixel iterator for the whole image or the given rectangle.
@@ -1177,7 +1179,7 @@ Image = {
     pixels = function(image, rectangle)
     end,
 
-    ---Resizes the image; The pivot is Point(0, 0) by default.
+    ---Resizes the image. The pivot defaults to `Point(0, 0)`.
     ---If no method is specified, defaults to nearest-neighbor.
     ---@param image Image
     ---@param width integer
@@ -1194,9 +1196,9 @@ Image = {
     saveAs = function(image, filename)
     end,
 
-    ---Returns the shrunken bounds (a rectangle) of the image
+    ---Returns the shrunken bounds, a rectangle, of the image
     ---removing all the empty space of borders using the mask
-    ---color or the given reference color in refColor.
+    ---color or the given `refColor`.
     ---@param image Image
     ---@param refColor integer
     ---@return Rectangle
@@ -1213,7 +1215,7 @@ Image = {
     putImage = function(destinationImage, sourceImage, position)
     end,
 
-    ---Sets the pixel in the xy-coordinate to the given integer pixel value.
+    ---Sets the pixel in the coordinate to the given integer pixel value.
     ---@param image Image
     ---@param x integer
     ---@param y integer
@@ -1274,7 +1276,7 @@ end
 ---@field spaceKey boolean
 KeyEvent = {
     ---Stops propagating this event to other parent widget/main
-    ---Aseprite window. Use this in case that your canvas widget
+    ---Aseprite window. Use this in case that the canvas widget
     ---used the key and you want to avoid triggering a command
     ---with a keyboard shortcut.
     ---@param ke KeyEvent
@@ -1340,7 +1342,9 @@ MouseEvent = {}
 ---@field frame Frame|nil Gets the first frame, if any.
 ---@NOTE also includes frameNumber property, but unclear what happens if frame is nil
 Palette = {
-    ---Returns the color at the given index. The index goes from 0 to #palette - 1.
+    ---Returns the color at the given index.
+    ---The index goes from `0` to `#palette - 1`.
+    ---Throws an error if the index is out of bounds.
     ---@param palette Palette
     ---@param index integer
     ---@return Color
@@ -1359,8 +1363,9 @@ Palette = {
     saveAs = function(palette, filename)
     end,
 
-    ---Changes a palette color in the given index.
-    ---The index goes from 0 to #palette - 1.
+    ---Sets a palette color at the given index.
+    ---The index goes from `0` to `#palette - 1`.
+    ---Throws an error if the index is out of bounds.
     ---@param palette Palette
     ---@param index integer
     ---@param color Color|integer
@@ -1459,17 +1464,18 @@ end
 ---@field layers Layer[] Gets or sets a table of layers.
 ---@field slices Slice[] Gets or sets a table of slices.
 ---@field sprite Sprite Gets the sprite to which the range is pointing.
----@field tiles integer[] Gets or sets a table of indices in the tileset bar.
 ---@field type RangeType Gets the type of range.
+---@NOTE Also contains a tiles field, but it doesn't work as of 1.3rc-4.
+---@NOTE It's not clear from the UI how a range contains slices.
 Range = {
     ---Clears the current range's contents.
     ---@param range Range
     clear = function(range)
     end,
 
-    ---Returns true if the layer, frame or cel is in the timeline range.
+    ---Returns true if a layer, frame, slice or cel is in the timeline range.
     ---@param range Range
-    ---@param object Layer|Frame|Cel
+    ---@param object Layer|Frame|Cel|Slice
     ---@return boolean
     contains = function(range, object)
     end,
@@ -1703,7 +1709,7 @@ Sprite = {
     end,
 
     ---Closes the sprite. Does not ask the user to save changes.
-    ---See app.command.CloseFile .
+    ---See `app.command.CloseFile` .
     ---@param sprite Sprite
     close = function(sprite)
     end,
@@ -1776,8 +1782,8 @@ Sprite = {
     deleteTileset = function(sprite, tileset)
     end,
 
-    ---Flatten all layers of the sprite into one layer;
-    ---is the same as `app.commands.FlattenLayers()`.
+    ---Flattens all layers of the sprite into one layer.
+    ---The same as `app.commands.FlattenLayers()` .
     ---@param sprite Sprite
     flatten = function(sprite)
     end,
@@ -1804,7 +1810,8 @@ Sprite = {
     newCel = function(sprite, layer, frame, image, position)
     end,
 
-    ---Creates a new empty frame in the given `frameNumber` (default: #sprite.frames + 1).
+    ---Creates a new empty frame in the given `frameNumber`.
+    ---Defaults to `#sprite.frames + 1`.
     ---@param sprite Sprite
     ---@param frameNumber? integer
     ---@return Frame
@@ -1915,6 +1922,7 @@ end
 ---@class Tag
 ---@field aniDir AniDir Gets or sets the tag animation direction.
 ---@field color Color Gets or sets the tag's color in the timeline.
+---@field data string The user-defined data of the tag.
 ---@field frames integer Gets the number of frames contained by the tag.
 ---@field fromFrame Frame|nil Gets or sets the `Frame` where the tag starts.
 ---@field name string Gets or sets the tag name.
