@@ -28,8 +28,7 @@ app = {
     ---`nil` when no sprite is active.
     editor = undefined --[[@as Editor|nil]],
 
-    ---Gets the `Events` object to so as to add
-    ---listener methods.
+    ---Gets the `Events` object so as to add listener methods.
     events = undefined --[[@as Events]],
 
     ---Gets or sets the foreground color.
@@ -79,8 +78,11 @@ app = {
     ---e.g., 1 for 100%, 2 for 200%.
     uiScale = undefined --[[@as integer]],
 
-    ---Gets the Aseprite version number, e.g., Version("1.2.10-beta1").
+    ---Gets the Aseprite version.
     version = undefined --[[@as Version]],
+
+    ---Gets the main window.
+    window = undefined --[[@as Window]],
 
     ---Displays an alert message.
     ---If `buttons` are not specified, it will show a message box with the OK button only.
@@ -426,6 +428,23 @@ app = {
     ---The active tool.
     ---@deprecated
     activeTool = undefined --[[@as Tool|string]],
+}
+
+
+---Module for encoding and decoding JSON strings.
+---@NOTE Would json object need to be defined?
+json = {
+    ---Parses `jsonText`, returning a JSON object.
+    ---@param jsonText string
+    ---@return table
+    decode = function(jsonText)
+    end,
+
+    ---Converts a Lua table or JSON object to a string.
+    ---@param table table
+    ---@return string
+    encode = function(table)
+    end
 }
 
 
@@ -2033,6 +2052,7 @@ Version = {}
 function Version(version)
 end
 
+---Object used to communicate with another program.
 ---@class WebSocket
 ---@field url string Address of the server. Read-only. The url is specified when creating the websocket.
 WebSocket = {
@@ -2072,3 +2092,10 @@ WebSocket = {
 ---@return WebSocket
 function WebSocket(options)
 end
+
+---References a window of the program.
+---@class Window
+---@field events Events Gets an `Events` object so as to add listener methods.
+---@field height integer Gets the height of the main window.
+---@field width integer Gets the width of the main window.
+Window = {}
