@@ -124,7 +124,7 @@ app = {
     ---Simulates a user stroke in the canvas using the given tool.
     ---See https://www.aseprite.org/api/app#app-usetool .
     ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection: SelectionMode}
-    usetool = function(options)
+    useTool = function(options)
     end,
 
     ---Executes the command named `CommandName` with the parameters provided.
@@ -432,16 +432,17 @@ app = {
 
 
 ---Module for encoding and decoding JSON strings.
----@NOTE Would json object need to be defined?
 json = {
     ---Parses `jsonText`, returning a JSON object.
+    ---Note that `number` fields will be parsed to `float`s,
+    ---even if they were originally `integer`s.
     ---@param jsonText string
-    ---@return table
+    ---@return userdata
     decode = function(jsonText)
     end,
 
     ---Converts a Lua table or JSON object to a string.
-    ---@param table table
+    ---@param table table|userdata
     ---@return string
     encode = function(table)
     end
@@ -1359,6 +1360,7 @@ MouseEvent = {}
 
 ---@class Palette
 ---@field frame Frame|nil Gets the first frame, if any.
+---@operator len(): integer
 ---@NOTE also includes frameNumber property, but unclear what happens if frame is nil
 Palette = {
     ---Returns the color at the given index.
@@ -1967,6 +1969,7 @@ Tile = {}
 ---@field data string Gets or sets the user-defined data string of this tileset.
 ---@field grid Grid Gets the grid offset and size.
 ---@field name string Gets or sets the tileset name.
+---@operator len(): integer
 Tileset = {
     ---Returns the tile in the given index.
     ---@param tileset Tileset
