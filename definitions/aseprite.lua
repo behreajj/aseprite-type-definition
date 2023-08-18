@@ -201,7 +201,7 @@ app = {
         ---The path from which the Aseprite executable launched.
         currentPath = undefined --[[@as string]],
 
-        ---The preferred path separator of the current platform; see: `app.fs.joinPath()`.
+        ---The preferred path separator of the current platform.
         pathSeparator = undefined --[[@as "/"|"\\"]],
 
         ---The path for temporary files for the current platform.
@@ -297,7 +297,7 @@ app = {
 
         ---Removes the given directory (it must be empty).
         ---@param path string Directory path.
-        ---@return boolean success `true` if the directory was removed (or is already removed).
+        ---@return boolean success
         removeDirectory = function(path)
         end
     },
@@ -452,7 +452,7 @@ json = {
 ---https://github.com/aseprite/aseprite/blob/main/src/doc/anidir.h#L16
 ---@enum AniDir
 AniDir = {
-    FOWARD = 0,
+    FORWARD = 0,
     REVERSE = 1,
     PING_PONG = 2,
     PING_PONG_REVERSE = 3,
@@ -539,7 +539,7 @@ FlipType = {
 ---@enum Ink
 Ink = {
     SIMPLE = 0,
-    ALPHA_COMPOSTING = 1,
+    ALPHA_COMPOSITING = 1,
     COPY_COLOR = 2,
     LOCK_ALPHA = 3,
     SHADING = 4
