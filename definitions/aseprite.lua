@@ -71,7 +71,7 @@ app = {
     tag = undefined --[[@as Tag|nil]],
 
     ---Gets or sets the active tool.
-    ---@NOTE Unlike frame, this accepts a string bc there's no clear alternative.
+    ---@NOTE Unlike frame, this accepts string bc there's no clear alternative.
     tool = undefined --[[@as Tool|string]],
 
     ---Gets the UI Elements scaling specified in Preferences,
@@ -85,7 +85,7 @@ app = {
     window = undefined --[[@as Window]],
 
     ---Displays an alert message.
-    ---If `buttons` are not specified, it will show a message box with the OK button only.
+    ---If `buttons` are not specified, shows the OK button only.
     ---@param text string
     ---@overload fun(options: {title: string, text: string|string[], buttons: string|string[]}): integer
     ---@return integer buttonIndex The selected button, e.g., 1 if the first button was clicked.
@@ -133,7 +133,8 @@ app = {
         BackgroundFromLayer = function()
         end,
 
-        ---When trimOutside is true, trims cels of excess alpha and trims cels to sprite bounds.
+        ---When trimOutside is true, trims cels of excess alpha and trims cels
+        ---to sprite bounds.
         ---@param options {bottom: integer, bounds: Rectangle, left: integer, right: integer, top: integer, trimOutside: boolean, ui: boolean}
         CanvasSize = function(options)
         end,
@@ -207,10 +208,10 @@ app = {
         ---The path for temporary files for the current platform.
         tempPath = undefined --[[@as string]],
 
-        ---The current user's Aseprite configuration path for the current platform.
+        ---The user's Aseprite configuration path for the current platform.
         userConfigPath = undefined --[[@as string]],
 
-        ---The current user's Documents path for the current platform.
+        ---The user's Documents path for the current platform.
         userDocsPath = undefined --[[@as string]],
 
         ---Returns the file extension of the given filename, excluding the `.`.
@@ -231,7 +232,8 @@ app = {
         filePath = function(fn)
         end,
 
-        ---Returns the file path joined with the title, excluding the extension, of the given filename.
+        ---Returns the file path joined with the title, excluding the extension,
+        ---of the given filename.
         ---@param fn string Filename.
         ---@return string
         filePathAndTitle = function(fn)
@@ -243,7 +245,8 @@ app = {
         fileSize = function(fn)
         end,
 
-        ---Returns the file title, excluding the path and extension, of the given filename.
+        ---Returns the file title, excluding the path and extension, of the
+        ---given filename.
         ---@param fn string Filename.
         ---@return string
         fileTitle = function(fn)
@@ -269,15 +272,14 @@ app = {
         end,
 
         ---Returns a list of files in the given directory path.
-        ---Each file name in the return table is relative to
-        ---the given path.
+        ---Each file name in the return table is relative to the path.
         ---@param path string Directory path.
         ---@return string[]
         listFiles = function(path)
         end,
 
-        ---Returns the file path converted to a canonical form
-        ---for the current platform.
+        ---Returns the file path converted to a canonical form for the current
+        ---platform.
         ---@param path string File path.
         ---@return string
         normalizePath = function(path)
@@ -302,7 +304,8 @@ app = {
         end
     },
 
-    ---A set of functions to handle the color for Image pixels as unsigned integers.
+    ---A set of functions to handle the color for Image pixels as unsigned
+    ---integers.
     pixelColor = {
         ---Constructs a 16-bit unsigned integer for grayscale images.
         ---@param gray integer Gray value. Black is 0, white is 255.
@@ -377,9 +380,9 @@ app = {
         end,
     },
 
-    -- Allows document, application and tool preferences to be get or set.
-    -- See https://github.com/aseprite/api/blob/main/api/app_preferences.md 
-    -- and https://github.com/aseprite/aseprite/blob/main/data/pref.xml .
+    ---Allows document, application and tool preferences to be get or set.
+    ---See https://github.com/aseprite/api/blob/main/api/app_preferences.md
+    ---and https://github.com/aseprite/aseprite/blob/main/data/pref.xml .
     preferences = {
         ---Returns the preferences of the given `Tool`.
         ---@param tool Tool|string
@@ -669,11 +672,10 @@ end
 Cel = {}
 
 
----Represents a color. The expected range for alpha (opacity,
----transparency) is [0, 255]. Expected ranges for red,
----green and blue are [0, 255]. The expected range for hue
----is [0.0, 360.0). Expected ranges for saturation, lightness
----and value are [0.0, 1.0].
+---Represents a color. The expected range for alpha (opacity, transparency) is
+---[0, 255]. Expected ranges for red, green and blue are [0, 255]. The expected
+---range for hue is [0.0, 360.0). Expected ranges for saturation, lightness and
+---value are [0.0, 1.0].
 ---@class Color
 ---@field alpha integer Gets or sets the transparency.
 ---@field blue integer Gets or sets the blue color channel.
@@ -687,7 +689,7 @@ Cel = {}
 ---@field hsvSaturation number Gets or sets the HSV saturation.
 ---@field hsvValue number Gets or sets the HSV value.
 ---@field hue number Gets or sets the hue.
----@field index integer Gets or sets the nearest (or exact) match palette index for this color.
+---@field index integer Gets or sets the nearest or exact match palette index for this color.
 ---@field lightness number Gets or sets the HSL lightness.
 ---@field red integer Gets or sets the red color channel.
 ---@field rgbaPixel integer Gets the 32-bit pixel (0xAABBGGRR).
@@ -710,40 +712,40 @@ Color = {}
 function Color()
 end
 
----Represents the color space/profile of a sprite, image, or image spec
+---Represents the color space, or profile, of a `Sprite`, `Image`, or
+---`ImageSpec`.
 ---@class ColorSpace
 ---@field name string Gets or sets the color space name.
 ColorSpace = {}
 
----Creates an empty color space, sRGB color space, or loads a color
----profile from the given ICC file specified in `fromFile` parameter.
+---Creates an empty color space, sRGB color space, or loads a color profile
+---from the given ICC file specified in `fromFile` parameter.
 ---@return ColorSpace
 ---@overload fun(options: {sRGB: boolean}): ColorSpace
 ---@overload fun(options: {fromFile: string}): ColorSpace
 function ColorSpace()
 end
 
----A class can be used to show input widgets in the screen
----to get some data from the user.
+---Creates dialog windows with input widgets on the screen to accept user input.
 ---@class Dialog
 ---@field bounds Rectangle Gets or sets the dialog bounds.
 ---@field data {[string]: boolean|string|integer|number|Color|Color[]}
 Dialog = {
-    ---Creates a button.
+    ---Appends a button to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, text: string, selected: boolean, focus: boolean, onclick: function}
     ---@return Dialog
     button = function(dialog, options)
     end,
 
-    ---Creates a canvas.
+    ---Appends a canvas to a dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, width: integer, height: integer, visible: boolean, autoScaling: boolean, onpaint: fun(event: {context: GraphicsContext}), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousemove: fun(event: MouseEvent), onmousedown: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), ondblclick: fun(event: MouseEvent), onwheel: fun(event: MouseEvent), ontouchmagnify: fun(event: TouchEvent)}
     ---@return Dialog
     canvas = function(dialog, options)
     end,
 
-    ---Creates a check box.
+    ---Appends a check box widget to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, text: string, selected: boolean, onclick: function}
     ---@return Dialog
@@ -755,48 +757,48 @@ Dialog = {
     close = function(dialog)
     end,
 
-    ---Creates a color picker.
+    ---Appends a color picker widget to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, color: Color, onchange: function}
     ---@return Dialog
     color = function(dialog, options)
     end,
 
-    ---Creates a combo box, or drop down list.
+    ---Appends a combo box, or drop down menu, to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, option: string, options: string[], onchange: function}
     ---@return Dialog
     combobox = function(dialog, options)
     end,
 
-    ---Creates a text entry field.
+    ---Appends a text entry field to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, text: string, focus: boolean, onchange: function}
     ---@return Dialog
     entry = function(dialog, options)
     end,
 
-    ---Creates a button to select one file to open or save.
+    ---Appends a button to select one file to open or save.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, title: string, open: boolean, save: boolean, filename: string|string[], filetypes: string[], onchange:function}
     ---@return Dialog
     file = function(dialog, options)
     end,
 
-    ---Creates a static label.
+    ---Appends a static label to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, text: string}
     ---@return Dialog
     label = function(dialog, options)
     end,
 
-    ---Changes properties of the given widget given by identifier.
+    ---Changes properties of the given widget given by string identifier.
     ---@param dialog Dialog
     ---@param options {id: string, visible: boolean, enabled: boolean}|{[string]: any}
     modify = function(dialog, options)
     end,
 
-    ---Creates a new row.
+    ---Creates a new row in the dialog.
     ---@param dialog Dialog
     ---@param options {always: boolean}
     ---@return Dialog
@@ -804,16 +806,16 @@ Dialog = {
     newrow = function(dialog, options)
     end,
 
-    ---Creates an entry field to input a number.
-    ---When assigning the text option, the number should
-    ---be formatted to a string.
+    ---Appends an entry field for a number to the dialog.
+    ---When assigning the text option, the number should be formatted to a
+    ---string.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, text: string, decimals: integer, onchange: function}
     ---@return Dialog
     number = function(dialog, options)
     end,
 
-    ---Creates a radio button.
+    ---Appends a radio button widget to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, text: string, selected: boolean, onchange: function}
     ---@return Dialog
@@ -825,24 +827,24 @@ Dialog = {
     repaint = function(dialog)
     end,
 
-    ---Creates a separator.
+    ---Creates a separator line in the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, text: string}
     ---@return Dialog
     separator = function(dialog, options)
     end,
 
-    ---Creates a widget with an array of colors.
+    ---Appends a widget with an array of colors to the dialog.
     ---Colors can be picked when the mode is "pick".
-    ---They can be sorted and accessed as an array when
-    ---the mode is "sort". The default mode is "pick".
+    ---They can be sorted and accessed as an array when the mode is "sort".
+    ---The default mode is "pick".
     ---@param dialog Dialog
     ---@param options {id: string, label: string, colors: Color[], mode: "pick"|"sort", onclick: fun(event: {color: Color, button: MouseButton})}
     ---@return Dialog
     shades = function(dialog, options)
     end,
 
-    ---Makes the dialog visible to the user.
+    ---Displays the dialog on the screen.
     ---When wait is true, blocks other user interactions.
     ---@param dialog Dialog
     ---@param options {wait: boolean, bounds: Rectangle}
@@ -850,7 +852,7 @@ Dialog = {
     show = function(dialog, options)
     end,
 
-    ---Creates a slider.
+    ---Appends a slider widget to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, min: integer, max: integer, value: integer, onchange: function, onrelease: function}
     ---@return Dialog
@@ -1537,9 +1539,9 @@ Rectangle = {
     contains = function(rectangle, otherRectangle)
     end,
 
-    ---Returns a new rectangle which is the intersection of
-    ---`rectangle` and `otherRectangle`. If the rectangles
-    ---do not intersect, then the result will be empty.
+    ---Returns a new rectangle which is the intersection of `rectangle` and
+    ---`otherRectangle`. If the rectangles do not intersect, then the result
+    ---will be empty.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return Rectangle
@@ -1604,8 +1606,8 @@ Selection = {
     deselect = function(selection)
     end,
 
-    ---Creates an intersection in `selection` between
-    ---the given `rectangle` or `otherSelection`.
+    ---Creates an intersection in `selection` between the given `rectangle` or
+    ---`otherSelection`.
     ---@param selection Selection
     ---@param rectangle Rectangle
     ---@overload fun(selection: Selection, otherSelection: Selection)
@@ -1650,9 +1652,9 @@ end
 Site = {}
 
 
----Represents a non-uniform scalar with two dimensions,
----i.e., width and height. Dimensions may be negative or
----zero; they are not validated by the constructor.
+---Represents a non-uniform scalar with two dimensions, i.e., width and height.
+---Dimensions may be negative or zero; they are not validated by the
+---constructor.
 ---@class Size
 ---@field h integer Gets or sets the height.
 ---@field height integer Gets or sets the height.
@@ -1677,7 +1679,6 @@ Size {
 }
 
 ---Creates a new `Size` instance with the given dimensions.
----
 ---Width and height default to zero.
 ---@return Size
 ---@overload fun(otherSize: Size): Size
@@ -1699,6 +1700,8 @@ end
 Slice = {}
 
 
+---Represents a file in working memory. Holds cels, frames, layers, slices,
+---tags and tilesets.
 ---@class Sprite
 ---@field backgroundLayer Layer|nil Gets a background layer, if any, for which the sprite is a direct parent.
 ---@field bounds Rectangle Gets the sprite bounds.
@@ -1722,8 +1725,7 @@ Slice = {}
 ---@field transparentColor integer Gets or sets the transparent color.
 ---@field width integer Gets or sets the width.
 Sprite = {
-    ---Assigns a new color space to the sprite without modifying
-    ---the sprite pixels.
+    ---Assigns a new color space to the sprite without modifying pixels.
     ---@param sprite Sprite
     ---@param colorSpace ColorSpace
     assignColorSpace = function(sprite, colorSpace)
@@ -1735,8 +1737,8 @@ Sprite = {
     close = function(sprite)
     end,
 
-    ---Converts all the sprite pixels to a new color space
-    ---so the image looks the same as in the previous color space.
+    ---Converts all the sprite pixels to a new color space so the image looks
+    ---the same as in the previous color space.
     ---@param sprite Sprite
     ---@param colorSpace ColorSpace
     convertColorSpace = function(sprite, colorSpace)
@@ -1752,10 +1754,9 @@ Sprite = {
     crop = function(sprite, x, y, width, height)
     end,
 
-    ---Deletes the given `cel`. If the cel is from a transparent
-    ---layer, the cel is completely deleted, but if the cel is
-    ---from a background layer, the cel will be deleted with
-    ---the background color.
+    ---Deletes the given `cel`.
+    ---If the cel is from a background layer, the cel will be replaced with
+    ---another that contains an image filled with `app.bgColor`.
     ---@param sprite Sprite
     ---@param cel Cel
     ---@overload fun(sprite: Sprite, layer: Layer, frame: Frame)
@@ -1815,13 +1816,13 @@ Sprite = {
     loadPalette = function(sprite, filename)
     end,
 
-    ---Creates a new cel in the given layer. Throws an error if the
-    ---layer is a group.
+    ---Creates a new cel in the given layer. Throws an error if the layer is a
+    ---group.
     ---If a frame is not provided, defaults to the first frame.
-    ---If an image is not provided, a new image will be created with
-    ---the size of the sprite canvas.
-    ---If a position is not provided, the cel defaults to the sprite
-    ---top-left corner.
+    ---If an image is not provided, a new image will be created with the size
+    ---of the sprite canvas.
+    ---If a position is not provided, the cel defaults to the sprite top-left
+    ---corner.
     ---@param sprite Sprite
     ---@param layer Layer Leaf layer.
     ---@param frame? Frame|integer Defaults to frame one.
@@ -1866,8 +1867,8 @@ Sprite = {
     newSlice = function(sprite, rectangle)
     end,
 
-    ---Creates a new tag that contains the frames between `fromFrame`
-    ---and `toFrame`, lower and upper bound inclusive.
+    ---Creates a new tag that contains the frames between `fromFrame` and
+    ---`toFrame`, lower and upper bound inclusive.
     ---@param sprite Sprite
     ---@param fromFrame Frame|integer
     ---@param toFrame Frame|integer
@@ -1876,8 +1877,7 @@ Sprite = {
     end,
 
     ---Inserts an empty tile into the given tileset at a tileIndex.
-    ---If tileIndex is not provided, the new tile is added to
-    ---the end of the tileset.
+    ---If tileIndex is not provided, the new tile is appended at the end.
     ---@param sprite Sprite
     ---@param tileset Tileset
     ---@param tileIndex integer?
@@ -1912,8 +1912,8 @@ Sprite = {
     saveAs = function(sprite, filename)
     end,
 
-    ---Saves a copy of the sprite in the given file but doesn't
-    ---change the saved state of the sprite.
+    ---Saves a copy of the sprite in the given file but doesn't change the
+    ---saved state of the sprite.
     ---@param sprite Sprite
     ---@param filename string
     saveCopyAs = function(sprite, filename)
@@ -2010,16 +2010,16 @@ Timer = {
 function Timer(options)
 end
 
----References a drawing tool. At the moment this class is used only
----to get and set the active tool (`app.activeTool`), or to paint
----on the canvas (`tool` parameter in `app.useTool()`).
+---References a drawing tool. At the moment this class is used only to get and
+---set the `app.activeTool` or to paint on the canvas, i.e., the `tool`
+---parameter in `app.useTool()`.
 ---@class Tool
 ---@field id string The identifier specified in the `gui.xml` file.
 Tool = {}
 
 
----Received as the first parameter in the function associated to a
----canvas widget ontouch event.
+---Received as the first parameter in the function associated to a canvas
+---widget ontouch event.
 ---@class TouchEvent
 ---@field magnification number Magnification factor to apply.
 ---@field x integer Horizontal coordinate, starting from the top-left corner.
@@ -2028,8 +2028,7 @@ TouchEvent = {}
 
 
 ---Represents a Universally unique identifier.
----May be indexed, converted to a string or checked
----for equality.
+---May be indexed, converted to a string or checked for equality.
 ---@class Uuid
 Uuid = {}
 
@@ -2038,9 +2037,9 @@ Uuid = {}
 function Uuid()
 end
 
----Represents a version number and provides an easy way to
----compare if the `app.version` is greater or equal than an
----expected version. See https://semver.org/ .
+---Represents a version number and provides an easy way to compare if the
+---`app.version` is greater or equal than an expected version.
+---See https://semver.org/ .
 ---@class Version
 ---@field major integer Major change number.
 ---@field minor integer Minor change number.
