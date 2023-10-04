@@ -175,6 +175,7 @@ app = {
         ModifySelection = function(options)
         end,
 
+        ---Beware, may cause crashes in version 1.2.40 or older.
         Refresh = function()
         end,
 
@@ -679,8 +680,8 @@ Cel = {}
 ---@class Color
 ---@field alpha integer Gets or sets the transparency.
 ---@field blue integer Gets or sets the blue color channel.
----@field gray integer Gets or sets the color's gray value.
----@field grayPixel integer Gets the 16-bit gray pixel (0xAAVV).
+---@field gray number Gets or sets the color's gray value. The getter is based on HSL lightness.
+---@field grayPixel integer Gets the 16-bit gray pixel (0xAAVV) based on HSL lightness.
 ---@field green integer Gets or sets the green color channel.
 ---@field hslHue number Gets or sets the HSL hue.
 ---@field hslLightness number Gets or sets the HSL lightness.
@@ -1717,10 +1718,12 @@ Slice = {}
 ---@field layers Layer[] Gets the layers contained by the sprite.
 ---@field palettes Palette[] Gets the palettes contained by the sprite.
 ---@field pixelRatio Size Gets or sets the sprite pixel ratio.
+---@field properties userdata Gets or sets user- and extension-defined properties of the sprite.
 ---@field selection Selection Gets or sets the active selection.
 ---@field slices Slice[] Gets the slices contained by the sprite.
 ---@field spec ImageSpec Gets the sprite's image specification.
 ---@field tags Tag[] Gets the tags contained by the sprite.
+---@field tileManagementPlugin string|nil Gets or sets external plugin string for custom tile management.
 ---@field tilesets Tileset[] Gets the tilesets contained by the sprite.
 ---@field transparentColor integer Gets or sets the transparent color.
 ---@field width integer Gets or sets the width.
