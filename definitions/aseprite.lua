@@ -680,7 +680,7 @@ Cel = {}
 ---@class Color
 ---@field alpha integer Gets or sets the transparency.
 ---@field blue integer Gets or sets the blue color channel.
----@field gray number Gets or sets the color's gray value. The getter is based on HSL lightness.
+---@field gray number Gets the color's gray value as a number based on HSL lightness. Sets as an integer.
 ---@field grayPixel integer Gets the 16-bit gray pixel (0xAAVV) based on HSL lightness.
 ---@field green integer Gets or sets the green color channel.
 ---@field hslHue number Gets or sets the HSL hue.
