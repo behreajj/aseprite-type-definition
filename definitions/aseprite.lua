@@ -52,7 +52,7 @@ app = {
 
     ---A table with parameters specified as `--script-param key=value` in the
     ---CLI or as `<param>` in `user.aseprite-keys` or `gui.xml` file.
-    params = undefined --[[@as {[string]: string}]],
+    params = undefined --[[@as table<string, string>]],
 
     ---Gets the range of elements chosen in the timeline or palette bar.
     range = undefined --[[@as Range]],
@@ -305,8 +305,7 @@ app = {
         end
     },
 
-    ---A set of functions to handle the color for Image pixels as unsigned
-    ---integers.
+    ---A module to handle the color for Image pixels as unsigned integers.
     pixelColor = {
         ---Constructs a 16-bit unsigned integer for grayscale images.
         ---@param gray integer Gray value. Black is 0, white is 255.
@@ -681,7 +680,7 @@ Cel = {}
 ---@field alpha integer Gets or sets the transparency.
 ---@field blue integer Gets or sets the blue color channel.
 ---@field gray number Gets the color's gray value as a number based on HSL lightness. Sets as an integer.
----@field grayPixel integer Gets the 16-bit gray pixel (0xAAVV) based on HSL lightness.
+---@field grayPixel integer Gets a 16-bit gray pixel (0xAAVV), based on HSL lightness.
 ---@field green integer Gets or sets the green color channel.
 ---@field hslHue number Gets or sets the HSL hue.
 ---@field hslLightness number Gets or sets the HSL lightness.
@@ -693,7 +692,7 @@ Cel = {}
 ---@field index integer Gets or sets the nearest or exact match palette index for this color.
 ---@field lightness number Gets or sets the HSL lightness.
 ---@field red integer Gets or sets the red color channel.
----@field rgbaPixel integer Gets the 32-bit pixel (0xAABBGGRR).
+---@field rgbaPixel integer Gets a 32-bit pixel for RGB color mode (0xAABBGGRR).
 ---@field saturation number Gets or sets the saturation, context-dependent.
 ---@field value number Gets or sets the HSV value.
 Color = {}
@@ -1895,9 +1894,10 @@ Sprite = {
     ---`numTiles` specifies the number of initial tiles.
     ---@param sprite Sprite
     ---@return Tileset
+    ---@NOTE Rectangle fixed as of 10/30/2023
+    ---@overload fun(sprite: Sprite, rectangle: Rectangle, numTiles?: integer): Tileset
     ---@overload fun(sprite: Sprite, grid: Grid, numTiles?: integer): Tileset
     ---@overload fun(sprite: Sprite, anotherTileset: Tileset): Tileset
-    ---@NOTE The proper overload signature for Rectangles is unclear?
     newTileset = function(sprite)
     end,
 
