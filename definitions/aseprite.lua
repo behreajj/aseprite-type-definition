@@ -751,7 +751,7 @@ Dialog = {
 
     ---Appends a canvas to a dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, width: integer, height: integer, visible: boolean, autoScaling: boolean, onpaint: fun(event: {context: GraphicsContext}), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousemove: fun(event: MouseEvent), onmousedown: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), ondblclick: fun(event: MouseEvent), onwheel: fun(event: MouseEvent), ontouchmagnify: fun(event: TouchEvent)}
+    ---@param options {id: string, label: string, width: integer, height: integer, visible: boolean, autoscaling: boolean, onpaint: fun(event: {context: GraphicsContext}), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousemove: fun(event: MouseEvent), onmousedown: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), ondblclick: fun(event: MouseEvent), onwheel: fun(event: MouseEvent), ontouchmagnify: fun(event: TouchEvent)}
     ---@return Dialog
     canvas = function(dialog, options)
     end,
