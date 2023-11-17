@@ -452,6 +452,16 @@ json = {
 }
 
 
+---@enum Align
+Align = {
+    LEFT = 0x040000,
+    CENTER = 0x080000,
+    RIGHT = 0x100000,
+    TOP = 0x200000,
+    BOTTOM = 0x800000,
+}
+
+
 ---https://github.com/aseprite/aseprite/blob/main/src/doc/anidir.h#L16
 ---@enum AniDir
 AniDir = {
