@@ -780,7 +780,7 @@ Dialog = {
 
     ---Appends a button to select one file to open or save.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, title: string, open: boolean, save: boolean, filename: string|string[], filetypes: string[], onchange:function}
+    ---@param options {id: string, label: string, title: string, filename: string|string[], filetypes: string[], entry: boolean, open: boolean, save: boolean, onchange:function}
     ---@return Dialog
     file = function(dialog, options)
     end,
