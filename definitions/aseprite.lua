@@ -865,7 +865,7 @@ Dialog = {
     ---Displays the dialog on the screen.
     ---When wait is true, blocks other user interactions.
     ---@param dialog Dialog
-    ---@param options {wait: boolean, bounds: Rectangle}
+    ---@param options {autoscrollbars: boolean, bounds: Rectangle, wait: boolean}
     ---@overload fun(dialog: Dialog)
     show = function(dialog, options)
     end,
