@@ -740,6 +740,7 @@ end
 ---@class Dialog
 ---@field bounds Rectangle Gets or sets the dialog bounds.
 ---@field data {[string]: boolean|string|integer|number|Color|Color[]}
+---@NOTE TODO: Several widgets share common fields that are not listed in the docs per each entry.
 Dialog = {
     ---Appends a button to the dialog.
     ---@param dialog Dialog
@@ -779,6 +780,13 @@ Dialog = {
     ---@param options {id: string, label: string, option: string, options: string[], onchange: function}
     ---@return Dialog
     combobox = function(dialog, options)
+    end,
+
+    ---Marks the end of both the last tab and the group of tabs to which it
+    ---belongs.
+    ---@param dialog Dialog
+    ---@param options {id: string, selected: string, align: Align|integer, onchange: function}
+    endtabs = function(dialog, options)
     end,
 
     ---Appends a text entry field to the dialog.
@@ -867,6 +875,13 @@ Dialog = {
     ---@param options {id: string, label: string, min: integer, max: integer, value: integer, onchange: function, onrelease: function}
     ---@return Dialog
     slider = function(dialog, options)
+    end,
+
+    ---Creates a new tab. If called after a prior tab call, closes the prior
+    ---and starts a new one.
+    ---@param dialog Dialog
+    ---@param options {id: string, text: string, onclick: function}
+    tab = function(dialog, options)
     end,
 }
 
