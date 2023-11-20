@@ -796,7 +796,9 @@ Dialog = {
     entry = function(dialog, options)
     end,
 
-    ---Appends a button to select one file to open or save.
+    ---Appends a button to select one file to open or save. When 'entry' is
+    ---present, a text entry field will appear to the left of an ellipsis file
+    ---browser button.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, title: string, filename: string|string[], filetypes: string[], entry: boolean, open: boolean, save: boolean, onchange:function}
     ---@return Dialog
@@ -1128,6 +1130,7 @@ end
 ---@class Image
 ---@field bounds Rectangle Gets the image bounds with origin equal to (0, 0).
 ---@field bytes string Gets or sets a byte string that contains raw image data.
+---@field bytesPerPixel integer Gets the number of bytes per pixel.
 ---@field cel Cel Gets the cel to which this image belongs or `nil`.
 ---@field colorMode ColorMode Gets the image color mode.
 ---@field height integer Gets the image height.
@@ -1868,9 +1871,9 @@ Sprite = {
     end,
 
     ---Creates a copy of the given `Frame` object or frame number and returns
-    ---a `Frame` that points to the newly created frame at `frameNumber`.
+    ---the copy. Defaults to the last frame in the sprite.
     ---@param sprite Sprite
-    ---@param frame Frame|integer
+    ---@param frame? Frame|integer
     ---@return Frame
     newFrame = function(sprite, frame)
     end,
