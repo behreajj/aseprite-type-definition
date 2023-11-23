@@ -915,19 +915,21 @@ Editor = {
 ---A collection of listeners for specific events.
 ---@class Events
 Events = {
-    ---Connects the given `function` with the given event.
+    ---Connects the given function with the given event.
     ---Returns the listenerCode.
-    ---@param eventName string the event name/code/identifier
+    ---@param ev Events
+    ---@param eventName string
     ---@param func function
     ---@return integer
-    on = function(eventName, func)
+    on = function(ev, eventName, func)
     end,
 
     ---Disconnects the given function from all events in the object,
     ---or stops only the connection identified by listenerCode
+    ---@param ev Events
     ---@param listenerCode integer
-    ---@overload fun(func: function)
-    off = function(listenerCode)
+    ---@overload fun(ev: Events, func: function)
+    off = function(ev, listenerCode)
     end,
 }
 
