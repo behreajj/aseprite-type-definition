@@ -890,7 +890,7 @@ Dialog = {
 ---Creates a new `Dialog` instance.
 ---@return Dialog
 ---@overload fun(title: string): Dialog
----@overload fun(options: {title: string, onclose: function}): Dialog
+---@overload fun(options: {title: string, notitlebar: boolean, parent: Dialog, onclose: function}): Dialog
 function Dialog()
 end
 
