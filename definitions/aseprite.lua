@@ -900,9 +900,11 @@ end
 ---@field sprite Sprite Gets the active sprite.
 ---@field spritePos Point Gets a point of the the mouse position on the sprite.
 Editor = {
-    ---Asks the user to select a point on the sprite.
-    ---@param options {title: string, point: Point, onclick: function, onchange: function, oncancel: function}
-    askPoint = function(options)
+    ---Asks the user to select a point on the sprite. Decorations may include
+    ---"rulers" and "dimmed".
+    ---@param editor Editor
+    ---@param options {title: string, point: Point, decorate: table, onclick: function, onchange: function, oncancel: function}
+    askPoint = function(editor, options)
     end,
 
     ---Cancels the askPoint action.
