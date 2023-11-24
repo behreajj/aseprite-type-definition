@@ -1992,7 +1992,7 @@ Tag = {}
 ---A tile from a `Tileset`.
 ---@class Tile
 ---@field color Color Gets or sets the user-defined color.
----@field data string Gets or sets the user-defined data string.
+---@field data string Gets or sets custom data assigned to the tile.
 ---@field image Image Gets or sets the tile image.
 ---@field index integer Gets the tile's index in its tileset.
 Tile = {}
@@ -2002,7 +2002,7 @@ Tile = {}
 ---@class Tileset
 ---@field baseIndex integer Gets or sets the base index.
 ---@field color Color Gets or sets the user-defined color of this tileset.
----@field data string Gets or sets the user-defined data string of this tileset.
+---@field data string Gets or sets custom data assigned to the tileset.
 ---@field grid Grid Gets the grid offset and size.
 ---@field name string Gets or sets the tileset name.
 ---@operator len(): integer
