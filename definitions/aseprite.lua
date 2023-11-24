@@ -1345,7 +1345,7 @@ KeyEvent = {
 ---@field blendMode BlendMode|nil Gets or sets the layer blend mode. `nil` if the layer is a group.
 ---@field cels Cel[] Gets the cels table in the layer.
 ---@field color Color Gets or sets the layer's color in the timeline.
----@field data string Gets or sets the layer's custom user data.
+---@field data string Gets or sets custom data assigned to the layer.
 ---@field id integer Gets the layer's id.
 ---@field isBackground boolean Whether the layer is a background.
 ---@field isCollapsed boolean Gets or sets a layer's collapsed state in the timeline.
@@ -1740,6 +1740,7 @@ Slice = {}
 ---@field cels Cel[] Gets the cels contained by the sprite.
 ---@field colorMode ColorMode Gets the sprite's color mode.
 ---@field colorSpace ColorSpace Gets or sets the sprite color space.
+---@field data string Gets or sets custom data assigned to the sprite. 
 ---@field events Events Events to associate functions that can act as listeners.
 ---@field filename string Gets or sets the sprite file name.
 ---@field frames Frame[] Gets the frames contained by the sprite.
