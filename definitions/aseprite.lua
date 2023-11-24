@@ -1979,7 +1979,7 @@ end
 ---@class Tag
 ---@field aniDir AniDir Gets or sets the tag animation direction.
 ---@field color Color Gets or sets the tag's color in the timeline.
----@field data string The user-defined data of the tag.
+---@field data string Gets or sets custom data assigned to the tag.
 ---@field frames integer Gets the number of frames contained by the tag.
 ---@field fromFrame Frame|nil Gets or sets the `Frame` where the tag starts.
 ---@field name string Gets or sets the tag name.
