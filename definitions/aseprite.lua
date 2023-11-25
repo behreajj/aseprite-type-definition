@@ -1243,10 +1243,12 @@ Image = {
     resize = function(image, width, height)
     end,
 
-    ---Saves the image as a sprite in the given `filename`.
+    ---Saves the image as a sprite in the given `filename`. Returns
+    ---true if the operation is successful, false if not.
     ---@param image Image
     ---@param filename string
     ---@overload fun(image: Image, options: {filename: string, palette: Palette})
+    ---@return boolean
     saveAs = function(image, filename)
     end,
 
@@ -1942,16 +1944,20 @@ Sprite = {
     resize = function(sprite, width, height)
     end,
 
-    ---Saves the sprite to the given file and mark the sprite as saved.
+    ---Saves the sprite to the given file and mark the sprite as saved. Returns
+    ---true if the operation is successful, false if not.
     ---@param sprite Sprite
     ---@param filename string
+    ---@return boolean
     saveAs = function(sprite, filename)
     end,
 
     ---Saves a copy of the sprite in the given file but doesn't change the
-    ---saved state of the sprite.
+    ---saved state of the sprite. Returns true if the operation is successful,
+    ---false if not.
     ---@param sprite Sprite
     ---@param filename string
+    ---@return boolean
     saveCopyAs = function(sprite, filename)
     end,
 
