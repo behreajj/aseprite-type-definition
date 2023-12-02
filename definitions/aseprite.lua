@@ -286,7 +286,7 @@ app = {
         normalizePath = function(path)
         end,
 
-        ---Creates all directories needed to access to the path.
+        ---Creates all directories needed to access the path.
         ---@param path string Path.
         ---@return boolean
         makeAllDirectories = function(path)
@@ -437,7 +437,7 @@ app = {
 ---Module for encoding and decoding JSON strings.
 json = {
     ---Parses `jsonText`, returning a JSON object.
-    ---Note that `number` fields will be parsed to `float`s,
+    ---`number` fields will be parsed to `float`s,
     ---even if they were originally `integer`s.
     ---@param jsonText string
     ---@return userdata
@@ -676,6 +676,7 @@ end
 ---@field layer Layer Gets the layer to which the cel belongs.
 ---@field opacity integer Gets or sets the cel opacity.
 ---@field position Point Gets or sets the cel position.
+---@field properties table<string, any> Gets or sets the cel's user-defined properties.
 ---@field sprite Sprite Gets the sprite to which the cel belongs.
 ---@field zIndex integer Gets or sets the cel's z offset in [-32768, 32767].
 ---@NOTE also includes frameNumber property, but unclear what happens if frame is nil
@@ -779,6 +780,7 @@ Dialog = {
     ---@param dialog Dialog
     ---@param options {id: string, label: string, option: string, options: string[], onchange: function}
     ---@return Dialog
+    ---@NOTE The focus optional property does not work for drop down.
     combobox = function(dialog, options)
     end,
 
@@ -1032,8 +1034,8 @@ GraphicsContext = {
     fillRect = function(gc, rectangle)
     end,
 
-    ---Draws on the canvas the given text string
-    ---at a position specified by the coordinates.
+    ---Draws on the canvas the given text string at a position specified by
+    ---the coordinates.
     ---@param gc GraphicsContext
     ---@param text string
     ---@param x integer
@@ -1100,13 +1102,13 @@ GraphicsContext = {
     end,
 
     ---Paints the edges of the current path with the current color
-    ---and current width.
+    ---and stroke weight.
     ---@param gc GraphicsContext
     stroke = function(gc)
     end,
 
     ---Paints the edges of the given rectangle with the current color
-    ---and current width.
+    ---and stroke weight.
     ---@param gc GraphicsContext
     ---@param rectangle Rectangle
     strokeRect = function(gc, rectangle)
@@ -1114,8 +1116,7 @@ GraphicsContext = {
 }
 
 
----Represents the grid that governs how tiles are placed
----in a tile map.
+---Represents the grid that governs how tiles are placed in a tile map.
 ---@class Grid
 ---@field origin Point Gets the grid offset relative to the canvas.
 ---@field tileSize Size Gets the tile width and height.
@@ -1202,15 +1203,17 @@ Image = {
     getPixel = function(image, x, y)
     end,
 
-    ---Returns true if all pixels in the image are equal to the transparent color.
+    ---Returns true if all pixels in the image are equal to the transparent
+    ---color.
     ---@param image Image
     ---@return boolean
     isEmpty = function(image)
     end,
 
-    ---Evaluates whether the provided image has the same dimensions as the instance image,
-    ---is the same color mode, and contains the same pixel colors. Does not check
-    ---for difference in color space or transparent color.
+    ---Evaluates whether the provided image has the same dimensions as the
+    ---instance image, is the same color mode, and contains the same pixel
+    ---colors. Does not check for difference in color space or transparent
+    ---color.
     ---@param image Image
     ---@param otherImage Image
     ---@return boolean
@@ -1244,7 +1247,7 @@ Image = {
     end,
 
     ---Saves the image as a sprite in the given `filename`. Returns
-    ---true if the operation is successful, false if not.
+    ---true if the operation is successful.
     ---@param image Image
     ---@param filename string
     ---@overload fun(image: Image, options: {filename: string, palette: Palette})
@@ -1268,6 +1271,7 @@ Image = {
     ---@param sourceImage Image
     ---@param position? Point
     ---@deprecated
+    ---@see Image.drawImage
     putImage = function(destinationImage, sourceImage, position)
     end,
 
@@ -1277,6 +1281,7 @@ Image = {
     ---@param y integer
     ---@param color integer
     ---@deprecated
+    ---@see Image.drawPixel
     putPixel = function(image, x, y, color)
     end,
 
@@ -1288,6 +1293,7 @@ Image = {
     ---@param frameNumber integer
     ---@param position Point
     ---@deprecated
+    ---@see Image.drawSprite
     putSprite = function(destinationImage, sourceSprite, frameNumber, position)
     end
 }
@@ -1366,6 +1372,7 @@ KeyEvent = {
 ---@field opacity integer|nil Gets or sets the layer opacity. `nil` if the `Layer` is a group.
 ---@field parent Sprite|Layer Gets or sets the layer's parent. May be a `Sprite` for top-level layers.
 ---@field previous Layer|nil Gets the previous layer, if any.
+---@field properties table<string, any> Gets or sets the layer's user-defined properties.
 ---@field sprite Sprite Gets the sprite to which the layer belongs.
 ---@field stackIndex integer Gets or sets the layer's index in its parent's layers table.
 ---@field tileset Tileset|nil If the layer is a tile map, gets or sets the layer's tile set.
@@ -1726,10 +1733,11 @@ end
 ---@class Slice
 ---@field bounds Rectangle|nil The slice's bounding rectangle, if any.
 ---@field center Rectangle|nil The central rectangle of a slice's nine-slice, if any.
----@field color Color The user-defined color of the slice in the timeline.
----@field data string The user-defined data of the slice.
+---@field color Color Gets or sets the slice's color.
+---@field data string Gets or sets custom data assigned to the slice.
 ---@field name string Gets or sets the slice's name.
 ---@field pivot Point|nil The slice's pivot, if any.
+---@field properties table<string, any> Gets or sets the slice's user-defined properties.
 ---@field sprite Sprite The sprite to which the slice belongs.
 Slice = {}
 
@@ -1742,7 +1750,7 @@ Slice = {}
 ---@field cels Cel[] Gets the cels contained by the sprite.
 ---@field colorMode ColorMode Gets the sprite's color mode.
 ---@field colorSpace ColorSpace Gets or sets the sprite color space.
----@field data string Gets or sets custom data assigned to the sprite. 
+---@field data string Gets or sets custom data assigned to the sprite.
 ---@field events Events Events to associate functions that can act as listeners.
 ---@field filename string Gets or sets the sprite file name.
 ---@field frames Frame[] Gets the frames contained by the sprite.
@@ -1752,7 +1760,7 @@ Slice = {}
 ---@field layers Layer[] Gets the layers contained by the sprite.
 ---@field palettes Palette[] Gets the palettes contained by the sprite.
 ---@field pixelRatio Size Gets or sets the sprite pixel ratio.
----@field properties userdata Gets or sets user- and extension-defined properties of the sprite.
+---@field properties table<string, any> Gets or sets the sprite's user-defined properties.
 ---@field selection Selection Gets or sets the active selection.
 ---@field slices Slice[] Gets the slices contained by the sprite.
 ---@field spec ImageSpec Gets the sprite's image specification.
@@ -1945,7 +1953,7 @@ Sprite = {
     end,
 
     ---Saves the sprite to the given file and mark the sprite as saved. Returns
-    ---true if the operation is successful, false if not.
+    ---true if the operation is successful.
     ---@param sprite Sprite
     ---@param filename string
     ---@return boolean
@@ -1953,8 +1961,7 @@ Sprite = {
     end,
 
     ---Saves a copy of the sprite in the given file but doesn't change the
-    ---saved state of the sprite. Returns true if the operation is successful,
-    ---false if not.
+    ---saved state of the sprite. Returns true if the operation is successful.
     ---@param sprite Sprite
     ---@param filename string
     ---@return boolean
@@ -1989,6 +1996,7 @@ end
 ---@field frames integer Gets the number of frames contained by the tag.
 ---@field fromFrame Frame|nil Gets or sets the `Frame` where the tag starts.
 ---@field name string Gets or sets the tag name.
+---@field properties table<string, any> Gets or sets the tag's user-defined properties.
 ---@field repeats integer Gets or sets the number of repeats. Zero is infinity.
 ---@field sprite Sprite Gets the sprite to which the tag belongs.
 ---@field toFrame Frame|nil Gets or sets the `Frame` where the tag ends.
@@ -2001,6 +2009,7 @@ Tag = {}
 ---@field data string Gets or sets custom data assigned to the tile.
 ---@field image Image Gets or sets the tile image.
 ---@field index integer Gets the tile's index in its tileset.
+---@field properties table<string, any> Gets or sets the tile's user-defined properties.
 Tile = {}
 
 
@@ -2011,6 +2020,7 @@ Tile = {}
 ---@field data string Gets or sets custom data assigned to the tileset.
 ---@field grid Grid Gets the grid offset and size.
 ---@field name string Gets or sets the tileset name.
+---@field properties table<string, any> Gets or sets the tileset's user-defined properties.
 ---@operator len(): integer
 Tileset = {
     ---Returns the tile in the given index.
@@ -2025,6 +2035,7 @@ Tileset = {
     ---@param index integer
     ---@return Image
     ---@deprecated
+    ---@see Tileset.tile
     getTile = function(tileset, index)
     end,
 }
