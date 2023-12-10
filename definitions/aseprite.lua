@@ -1327,15 +1327,16 @@ ImageSpec = {}
 function ImageSpec()
 end
 
+---Represents a key event used by listener methods of a canvas widget.
 ---@class KeyEvent
----@field altKey boolean
+---@field altKey boolean Whether the `Alt` key was pressed.
 ---@field code string A string identifier for the key. See https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values .
----@field ctrlKey boolean
+---@field ctrlKey boolean Whether the `Ctrl` key was pressed.
 ---@field key string A string containing the pressed/released Unicode character.
----@field metaKey boolean
+---@field metaKey boolean Whether the `Windows` or `Command` key was pressed.
 ---@field repeatCount integer Number of times the key was autorepeated.
----@field shiftKey boolean
----@field spaceKey boolean
+---@field shiftKey boolean Whether the `Shift` key was pressed.
+---@field spaceKey boolean Whether the `Space` key was pressed.
 KeyEvent = {
     ---Stops propagating this event to other parent widget/main
     ---Aseprite window. Use this in case that the canvas widget
@@ -1386,21 +1387,23 @@ Layer = {
 }
 
 
+---Represents a mouse event used by listener methods of a canvas widget.
 ---@class MouseEvent
----@field altKey boolean
----@field button MouseButton
----@field ctrlKey boolean
----@field deltaX number|nil
----@field deltaY number|nil
----@field metaKey boolean
----@field pressure number
----@field shiftKey boolean
----@field spaceKey boolean
----@field x integer
----@field y integer
+---@field altKey boolean Whether the `Alt` key was pressed.
+---@field button MouseButton The button pressed or released by the user.
+---@field ctrlKey boolean Whether the `Ctrl` key was pressed.
+---@field deltaX number|nil Change in mouse wheel x.
+---@field deltaY number|nil Change in mouse wheel y.
+---@field metaKey boolean Whether the `Windows` or `Command` key was pressed.
+---@field pressure number Pen pressure when the event comes from a stylus.
+---@field shiftKey boolean Whether the `Shift` key was pressed.
+---@field spaceKey boolean Whether the `Space` key was pressed.
+---@field x integer The horizontal mouse position relative to the canvas widget.
+---@field y integer The vertical mouse position relative to the canvas widget.
 MouseEvent = {}
 
 
+---Represents an array of `Color` objects, beginning at index 0.
 ---@class Palette
 ---@field frame Frame|nil Gets the first frame, if any.
 ---@operator len(): integer
@@ -2024,13 +2027,15 @@ Tile = {}
 ---@operator len(): integer
 Tileset = {
     ---Returns the tile in the given index.
+    ---The index goes from `0` to `#tileset - 1`.
+    ---Returns `nil` if the index is out of bounds.
     ---@param tileset Tileset
     ---@param index integer
-    ---@return Tile
+    ---@return Tile|nil
     tile = function(tileset, index)
     end,
 
-    ---Returns the image of tile in the given index.
+    ---Returns the image of the tile in the given index.
     ---@param tileset Tileset
     ---@param index integer
     ---@return Image
