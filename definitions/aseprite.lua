@@ -129,28 +129,69 @@ app = {
 
     ---Executes the command named `CommandName` with the parameters provided.
     ---See https://www.aseprite.org/api/app_command .
+    ---@NOTE AutocropSprite, Stroke could not be found in source code.
+    ---@NOTE SliceProperties, Cancel omitted until further testing.
     command = {
+        ---Displays the application about section.
+        About = function()
+        end,
+
+        ---Appends a color to the active palette. The source defaults to
+        ---"color".
+        ---@param options {source: "bg"|"color"|"fg", color: Color}
+        AddColor = function(options)
+        end,
+
+        ---Cycles the view mode from normal UI to context bar and timeline,
+        ---then to editor only mode, then back to normal.
+        AdvancedMode = function()
+        end,
+
+        ---Converts a layer to a background layer.
         BackgroundFromLayer = function()
         end,
 
-        ---When trimOutside is true, trims cels of excess alpha and trims cels
-        ---to sprite bounds.
-        ---@param options {bottom: integer, bounds: Rectangle, left: integer, right: integer, top: integer, trimOutside: boolean, ui: boolean}
+        ---Applies a brightness-contrast adjustment filter to the sprite.
+        ---@param options {brightness: integer, channels: integer|FilterChannels, contrast: integer, ui: boolean}
+        BrightnessContrast = function(options)
+        end,
+
+        ---Changes the sprite canvas size by the given dimensions.
+        ---Accepts either a boundary as a Rectangle or separate edges as
+        ---integers. When trimOutside is true, trims cels of excess alpha and
+        ---trims cels to sprite bounds.
+        ---@overload fun(options: {bottom: integer, left: integer, right: integer, top: integer, trimOutside: boolean, ui: boolean})
+        ---@param options {bounds: Rectangle, trimOutside: boolean, ui: boolean}
         CanvasSize = function(options)
         end,
 
+        ---Sets the active cel's opacity.
+        ---@param options {opacity: integer}
+        CelOpacity = function(options)
+        end,
+
+        ---Displays the cel properties dialog.
+        CelProperties = function()
+        end,
+
+        ---Changes the sprite's color mode.
         ---@param options {format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", ["dithering-matrix"]: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
         ChangePixelFormat = function(options)
         end,
 
-        ---@param options {ui: boolean, channels: integer, curve: Point[]|integer[][] }
+        ---@param options {channels: integer, curve: Point[]|integer[][], ui: boolean}
         ColorCurve = function(options)
         end,
 
         ---Extracts a palette from the sprite canvas.
         ---For the algorithm, 0 is default, 1 is RGB table, 2 is octree.
-        ---@param options {ui: boolean, withAlpha: boolean, maxColors: integer, useRange: boolean, algorithm:0|1|2}
+        ---@param options {algorithm:0|1|2, maxColors: integer, ui: boolean, useRange: boolean, withAlpha: boolean}
         ColorQuantization = function(options)
+        end,
+
+        ---Duplicates a layer. For tilemap layers, the new layer refers to the
+        ---same tile set as the source layer, by reference.
+        DuplicateLayer = function()
         end,
 
         FitScreen = function()
@@ -162,9 +203,11 @@ app = {
         GoToPreviousTab = function()
         end,
 
+        ---Inverts the active selection.
         InvertMask = function()
         end,
 
+        ---Converts a background layer to a regular layer.
         LayerFromBackground = function()
         end,
 
@@ -175,8 +218,44 @@ app = {
         ModifySelection = function(options)
         end,
 
-        ---Beware, may cause crashes in version 1.2.40 or older.
+        ---Creates a new layer. Layer type options `reference`, `tilemap` and
+        ---`group` are mutually exclusive. The `gridBounds` parameter applies
+        ---only to tilemap layers. The `ask` parameter refers to displaying a
+        ---dialog in the UI for the user to enter a layer name. The `top`
+        ---parameter places a new layer at the top of the stack if true; the
+        ---`before` parameter places the new layer before the active layer if
+        ---true, after if false.
+        ---@param options {ask: boolean, before: boolean, fromFile: boolean, fromClipboard: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
+        NewLayer = function(options)
+        end,
+
+        ---Reloads Aseprite's theme, or skin. May cause crashes in version
+        ---1.2.40 or older, especially with a custom theme.
         Refresh = function()
+        end,
+
+        ---This method has serious bugs, particularly with `fromFrame` and
+        ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
+        ---where possible.
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@deprecated
+        SaveFile = function(options)
+        end,
+
+        ---This method has serious bugs, particularly with `fromFrame` and
+        ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
+        ---where possible.
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@deprecated
+        SaveFileAs = function(options)
+        end,
+
+        ---This method has serious bugs, particularly with `fromFrame` and
+        ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
+        ---where possible.
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@deprecated
+        SaveFileCopyAs = function(options)
         end,
 
         ---Sets the palette swatch display size in the color bar.
@@ -184,15 +263,76 @@ app = {
         SetPaletteEntrySize = function(options)
         end,
 
+        ---Toggles snap to grid setting.
+        SnapToGrid = function()
+        end,
+
+        ---Displays the sprite properties dialog.
+        SpriteProperties = function()
+        end,
+
+        ---Scales a sprite, either to a target width and height, or by a
+        ---scalar. Not to be confused with changing a sprite's canvas size.
+        ---@param options {height: integer, lockRatio: boolean, method: "bilinear"|"nearest"|"rotSprite", scale: number, scaleX: number, scaleY: number, ui: boolean, width: integer}
+        SpriteSize = function(options)
+        end,
+
+        ---Swaps the colors in a sprite's background checkboard.
+        SwapCheckerboardColors = function()
+        end,
+
         ---Switches the foreground and background color.
         ---Reverses the order of swatches in shading ink.
         SwitchColors = function()
         end,
 
+        ---Toggles a sprite's symmetry mode. Any string other than "horizontal"
+        ---or "vertical" will evaluate to "none".
+        ---@param options {orientation: "horizontal"|"none"|"vertical"}
+        SymmetryMode = function(options)
+        end,
+
+        ---Sets a sprite's tiled mode view.
+        ---@param options {axis: "both"|"x"|"y"}
+        TiledMode = function(options)
+        end,
+
         ---Shows, hides or toggles the visibility of the timeline.
-        ---@param options {close: boolean, open: boolean, switch: boolean}
+        ---@overload fun(options: {close: boolean})
+        ---@overload fun(options: {open: boolean})
+        ---@param options {switch: boolean}
         Timeline = function(options)
         end,
+
+        ---Toggles between focus on color palette swatches and tiles in a set
+        ---in the color bar.
+        ToggleTilesMode = function()
+        end,
+
+        ---Toggles visibility of timeline cel thumbnails.
+        ToggleTimelineThumbnails = function()
+        end,
+
+        ---Undoes the most recent action.
+        Undo = function()
+        end,
+
+        ---Toggles visibility of the undo history dialog.
+        UndoHistory = function()
+        end,
+
+        ---Unlinks the cels contained by the active range.
+        UnlinkCel = function()
+        end,
+
+        ---Zooms the sprite view. When a percentage is provided, then sets the
+        ---zoom to the level nearest the input. To zoom in and out, do not
+        ---provide a percentage.
+        ---@overload fun(options: {action: "in"|"out", focus: "center"|"mouse"})
+        ---@param options {action: "set", focus: "center"|"mouse", percentage: number }
+        ---@NOTE percentage is retrieved as a string, but parsed as a number.
+        Zoom = function(options)
+        end
     },
 
     ---Functions to handle file names and the file system.
@@ -227,7 +367,7 @@ app = {
         fileName = function(fn)
         end,
 
-        ---Returns the path/directory part of the given filename.
+        ---Returns the path, or directory, part of the given filename.
         ---@param fn string Filename.
         ---@return string
         filePath = function(fn)
@@ -314,13 +454,13 @@ app = {
         graya = function(gray, alpha)
         end,
 
-        ---Returns the alpha component.
+        ---Returns the alpha component from a 16-bit integer.
         ---@param grayPixelValue integer 16-bit integer.
         ---@return integer
         grayaA = function(grayPixelValue)
         end,
 
-        ---Returns the gray component.
+        ---Returns the gray component from a 16-bit integer.
         ---@param grayPixelValue integer 16-bit integer.
         ---@return integer
         grayaV = function(grayPixelValue)
@@ -335,25 +475,25 @@ app = {
         rgba = function(red, green, blue, alpha)
         end,
 
-        ---Returns the alpha component.
+        ---Returns the alpha component from a 32-bit integer.
         ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaA = function(rgbaPixelValue)
         end,
 
-        ---Returns the blue component.
+        ---Returns the blue component from a 32-bit integer.
         ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaB = function(rgbaPixelValue)
         end,
 
-        ---Returns the green component.
+        ---Returns the green component from a 32-bit integer.
         ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaG = function(rgbaPixelValue)
         end,
 
-        ---Returns the red component.
+        ---Returns the red component from a 32-bit integer.
         ---@param rgbaPixelValue integer 32-bit integer.
         ---@return integer
         rgbaR = function(rgbaPixelValue)
@@ -1193,8 +1333,8 @@ Image = {
     flip = function(image, flipType)
     end,
 
-    ---Returns an integer pixel value for the given coordinates local to the Image.
-    ---When the coordinates are out-of-bounds, returns `0xffffffff`,
+    ---Returns an integer pixel value for the given coordinates local to the
+    ---image. When the coordinates are out-of-bounds, returns `0xffffffff`,
     ---which is white for RGB images.
     ---@param image Image
     ---@param x integer
@@ -1220,8 +1360,7 @@ Image = {
     isEqual = function(image, otherImage)
     end,
 
-    ---Returns true if all pixels in the image are equal to the
-    ---given color.
+    ---Returns true if all pixels in the image are equal to the given color.
     ---@param image Image
     ---@param refColor Color|integer
     ---@return boolean
@@ -1246,8 +1385,8 @@ Image = {
     resize = function(image, width, height)
     end,
 
-    ---Saves the image as a sprite in the given `filename`. Returns
-    ---true if the operation is successful.
+    ---Saves the image as a sprite in the given `filename`. Returns true if the
+    ---operation is successful.
     ---@param image Image
     ---@param filename string
     ---@overload fun(image: Image, options: {filename: string, palette: Palette})
@@ -1255,9 +1394,8 @@ Image = {
     saveAs = function(image, filename)
     end,
 
-    ---Returns the shrunken bounds, a rectangle, of the image
-    ---removing all the empty space of borders using the mask
-    ---color or the given `refColor`.
+    ---Returns the shrunken bounds, a rectangle, of the image, removing empty
+    ---space as defined by the mask color or a given `refColor`.
     ---@param image Image
     ---@param refColor integer
     ---@return Rectangle
@@ -1532,7 +1670,7 @@ end
 ---@field slices Slice[] Gets or sets a table of slices.
 ---@field sprite Sprite Gets the sprite to which the range is pointing.
 ---@field type RangeType Gets the type of range.
----@NOTE Also contains a tiles field, but it doesn't work as of 1.3rc-4.
+---@NOTE Also contains a tiles field, but it doesn't work as of 1.3.2.
 ---@NOTE It's not clear from the UI how a range contains slices.
 Range = {
     ---Clears the current range's contents.
@@ -1940,7 +2078,6 @@ Sprite = {
     ---`numTiles` specifies the number of initial tiles.
     ---@param sprite Sprite
     ---@return Tileset
-    ---@NOTE Rectangle fixed as of 10/30/2023
     ---@overload fun(sprite: Sprite, rectangle: Rectangle, numTiles?: integer): Tileset
     ---@overload fun(sprite: Sprite, grid: Grid, numTiles?: integer): Tileset
     ---@overload fun(sprite: Sprite, anotherTileset: Tileset): Tileset
