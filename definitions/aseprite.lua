@@ -131,6 +131,7 @@ app = {
     ---See https://www.aseprite.org/api/app_command .
     ---@NOTE AutocropSprite, Stroke could not be found in source code.
     ---@NOTE SliceProperties, Cancel omitted until further testing.
+    ---@NOTE HueSaturation filter doesn't seem to work.
     command = {
         ---Displays the application about section.
         About = function()
@@ -152,7 +153,7 @@ app = {
         end,
 
         ---Applies a brightness-contrast adjustment filter to the sprite.
-        ---@param options {brightness: integer, channels: integer|FilterChannels, contrast: integer, ui: boolean}
+        ---@param options {brightness: integer, channels: FilterChannels|integer, contrast: integer, ui: boolean}
         BrightnessContrast = function(options)
         end,
 
@@ -179,7 +180,8 @@ app = {
         ChangePixelFormat = function(options)
         end,
 
-        ---@param options {channels: integer, curve: Point[]|integer[][], ui: boolean}
+        ---Applies an sRGB color curve filter to the sprite.
+        ---@param options {channels: FilterChannels|integer, curve: Point[]|integer[][], ui: boolean}
         ColorCurve = function(options)
         end,
 
@@ -189,18 +191,42 @@ app = {
         ColorQuantization = function(options)
         end,
 
+        ---Applies a convolution matrix filter to the sprite.
+        ---@param options {channels: FilterChannels|integer, fromResource: string, tiledMode: string, ui: boolean}
+        ConvolutionMatrix = function(options)
+        end,
+
+        ---Copies the palette swatches in a range and pastes them before the
+        ---given index.
+        ---@param options {before: integer}
+        CopyColors = function(options)
+        end,
+
+        ---Applies a despeckle filter to the sprite.
+        ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: string, ui: boolean, width: integer}
+        Despeckle = function(options)
+        end,
+
         ---Duplicates a layer. For tilemap layers, the new layer refers to the
         ---same tile set as the source layer, by reference.
         DuplicateLayer = function()
         end,
 
+        ---Centers and zooms the sprite canvas so as to fit it on screen.
         FitScreen = function()
         end,
 
+        ---Sets the next tab in the application to active.
         GoToNextTab = function()
         end,
 
+        ---Sets the previous tab in the application to active.
         GoToPreviousTab = function()
+        end,
+
+        ---Applies the invert color filter to the sprite.
+        ---@param options {channels: FilterChannels|integer, ui: boolean}
+        InvertColor = function(options)
         end,
 
         ---Inverts the active selection.
@@ -211,6 +237,12 @@ app = {
         LayerFromBackground = function()
         end,
 
+        ---Sets the active layer's opacity.
+        ---@param options {opacity: integer}
+        LayerOpacity = function(options)
+        end,
+
+        ---Links the cels contained by the active range.
         LinkCels = function()
         end,
 
@@ -230,7 +262,7 @@ app = {
         end,
 
         ---Reloads Aseprite's theme, or skin. May cause crashes in version
-        ---1.2.40 or older, especially with a custom theme.
+        ---1.2.40 or older, especially with custom themes.
         Refresh = function()
         end,
 
@@ -894,6 +926,7 @@ Dialog = {
     ---@param dialog Dialog
     ---@param options {id: string, label: string, width: integer, height: integer, visible: boolean, autoscaling: boolean, onpaint: fun(event: {context: GraphicsContext}), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousemove: fun(event: MouseEvent), onmousedown: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), ondblclick: fun(event: MouseEvent), onwheel: fun(event: MouseEvent), ontouchmagnify: fun(event: TouchEvent)}
     ---@return Dialog
+    ---@NOTE hexpand and vexpand are also boolean options, but they don't seem to work.
     canvas = function(dialog, options)
     end,
 
@@ -1897,6 +1930,7 @@ Slice = {}
 ---@field frames Frame[] Gets the frames contained by the sprite.
 ---@field gridBounds Rectangle Gets or sets grid offset and size.
 ---@field height integer Gets or sets the height.
+---@field id integer Gets the sprite's id.
 ---@field isModified boolean Returns true if the sprite is modified compared to the latest saved state.
 ---@field layers Layer[] Gets the layers contained by the sprite.
 ---@field palettes Palette[] Gets the palettes contained by the sprite.
