@@ -1694,7 +1694,7 @@ end
 ---through `integer`s.
 ---@class Range
 ---@field cels Cel[] Gets a table of cels.
----@field colors integer[] Gets or sets a table of indices in the color bar.
+---@field colors integer[] Gets or sets a table of color palette indices.
 ---@field editableImages Image[] Gets a table of unique, editable images.
 ---@field frames Frame[] Gets or sets a table of frames.
 ---@field images Image[] Gets a table of unique images.
@@ -1702,8 +1702,9 @@ end
 ---@field layers Layer[] Gets or sets a table of layers.
 ---@field slices Slice[] Gets or sets a table of slices.
 ---@field sprite Sprite Gets the sprite to which the range is pointing.
+---@field tiles integer[] Sets a table of tile set indices.
 ---@field type RangeType Gets the type of range.
----@NOTE Also contains a tiles field, but it doesn't work as of 1.3.2.
+---@NOTE Tiles field works as a setter, but not yet as a getter.
 ---@NOTE It's not clear from the UI how a range contains slices.
 Range = {
     ---Clears the current range's contents.
