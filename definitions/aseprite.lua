@@ -9,7 +9,7 @@ local undefined
 ---@NOTE app.theme still needs to be defined. Depends on Theme object?
 app = {
     ---Gets the API version.
-    apiVersion = undefined --[[@as number]],
+    apiVersion = undefined --[[@as integer]],
 
     ---Gets or sets the background color.
     bgColor = undefined --[[@as Color]],
@@ -535,20 +535,21 @@ app = {
         ---@param i integer Tile set index.
         ---@param f integer Tile map flags.
         ---@return integer
+        ---@NOTE TODO: Check to see if tile map flags default to 0.
         tile = function(i, f)
         end,
 
         ---Returns the modifier flags for a tile in the map,
         ---such as whether it is flipped or rotated.
-        ---@param n integer Pixel value.
+        ---@param mapEntryValue integer Entry value.
         ---@return integer
-        tileF = function(n)
+        tileF = function(mapEntryValue)
         end,
 
         ---Returns the tile set index.
-        ---@param n integer Pixel value.
+        ---@param mapEntryValue integer Entry value.
         ---@return integer
-        tileI = function(n)
+        tileI = function(mapEntryValue)
         end,
     },
 
@@ -926,7 +927,7 @@ Dialog = {
     ---@param dialog Dialog
     ---@param options {id: string, label: string, width: integer, height: integer, autoscaling: boolean, visible: boolean, ondblclick: fun(event: MouseEvent), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousedown: fun(event: MouseEvent), onmousemove: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), onpaint: fun(event: {context: GraphicsContext}), ontouchmagnify: fun(event: TouchEvent), onwheel: fun(event: MouseEvent)}
     ---@return Dialog
-    ---@NOTE hexpand and vexpand don't seem to work for the canvas.
+    ---@NOTE Canvas expansion doesn't seem to work when it is followed by other widgets.
     canvas = function(dialog, options)
     end,
 
