@@ -917,22 +917,22 @@ end
 Dialog = {
     ---Appends a button to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, selected: boolean, focus: boolean, onclick: function}
+    ---@param options {id: string, label: string, text: string, focus: boolean, selected: boolean, visible: boolean, onclick: function}
     ---@return Dialog
     button = function(dialog, options)
     end,
 
     ---Appends a canvas to a dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, width: integer, height: integer, visible: boolean, autoscaling: boolean, onpaint: fun(event: {context: GraphicsContext}), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousemove: fun(event: MouseEvent), onmousedown: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), ondblclick: fun(event: MouseEvent), onwheel: fun(event: MouseEvent), ontouchmagnify: fun(event: TouchEvent)}
+    ---@param options {id: string, label: string, width: integer, height: integer, autoscaling: boolean, visible: boolean, ondblclick: fun(event: MouseEvent), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousedown: fun(event: MouseEvent), onmousemove: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), onpaint: fun(event: {context: GraphicsContext}), ontouchmagnify: fun(event: TouchEvent), onwheel: fun(event: MouseEvent)}
     ---@return Dialog
-    ---@NOTE hexpand and vexpand are also boolean options, but they don't seem to work.
+    ---@NOTE hexpand and vexpand don't seem to work for the canvas.
     canvas = function(dialog, options)
     end,
 
     ---Appends a check box widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, selected: boolean, onclick: function}
+    ---@param options {id: string, label: string, text: string, selected: boolean, visible: boolean, onclick: function}
     ---@return Dialog
     check = function(dialog, options)
     end,
@@ -944,14 +944,14 @@ Dialog = {
 
     ---Appends a color picker widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, color: Color, onchange: function}
+    ---@param options {id: string, label: string, color: Color, visible: boolean, onchange: function}
     ---@return Dialog
     color = function(dialog, options)
     end,
 
     ---Appends a combo box, or drop down menu, to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, option: string, options: string[], onchange: function}
+    ---@param options {id: string, label: string, option: string, options: string[], visible: boolean, onchange: function}
     ---@return Dialog
     ---@NOTE The focus optional property does not work for drop down.
     combobox = function(dialog, options)
@@ -966,7 +966,7 @@ Dialog = {
 
     ---Appends a text entry field to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, focus: boolean, onchange: function}
+    ---@param options {id: string, label: string, text: string, focus: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     entry = function(dialog, options)
     end,
@@ -975,14 +975,14 @@ Dialog = {
     ---present, a text entry field will appear to the left of an ellipsis file
     ---browser button.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, title: string, filename: string|string[], filetypes: string[], entry: boolean, open: boolean, save: boolean, onchange:function}
+    ---@param options {id: string, label: string, title: string, filename: string|string[], filetypes: string[], open: boolean, save: boolean, entry: boolean, visible: boolean, onchange:function}
     ---@return Dialog
     file = function(dialog, options)
     end,
 
     ---Appends a static label to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string}
+    ---@param options {id: string, label: string, text: string, visible: boolean }
     ---@return Dialog
     label = function(dialog, options)
     end,
@@ -1005,14 +1005,14 @@ Dialog = {
     ---When assigning the text option, the number should be formatted to a
     ---string.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, decimals: integer, onchange: function}
+    ---@param options {id: string, label: string, text: string, decimals: integer, visible: boolean, onchange: function}
     ---@return Dialog
     number = function(dialog, options)
     end,
 
     ---Appends a radio button widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, selected: boolean, onchange: function}
+    ---@param options {id: string, label: string, text: string, selected: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     radio = function(dialog, options)
     end,
@@ -1026,6 +1026,7 @@ Dialog = {
     ---@param dialog Dialog
     ---@param options {id: string, text: string}
     ---@return Dialog
+    ---@NOTE visible parameter does not apply to separators.
     separator = function(dialog, options)
     end,
 
@@ -1034,7 +1035,7 @@ Dialog = {
     ---They can be sorted and accessed as an array when the mode is "sort".
     ---The default mode is "pick".
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, colors: Color[], mode: "pick"|"sort", onclick: fun(event: {color: Color, button: MouseButton})}
+    ---@param options {id: string, label: string, colors: Color[], mode: "pick"|"sort", visible: boolean, onclick: fun(event: {color: Color, button: MouseButton})}
     ---@return Dialog
     shades = function(dialog, options)
     end,
@@ -1049,7 +1050,7 @@ Dialog = {
 
     ---Appends a slider widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, min: integer, max: integer, value: integer, onchange: function, onrelease: function}
+    ---@param options {id: string, label: string, min: integer, max: integer, value: integer, visible: boolean, onchange: function, onrelease: function}
     ---@return Dialog
     slider = function(dialog, options)
     end,
@@ -1428,7 +1429,8 @@ Image = {
     end,
 
     ---Returns the shrunken bounds, a rectangle, of the image, removing empty
-    ---space as defined by the mask color or a given `refColor`.
+    ---space as defined by the mask color or a given `refColor`. For tile map
+    ---images, returns an empty rectangle.
     ---@param image Image
     ---@param refColor integer
     ---@return Rectangle
