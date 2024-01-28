@@ -123,7 +123,7 @@ app = {
 
     ---Simulates a user stroke in the canvas using the given tool.
     ---See https://www.aseprite.org/api/app#app-usetool .
-    ---@param options {tool: string, color: Color, bgColor: Color, brush: Brush, points: Point[], cel: Cel, layer: Layer, frame: Frame, ink: Ink, button: MouseButton, opacity: integer, contiguous: boolean, tolerance: integer, freehandAlgorithm: 0|1, selection: SelectionMode}
+    ---@param options {bgColor: Color, brush: Brush, button: MouseButton, cel: Cel, color: Color, contiguous: boolean, frame: Frame, freehandAlgorithm: 0|1, ink: Ink, layer: Layer, opacity: integer, points: Point[], tolerance: integer, tool: string, selection: SelectionMode, tilemapMode: TilemapMode, tilesetMode: TilesetMode}
     useTool = function(options)
     end,
 
@@ -327,6 +327,11 @@ app = {
         ---Sets a sprite's tiled mode view.
         ---@param options {axis: "both"|"x"|"y"}
         TiledMode = function(options)
+        end,
+
+        ---Sets a sprite's tile set mode. Defaults to "auto".
+        ---@param options {mode: "auto"|"manual"|"stack"}
+        TilesetMode = function(options)
         end,
 
         ---Shows, hides or toggles the visibility of the timeline.
@@ -574,8 +579,8 @@ app = {
     ---@deprecated
     activeBrush = undefined --[[@as Brush]],
 
-    ---The active cel. `nil` when no sprite is active or
-    ---when the active layer is a group.
+    ---The active cel. `nil` when no sprite is active or when the active layer
+    ---is a group.
     ---@deprecated
     activeCel = undefined --[[@as Cel|nil]],
 
@@ -584,8 +589,8 @@ app = {
     ---@deprecated
     activeFrame = undefined --[[@as Frame|nil]],
 
-    ---The active image. `nil` when no sprite is active or
-    ---when the active layer is a group.
+    ---The active image. `nil` when no sprite is active or when the active
+    ---layer is a group.
     ---@deprecated
     activeImage = undefined --[[@as Image|nil]],
 
@@ -798,6 +803,23 @@ SpriteSheetType = {
     ROWS = 3,
     COLUMNS = 4,
     PACKED = 5
+}
+
+
+---https://github.com/aseprite/aseprite/blob/main/src/app/tilemap_mode.h
+---@enum TilemapMode
+TilemapMode = {
+    PIXELS = 0,
+    TILES = 1
+}
+
+
+---https://github.com/aseprite/aseprite/blob/main/src/app/tileset_mode.h
+---@enum TilesetMode
+TilesetMode = {
+    MANUAL = 0,
+    AUTO = 1,
+    STACK = 2
 }
 
 
@@ -1113,7 +1135,7 @@ Events = {
 }
 
 
----Represents a discrete unit of time in a sprite.
+---Represents a discrete unit of animation in a sprite.
 ---@class Frame
 ---@field duration number Gets or sets the frame duration in seconds.
 ---@field frameNumber integer Gets the frame number.
@@ -1482,6 +1504,7 @@ Image = {
 ---@overload fun(sprite: Sprite): Image
 ---@overload fun(otherImage: Image): Image
 ---@overload fun(option: {fromFile: string}): Image
+---@NOTE TODO: Make ImageSpec the default constructor?
 function Image(width, height, colorMode)
 end
 
