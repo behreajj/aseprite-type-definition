@@ -6,7 +6,6 @@ local undefined
 
 
 ---The `app` global namespace.
----@NOTE app.theme still needs to be defined. Depends on Theme object?
 app = {
     ---Gets the API version.
     apiVersion = undefined --[[@as integer]],
@@ -69,6 +68,9 @@ app = {
     ---Gets the active tag.
     ---`nil` when no sprite is active.
     tag = undefined --[[@as Tag|nil]],
+
+    ---Gets the UI theme.
+    theme = undefined --[[@as Theme]],
 
     ---Gets or sets the active tool.
     ---@NOTE Unlike frame, this accepts string bc there's no clear alternative.
@@ -212,6 +214,16 @@ app = {
         DuplicateLayer = function()
         end,
 
+        ---Duplicates a sprite. Opens a UI dialog to name the duplicate and to
+        ---optionally merge layers.
+        DuplicateSprite = function()
+        end,
+
+        ---Duplicates a view of the sprite in the editor. Does not duplicate
+        ---the sprite itself.
+        DuplicateView = function()
+        end,
+
         ---Centers and zooms the sprite canvas so as to fit it on screen.
         FitScreen = function()
         end,
@@ -246,6 +258,8 @@ app = {
         LinkCels = function()
         end,
 
+        ---Changes the active selection, either contracting it, expanding it or
+        ---turning it into a border.
         ---@param options {brush: "circle"|"square", modifier: "border"|"contract"|"expand", quantity: integer}
         ModifySelection = function(options)
         end,
@@ -254,11 +268,16 @@ app = {
         ---`group` are mutually exclusive. The `gridBounds` parameter applies
         ---only to tilemap layers. The `ask` parameter refers to displaying a
         ---dialog in the UI for the user to enter a layer name. The `top`
-        ---parameter places a new layer at the top of the stack if true; the
+        ---parameter places a new layer at the top of the stack if true. The
         ---`before` parameter places the new layer before the active layer if
         ---true, after if false.
         ---@param options {ask: boolean, before: boolean, fromFile: boolean, fromClipboard: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
         NewLayer = function(options)
+        end,
+
+        ---Sets the size of the active palette.
+        ---@param options {size: integer}
+        PaletteSize = function(options)
         end,
 
         ---Reloads Aseprite's theme, or skin. May cause crashes in version
@@ -290,9 +309,50 @@ app = {
         SaveFileCopyAs = function(options)
         end,
 
+        ---Scrolls the canvas view.
+        ---@param options {direction: "down"|"left"|"right"|"up", quantity: integer, units: "pixel"|"tile-height"|"tile-width"|"zoomed-pixel"|"zoomed-tile-height"|"zoomed-tile-width"|"viewport-height"|"viewport-width"}
+        Scroll = function(options)
+        end,
+
+        ---Scrolls the canvas view to the sprite center.
+        ScrollCenter = function()
+        end,
+
+        ---Sets the sprite's grid to the active selection's bounds.
+        SelectionAsGrid = function()
+        end,
+
+        ---Creates a range in the color bar of used or unused colors or tiles,
+        ---per the modifier.
+        ---@param options {modifier: "unused_colors"|"unused_tiles"|"used_colors"|"used_tiles"}
+        SelectPaletteColors = function(options)
+        end,
+
+        ---Sets the color selector in the UI. The argument "wheel" is the same
+        ---as "rgb-wheel".
+        ---@param options {type: "normal-map-wheel"|"rgb-wheel"|"ryb-wheel"|"spectrum"|"tint-shade-tone"|"wheel"}
+        SetColorSelector = function(options)
+        end,
+
+        ---Sets the ink type for the active tool.
+        ---@param options {type: Ink}
+        SetInkType = function(options)
+        end,
+
+        ---Creates or removes a tag around frames. Frame indices are zero
+        ---indexed, regardless of UI base index. The parameter "end" is a Lua
+        ---reserved keyword, so place in square brackets, e.g., { ["end"] = 5 }.
+        ---@param options {action: "off"|"on", begin: integer, end: integer}
+        SetLoopSection = function(options)
+        end,
+
         ---Sets the palette swatch display size in the color bar.
         ---@param options {size: integer}
         SetPaletteEntrySize = function(options)
+        end,
+
+        ---Toggles whether ink type is shared across all tools.
+        SetSameInk = function()
         end,
 
         ---Toggles snap to grid setting.
@@ -339,6 +399,10 @@ app = {
         ---@overload fun(options: {open: boolean})
         ---@param options {switch: boolean}
         Timeline = function(options)
+        end,
+
+        ---Toggles the preview windows visibility for an active sprite.
+        TogglePreview = function()
         end,
 
         ---Toggles between focus on color palette swatches and tiles in a set
@@ -540,12 +604,13 @@ app = {
         ---@param i integer Tile set index.
         ---@param f integer Tile map flags.
         ---@return integer
-        ---@NOTE TODO: Check to see if tile map flags default to 0.
         tile = function(i, f)
         end,
 
-        ---Returns the modifier flags for a tile in the map,
-        ---such as whether it is flipped or rotated.
+        ---Returns the modifier flags for a tile in the map, where `0x20000000`
+        ---is diagonal, `0x40000000` is vertical, `0x80000000` is horizontal,
+        ---and these three may be composited together up to `0xe0000000`.
+        ---See https://github.com/aseprite/aseprite/blob/main/src/doc/tile.h .
         ---@param mapEntryValue integer Entry value.
         ---@return integer
         tileF = function(mapEntryValue)
@@ -652,10 +717,21 @@ AniDir = {
 
 ---https://github.com/aseprite/aseprite/blob/main/src/doc/blend_mode.h#L26
 ---@enum BlendMode
----@NOTE Internal enum is converted to public, leading to discrepancies.
 BlendMode = {
+    CLEAR = 0,
     SRC = 1,
-    NORMAL = 3,
+    DST = 2,
+    NORMAL = 3, -- SRC_OVER
+    DST_OVER = 4,
+    SRC_IN = 5,
+    DST_IN = 6,
+    SRC_OUT = 7,
+    DST_OUT = 8,
+    SRC_ATOP = 9,
+    DST_ATOP = 10,
+    XOR = 11,
+    PLUS = 12,
+    MODULATE = 13,
     MULTIPLY = 14,
     SCREEN = 15,
     OVERLAY = 16,
@@ -667,10 +743,10 @@ BlendMode = {
     SOFT_LIGHT = 22,
     DIFFERENCE = 23,
     EXCLUSION = 24,
-    HSL_HUE = 25,
-    HSL_SATURATION = 26,
-    HSL_COLOR = 27,
-    HSL_LUMINOSITY = 28,
+    HSL_HUE = 25,        -- HUE
+    HSL_SATURATION = 26, -- SATURATION
+    HSL_COLOR = 27,      -- COLOR
+    HSL_LUMINOSITY = 28, -- LUMINOSITY
     ADDITION = 29,
     SUBTRACT = 30,
     DIVIDE = 31
@@ -1496,16 +1572,15 @@ Image = {
 
 ---Creates a new `Image` instance.
 ---Images loaded fromFile may be `nil`.
----@param width integer
----@param height integer
----@param colorMode? ColorMode
+---The ImageSpec constructor is preferable, so that transparent color and color
+---space fields can be transferred from a source to a target.
+---@param spec ImageSpec
 ---@return Image
----@overload fun(spec: ImageSpec): Image
+---@overload fun(width: integer, height: integer, colorMode?: ColorMode): Image
 ---@overload fun(sprite: Sprite): Image
 ---@overload fun(otherImage: Image): Image
 ---@overload fun(option: {fromFile: string}): Image
----@NOTE TODO: Make ImageSpec the default constructor?
-function Image(width, height, colorMode)
+function Image(spec)
 end
 
 ---Specifications of sprites or images.
@@ -2178,15 +2253,15 @@ Sprite = {
 
 ---Creates a new `Sprite` instance.
 ---Sprites loaded fromFile may be `nil`.
----@param width integer
----@param height integer
----@param colorMode? ColorMode
+---The ImageSpec constructor is preferable, so that transparent color and color
+---space fields can be transferred from a source to a target.
+---@param spec ImageSpec
 ---@return Sprite
----@overload fun(spec: ImageSpec): Sprite
+---@overload fun(width: integer, height: integer, colorMode?: ColorMode): Sprite
 ---@overload fun(otherSprite: Sprite): Sprite
 ---@overload fun(options: {fromFile: string}): Sprite
 ---@overload fun(options: {fromFile: string, oneFrame: boolean}): Sprite
-function Sprite(width, height, colorMode)
+function Sprite(spec)
 end
 
 ---A tag in the timeline to label and organize frames.
@@ -2202,6 +2277,24 @@ end
 ---@field sprite Sprite Gets the sprite to which the tag belongs.
 ---@field toFrame Frame|nil Gets or sets the `Frame` where the tag ends.
 Tag = {}
+
+
+---Stores color and dimensions of elements in a UI theme. See
+---https://github.com/aseprite/api/blob/main/api/app_theme.md and
+---https://github.com/aseprite/aseprite/blob/main/data/extensions/aseprite-theme/theme.xml .
+---@class Theme
+---@field color table<string, Color> Gets the colors used by a theme.
+---@field dimension table<string, integer> Gets the dimensions of theme elements.
+Theme = {
+    ---Returns data about the given style ID string. The data is a table
+    ---containing integers for the left, right, top and bottom border in pixels
+    ---with UI scale already applied.
+    ---@param theme Theme
+    ---@param id string
+    ---@return {bottom: integer, left: integer, right: integer, top: integer}
+    styleMetrics = function(theme, id)
+    end
+}
 
 
 ---A tile from a `Tileset`.
