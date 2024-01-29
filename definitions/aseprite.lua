@@ -716,6 +716,7 @@ AniDir = {
 
 
 ---https://github.com/aseprite/aseprite/blob/main/src/doc/blend_mode.h#L26
+---https://github.com/aseprite/aseprite/blob/main/src/app/script/engine.cpp#L299
 ---@enum BlendMode
 BlendMode = {
     CLEAR = 0,
@@ -782,6 +783,7 @@ ColorMode = {
 }
 
 
+---https://github.com/aseprite/aseprite/blob/main/src/filters/target.h
 ---@enum FilterChannels
 FilterChannels = {
     RED = 1,
@@ -796,6 +798,7 @@ FilterChannels = {
 }
 
 
+---https://github.com/aseprite/aseprite/blob/main/src/doc/algorithm/flip_type.h
 ---@enum FlipType
 FlipType = {
     HORIZONTAL = 0,
@@ -813,6 +816,7 @@ Ink = {
 }
 
 
+---https://github.com/aseprite/aseprite/blob/main/src/ui/mouse_button.h
 ---@enum MouseButton
 MouseButton = {
     NONE = 0,
@@ -824,6 +828,7 @@ MouseButton = {
 }
 
 
+---https://github.com/aseprite/aseprite/blob/main/src/ui/cursor_type.h
 ---@NOTE Both GRAB and GRABBING appear as 6. 2 is missing?
 ---@enum MouseCursor
 MouseCursor = {
@@ -847,6 +852,7 @@ MouseCursor = {
 }
 
 
+---https://github.com/aseprite/aseprite/blob/main/src/app/doc_range.h#L28
 ---@enum RangeType
 RangeType = {
     EMPTY = 0,
@@ -2135,6 +2141,7 @@ Sprite = {
     ---Sets the sprite palette to one loaded from a file path.
     ---@param sprite Sprite
     ---@param filename string
+    ---TODO: What happens if file name is invalid?
     loadPalette = function(sprite, filename)
     end,
 
