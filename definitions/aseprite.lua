@@ -2141,7 +2141,7 @@ Sprite = {
     ---Sets the sprite palette to one loaded from a file path.
     ---@param sprite Sprite
     ---@param filename string
-    ---TODO: What happens if file name is invalid?
+    ---@NOTE TODO: What happens if file name is invalid?
     loadPalette = function(sprite, filename)
     end,
 
