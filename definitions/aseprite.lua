@@ -341,9 +341,24 @@ app = {
         NewLayer = function(options)
         end,
 
+        ---Displays the preferences dialog, with an option to prompt the
+        ---installation of an extension from a file path.
+        ---@param options {installExtension: string}
+        Options = function(options)
+        end,
+
         ---Applies an outline to the selected elements.
         ---@param options {bgColor: Color, channels: FilterChannels|integer, color: Color, matrix:"circle"|"horizontal"|"square"|"vertical", place: "inside"|"outside", tiledMode: "both"|"none"|"x"|"y", ui: boolean}
         Outline = function(options)
+        end,
+
+        ---Edits a color in the palette. If `edit` is set to `switch`, toggles
+        ---whether the palette is locked or unlocked. If `popup` is 
+        ---`background`, then displays color sliders for the background color.
+        ---If `popup` is set to a non-empty string, displays the sliders for
+        ---the foreground color.
+        ---@param options {edit: "switch", popup: "background"}
+        PaletteEditor = function(options)
         end,
 
         ---Sets the size of the active palette.
@@ -351,9 +366,40 @@ app = {
         PaletteSize = function(options)
         end,
 
+        ---Toggles pixel perfect on and off for tools such as the pencil.
+        PixelPerfectMode = function()
+        end,
+
+        ---Plays the sprite animation in the editor canvas.
+        PlayAnimation = function()
+        end,
+
+        ---Plays the sprite animation in the preview window.
+        PlayPreviewAnimation = function()
+        end,
+
         ---Reloads Aseprite's theme, or skin. May cause crashes in version
         ---1.2.40 or older, especially with custom themes.
         Refresh = function()
+        end,
+
+        ---Replaces the `from` color with the `to` color according to a match
+        ---tolerance.
+        ---@param options {channels: FilterChannels|integer, from: Color, to: Color, tolerance: integer, ui: boolean}
+        ReplaceColor = function(options)
+        end,
+
+        ---Reselects a previously unselected mask.
+        ReselectMask = function()
+        end,
+
+        ---Reverses the order of frames in the active range.
+        ReverseFrames = function()
+        end,
+
+        ---Rotates an element by an angle in degrees.
+        ---@param options {target: "mask", angle: integer}
+        Rotate = function(options)
         end,
 
         ---This method has serious bugs, particularly with `fromFrame` and
@@ -1089,11 +1135,10 @@ end
 ---@class Dialog
 ---@field bounds Rectangle Gets or sets the dialog bounds.
 ---@field data {[string]: boolean|string|integer|number|Color|Color[]}
----@NOTE TODO: Several widgets share common fields that are not listed in the docs per each entry.
 Dialog = {
     ---Appends a button to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, focus: boolean, selected: boolean, visible: boolean, onclick: function}
+    ---@param options {id: string, label: string, text: string, enabled: boolean, focus: boolean, selected: boolean, visible: boolean, onclick: function}
     ---@return Dialog
     button = function(dialog, options)
     end,
@@ -1108,7 +1153,7 @@ Dialog = {
 
     ---Appends a check box widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, selected: boolean, visible: boolean, onclick: function}
+    ---@param options {id: string, label: string, text: string, enabled: boolean, focus: boolean, selected: boolean, visible: boolean, onclick: function}
     ---@return Dialog
     check = function(dialog, options)
     end,
@@ -1120,14 +1165,14 @@ Dialog = {
 
     ---Appends a color picker widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, color: Color, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, color: Color, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     color = function(dialog, options)
     end,
 
     ---Appends a combo box, or drop down menu, to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, option: string, options: string[], visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, option: string, options: string[], enabled: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     ---@NOTE The focus optional property does not work for drop down.
     combobox = function(dialog, options)
@@ -1142,7 +1187,7 @@ Dialog = {
 
     ---Appends a text entry field to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, focus: boolean, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, text: string, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     entry = function(dialog, options)
     end,
@@ -1151,7 +1196,7 @@ Dialog = {
     ---present, a text entry field will appear to the left of an ellipsis file
     ---browser button.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, title: string, filename: string|string[], filetypes: string[], open: boolean, save: boolean, entry: boolean, visible: boolean, onchange:function}
+    ---@param options {id: string, label: string, title: string, filename: string|string[], filetypes: string[], open: boolean, save: boolean, entry: boolean, enabled: boolean, focus: boolean, visible: boolean, onchange:function}
     ---@return Dialog
     file = function(dialog, options)
     end,
@@ -1181,14 +1226,14 @@ Dialog = {
     ---When assigning the text option, the number should be formatted to a
     ---string.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, decimals: integer, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, text: string, decimals: integer, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     number = function(dialog, options)
     end,
 
     ---Appends a radio button widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, selected: boolean, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, text: string, selected: boolean, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     radio = function(dialog, options)
     end,
@@ -1226,7 +1271,7 @@ Dialog = {
 
     ---Appends a slider widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, min: integer, max: integer, value: integer, visible: boolean, onchange: function, onrelease: function}
+    ---@param options {id: string, label: string, min: integer, max: integer, value: integer, enabled: boolean, focus: boolean, visible: boolean, onchange: function, onrelease: function}
     ---@return Dialog
     slider = function(dialog, options)
     end,
