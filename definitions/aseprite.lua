@@ -119,7 +119,7 @@ app = {
     transaction = function(func)
     end,
 
-    ---Undoes the latest operation in the `activeSprite`.
+    ---Undoes the latest operation in the active sprite.
     undo = function()
     end,
 
@@ -131,8 +131,7 @@ app = {
 
     ---Executes the command named `CommandName` with the parameters provided.
     ---See https://www.aseprite.org/api/app_command .
-    ---@NOTE AutocropSprite, Stroke could not be found in source code.
-    ---@NOTE SliceProperties, Cancel omitted until further testing.
+    ---@NOTE SliceProperties, Stroke, Cancel, ContiguousFill omitted until further testing.
     ---@NOTE HueSaturation filter doesn't seem to work.
     command = {
         ---Displays the application about section.
@@ -143,6 +142,12 @@ app = {
         ---"color".
         ---@param options {source: "bg"|"color"|"fg", color: Color}
         AddColor = function(options)
+        end,
+
+        ---Resizes sprite canvas to remove excess transparent pixels.
+        ---See https://github.com/aseprite/aseprite/blob/main/src/app/commands/cmd_crop.cpp#L86 .
+        ---@param options {byGrid: boolean}
+        AutocropSprite = function(options)
         end,
 
         ---Cycles the view mode from normal UI to context bar and timeline,
@@ -177,9 +182,40 @@ app = {
         CelProperties = function()
         end,
 
+        ---Changes the brush according to the change argument. If the `custom`
+        ---brush is changed, then `slot` specifies which brush to use.
+        ---Incrementing an angle rotates it counter clockwise. Decrementing
+        ---rotates it clockwise.
+        ---@param options {change: "custom"|"decrement-angle"|"decrement-size"|"flip-x"|"flip-y"|"flip-d"|"increment-angle"|"increment-size"|"rotate-90cw", slot: integer}
+        ChangeBrush = function(options)
+        end,
+
+        ---Changes the active color in the color bar. When a color reaches one
+        ---end of the palette, it will loop around to the other end.
+        ---@param options {change: "decrement-index"|"increment-index", target: "background"|"foreground"}
+        ChangeColor = function(options)
+        end,
+
         ---Changes the sprite's color mode.
         ---@param options {format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", ["dithering-matrix"]: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
         ChangePixelFormat = function(options)
+        end,
+
+        ---Deletes timeline elements in a range.
+        Clear = function()
+        end,
+
+        ---Deletes the selected cels. In a background layer, replaces cels with
+        ---an active background color fill.
+        ClearCel = function()
+        end,
+
+        ---Closes all files.
+        CloseAllFiles = function()
+        end,
+
+        ---Closes the active file.
+        CloseFile = function()
         end,
 
         ---Applies an sRGB color curve filter to the sprite.
@@ -204,9 +240,17 @@ app = {
         CopyColors = function(options)
         end,
 
+        ---Crops the sprite according to a selection.
+        CropSprite = function()
+        end,
+
         ---Applies a despeckle filter to the sprite.
         ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: string, ui: boolean, width: integer}
         Despeckle = function(options)
+        end,
+
+        ---Opens the developer console.
+        DeveloperConsole = function()
         end,
 
         ---Duplicates a layer. For tilemap layers, the new layer refers to the
@@ -222,6 +266,10 @@ app = {
         ---Duplicates a view of the sprite in the editor. Does not duplicate
         ---the sprite itself.
         DuplicateView = function()
+        end,
+
+        ---Exits the application.
+        Exit = function()
         end,
 
         ---Centers and zooms the sprite canvas so as to fit it on screen.
@@ -245,6 +293,12 @@ app = {
         InvertMask = function()
         end,
 
+        ---Opens the keyboard shortcuts dialog, optionally with the results of
+        ---a search query.
+        ---@param options {search: string}
+        KeyboardShortcuts = function(options)
+        end,
+
         ---Converts a background layer to a regular layer.
         LayerFromBackground = function()
         end,
@@ -264,6 +318,18 @@ app = {
         ModifySelection = function(options)
         end,
 
+        ---Moves colors in a range to before the given index.
+        ---@param options {before:integer}
+        MoveColors = function(options)
+        end,
+
+        ---Moves a selection, either its boundaries or content, depending on
+        ---the `target`. The `wrap` parameter wraps pixel content around the
+        ---selection boundaries.
+        ---@param options {direction: "down"|"left"|"right"|"up", quantity: integer, target: "boundaries"|"content", units: "pixel"|"tile-height"|"tile-width"|"zoomed-pixel"|"zoomed-tile-height"|"zoomed-tile-width"|"viewport-height"|"viewport-width", wrap: boolean}
+        MoveMask = function(options)
+        end,
+
         ---Creates a new layer. Layer type options `reference`, `tilemap` and
         ---`group` are mutually exclusive. The `gridBounds` parameter applies
         ---only to tilemap layers. The `ask` parameter refers to displaying a
@@ -273,6 +339,11 @@ app = {
         ---true, after if false.
         ---@param options {ask: boolean, before: boolean, fromFile: boolean, fromClipboard: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
         NewLayer = function(options)
+        end,
+
+        ---Applies an outline to the selected elements.
+        ---@param options {bgColor: Color, channels: FilterChannels|integer, color: Color, matrix:"circle"|"horizontal"|"square"|"vertical", place: "inside"|"outside", tiledMode: "both"|"none"|"x"|"y", ui: boolean}
+        Outline = function(options)
         end,
 
         ---Sets the size of the active palette.
@@ -351,7 +422,7 @@ app = {
         SetPaletteEntrySize = function(options)
         end,
 
-        ---Toggles whether ink type is shared across all tools.
+        ---Toggles whether the ink type is shared across all tools.
         SetSameInk = function()
         end,
 
@@ -1179,7 +1250,7 @@ end
 ---@class Editor
 ---@field mousePos Point Gets the mouse's screen position.
 ---@field sprite Sprite Gets the active sprite.
----@field spritePos Point Gets a point of the the mouse position on the sprite.
+---@field spritePos Point Gets the mouse position on the sprite.
 Editor = {
     ---Asks the user to select a point on the sprite. Decorations may include
     ---"rulers" and "dimmed".
@@ -1236,8 +1307,8 @@ Frame = {}
 ---@field height integer Gets the height of the visible area in pixels. Changes when the dialog is resized.
 ---@field opacity integer Gets or sets the opacity used in stroke(), fill(), etc.
 ---@field strokeWidth integer Gets or sets the width of lines painted with strokes.
+---@field theme Theme Gets the theme where metrics are not multiplied by UI scaling.
 ---@field width integer Gets the width of the visible area in pixels. Changes when the dialog is resized.
----@NOTE Also contains the field 'theme', which in turn has an instance styleMetrics method.
 GraphicsContext = {
     ---Starts a new path, emptying the list of tracked sub-paths.
     ---@param gc GraphicsContext
@@ -2141,7 +2212,6 @@ Sprite = {
     ---Sets the sprite palette to one loaded from a file path.
     ---@param sprite Sprite
     ---@param filename string
-    ---@NOTE TODO: What happens if file name is invalid?
     loadPalette = function(sprite, filename)
     end,
 
@@ -2294,8 +2364,9 @@ Tag = {}
 ---@field dimension table<string, integer> Gets the dimensions of theme elements.
 Theme = {
     ---Returns data about the given style ID string. The data is a table
-    ---containing integers for the left, right, top and bottom border in pixels
-    ---with UI scale already applied.
+    ---containing integers for the left, right, top and bottom border in pixels.
+    ---Whether UI scaling is applied depends on whether the theme was retrieved
+    ---from `app` or a `GraphicsContext`.
     ---@param theme Theme
     ---@param id string
     ---@return {bottom: integer, left: integer, right: integer, top: integer}
