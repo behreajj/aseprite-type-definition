@@ -124,13 +124,16 @@ app = {
     end,
 
     ---Simulates a user stroke in the canvas using the given tool.
-    ---See https://www.aseprite.org/api/app#app-usetool .
-    ---@param options {bgColor: Color, brush: Brush, button: MouseButton, cel: Cel, color: Color, contiguous: boolean, frame: Frame, freehandAlgorithm: 0|1, ink: Ink, layer: Layer, opacity: integer, points: Point[], tolerance: integer, tool: string, selection: SelectionMode, tilemapMode: TilemapMode, tilesetMode: TilesetMode}
+    ---For the `freehandAlgorithm` parameter, 2 is dots, 1 is pixel perfect,
+    ---0 is the default. See
+    ---https://github.com/aseprite/aseprite/blob/main/src/app/tools/freehand_algorithm.h .
+    ---Many tools do not work, avoid using this method where possible.
+    ---@param options {bgColor: Color, brush: Brush, button: MouseButton, cel: Cel, color: Color, contiguous: boolean, frame: Frame, freehandAlgorithm: 0|1|2, ink: Ink, layer: Layer, opacity: integer, points: Point[], tolerance: integer, tool: string, selection: SelectionMode, tilemapMode: TilemapMode, tilesetMode: TilesetMode}
+    ---@deprecated
     useTool = function(options)
     end,
 
     ---Executes the command named `CommandName` with the parameters provided.
-    ---See https://www.aseprite.org/api/app_command .
     ---@NOTE SliceProperties, Stroke, Cancel, ContiguousFill omitted until further testing.
     ---@NOTE HueSaturation filter doesn't seem to work.
     command = {
@@ -1062,7 +1065,7 @@ end
 ---See https://github.com/aseprite/aseprite/blob/main/docs/ase-file-specs.md#note5
 ---for how to process a cel's zIndex.
 ---@class Cel
----@field bounds Rectangle Gets the cel bounds.
+---@field bounds Rectangle Gets the cel bounds. Width and height are scaled by tile size in tile map cels.
 ---@field color Color Gets or sets the cel color in the timeline.
 ---@field data string Gets or sets custom data assigned to the cel.
 ---@field frame Frame|nil Gets or sets the frame to which the cel belongs. When set, the cel will be moved to the given frame.
@@ -1915,6 +1918,11 @@ end
 ---A range of selected objects. It may contain layers, frames, cels,
 ---images, tiles and/or colors. Tiles and colors are referenced indirectly
 ---through `integer`s.
+---
+---Ranges may report as empty when the timeline is hidden.
+---
+---The `layers` field is not necessarily ordered according to stack index,
+---whether relative to the sprite or to parent layer.
 ---@class Range
 ---@field cels Cel[] Gets a table of cels.
 ---@field colors integer[] Gets or sets a table of color palette indices.
