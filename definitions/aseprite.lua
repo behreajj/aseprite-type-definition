@@ -232,7 +232,7 @@ app = {
         end,
 
         ---Applies a convolution matrix filter to the sprite.
-        ---@param options {channels: FilterChannels|integer, fromResource: string, tiledMode: string, ui: boolean}
+        ---@param options {channels: FilterChannels|integer, fromResource: string, tiledMode: "both"|"none"|"x"|"y", ui: boolean}
         ConvolutionMatrix = function(options)
         end,
 
@@ -248,7 +248,7 @@ app = {
 
         ---Applies a despeckle filter to the sprite.
         ---@NOTE TODO: Is tiledMode a string or an int for an enum constant? https://github.com/aseprite/aseprite/blob/main/src/filters/tiled_mode.h
-        ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: 0|1|2|3, ui: boolean, width: integer}
+        ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: "both"|"none"|"x"|"y", ui: boolean, width: integer}
         Despeckle = function(options)
         end,
 
@@ -279,8 +279,24 @@ app = {
         FitScreen = function()
         end,
 
+        ---Sets the next frame to active.
+        GoToNextFrame = function()
+        end,
+
+        ---Sets the next layer up the stack to active.
+        GoToNextLayer = function()
+        end,
+
         ---Sets the next tab in the application to active.
         GoToNextTab = function()
+        end,
+
+        ---Sets the previous frame to active.
+        GoToPreviousFrame = function()
+        end,
+
+        ---Sets the previous layer down the stack to active.
+        GoToPreviousLayer = function()
         end,
 
         ---Sets the previous tab in the application to active.
