@@ -274,8 +274,23 @@ app = {
         Exit = function()
         end,
 
+        ---Fills a selection with the foreground color.
+        Fill = function()
+        end,
+
         ---Centers and zooms the sprite canvas so as to fit it on screen.
         FitScreen = function()
+        end,
+
+        ---Flattens layers.
+        ---@param options {visibleOnly: boolean}
+        FlattenLayers = function(options)
+        end,
+
+        ---Flips the content horizontally or vertically. If target is "mask",
+        ---flips the selected region only.
+        ---@param options {target: "mask", orientation: "horizontal"|"vertical"}
+        Flip = function(options)
         end,
 
         ---Displays the frame properties window.
@@ -596,8 +611,24 @@ app = {
         Timeline = function(options)
         end,
 
+        ---Toggles the animation playback setting to play all frames.
+        TogglePlayAll = function()
+        end,
+
+        ---Toggles the animation playback setting to play once.
+        TogglePlayOnce = function()
+        end,
+
+        ---Toggles the animation playback setting to play subtags.
+        TogglePlaySubtags = function()
+        end,
+
         ---Toggles the preview windows visibility for an active sprite.
         TogglePreview = function()
+        end,
+
+        ---Toggles the animation playback setting to rewind on stop.
+        ToggleRewindOnStop = function()
         end,
 
         ---Toggles between focus on color palette swatches and tiles in a set
