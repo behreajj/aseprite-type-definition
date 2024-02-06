@@ -247,7 +247,6 @@ app = {
         end,
 
         ---Applies a despeckle filter to the sprite.
-        ---@NOTE TODO: Is tiledMode a string or an int for an enum constant? https://github.com/aseprite/aseprite/blob/main/src/filters/tiled_mode.h
         ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: "both"|"none"|"x"|"y", ui: boolean, width: integer}
         Despeckle = function(options)
         end,
@@ -279,8 +278,46 @@ app = {
         FitScreen = function()
         end,
 
+        ---Displays the frame properties window.
+        ---@param options {frame: "all"|"current"|integer}
+        FrameProperties = function(options)
+        end,
+
+        ---Displays the tag properties window.
+        FrameTagProperties = function()
+        end,
+
+        ---Displays full screen preview.
+        FullscreenPreview = function()
+        end,
+
+        ---Sets the first frame in the sprite as active.
+        GotoFirstFrame = function()
+        end,
+
+        ---Sets the first frame in the tag as active.
+        GotoFirstFrameInTag = function()
+        end,
+
+        ---Sets the active frame.
+        ---@param options {frame: integer}
+        GotoFrame = function(options)
+        end,
+
+        ---Sets the last frame in the sprite as active.
+        GotoLastFrame = function()
+        end,
+
+        ---Sets the last frame in the tag as active.
+        GotoLastFrameInTag = function()
+        end,
+
         ---Sets the next frame to active.
         GoToNextFrame = function()
+        end,
+
+        ---Sets the next frame within the same tag to active.
+        GotoNextFrameWithSameTag = function()
         end,
 
         ---Sets the next layer up the stack to active.
@@ -295,12 +332,20 @@ app = {
         GoToPreviousFrame = function()
         end,
 
+        ---Sets the previuos frame within the same tag to active.
+        GotoPreviousFrameWithSameTag = function()
+        end,
+
         ---Sets the previous layer down the stack to active.
         GoToPreviousLayer = function()
         end,
 
         ---Sets the previous tab in the application to active.
         GoToPreviousTab = function()
+        end,
+
+        ---Displays grid settings window.
+        GridSettings = function()
         end,
 
         ---Displays the home tab.
