@@ -135,7 +135,6 @@ app = {
 
     ---Executes the command named `CommandName` with the parameters provided.
     ---@NOTE SliceProperties, Stroke, Cancel, ContiguousFill omitted until further testing.
-    ---@NOTE HueSaturation filter doesn't seem to work.
     command = {
         ---Displays the application about section.
         About = function()
@@ -248,7 +247,8 @@ app = {
         end,
 
         ---Applies a despeckle filter to the sprite.
-        ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: string, ui: boolean, width: integer}
+        ---@NOTE TODO: Is tiledMode a string or an int for an enum constant? https://github.com/aseprite/aseprite/blob/main/src/filters/tiled_mode.h
+        ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: 0|1|2|3, ui: boolean, width: integer}
         Despeckle = function(options)
         end,
 
@@ -285,6 +285,20 @@ app = {
 
         ---Sets the previous tab in the application to active.
         GoToPreviousTab = function()
+        end,
+
+        ---Displays the home tab.
+        Home = function()
+        end,
+
+        ---Applies the hue/saturation filter to the sprite.
+        ---`channels` defaults to 0.
+        ---`mode` can be 0 for HSV_MUL; 1, HSL_MUL; 2, HSV_ADD; 3, HSL_ADD. See
+        ---https://github.com/aseprite/aseprite/blob/main/src/filters/hue_saturation_filter.h .
+        ---Defaults to HSL_MUL.
+        ---When `ui` is `true`, widgets do not display values set by command.
+        ---@param options {alpha: number, channels: FilterChannels|integer, hue: number, lightness: number, mode: 0|1|2|3, saturation: number, ui: boolean, value: number}
+        HueSaturation = function(options)
         end,
 
         ---Applies the invert color filter to the sprite.
@@ -356,7 +370,7 @@ app = {
         end,
 
         ---Edits a color in the palette. If `edit` is set to `switch`, toggles
-        ---whether the palette is locked or unlocked. If `popup` is 
+        ---whether the palette is locked or unlocked. If `popup` is
         ---`background`, then displays color sliders for the background color.
         ---If `popup` is set to a non-empty string, displays the sliders for
         ---the foreground color.
@@ -1800,7 +1814,7 @@ Layer = {
 MouseEvent = {}
 
 
----Represents an array of `Color` objects, beginning at index 0.
+---Represents an array of `Color` objects. Indexing begins at 0.
 ---@class Palette
 ---@field frame Frame|nil Gets the first frame, if any.
 ---@operator len(): integer
