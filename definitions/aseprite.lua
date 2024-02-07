@@ -423,6 +423,21 @@ app = {
         MoveMask = function(options)
         end,
 
+        ---Creates a new sprite.
+        ---@overload fun(options: {fromClipboard: boolean})
+        ---@param options {colorMode: ColorMode, height: integer, ui: boolean, width: integer}
+        NewFile = function(options)
+        end,
+
+        ---Creates a new frame.
+        ---@param options {content: "cel"|"celblock"|"celcopies"|"cellinked"|"current"|"empty"|"frame"}
+        NewFrame = function(options)
+        end,
+
+        ---Creates a new tag. Displays dialog to set new tag options.
+        NewFrameTag = function()
+        end,
+
         ---Creates a new layer. Layer type options `reference`, `tilemap` and
         ---`group` are mutually exclusive. The `gridBounds` parameter applies
         ---only to tilemap layers. The `ask` parameter refers to displaying a
@@ -430,7 +445,9 @@ app = {
         ---parameter places a new layer at the top of the stack if true. The
         ---`before` parameter places the new layer before the active layer if
         ---true, after if false.
-        ---@param options {ask: boolean, before: boolean, fromFile: boolean, fromClipboard: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
+        ---@overload fun(options: {fromClipboard: boolean, name: string})
+        ---@overload fun(options: {fromFile: boolean, name: string})
+        ---@param options {ask: boolean, before: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
         NewLayer = function(options)
         end,
 
@@ -579,6 +596,10 @@ app = {
         SpriteSize = function(options)
         end,
 
+        ---Strokes the inner edge of a selection with the foreground color.
+        Stroke = function()
+        end,
+
         ---Swaps the colors in a sprite's background checkboard.
         SwapCheckerboardColors = function()
         end,
@@ -609,6 +630,11 @@ app = {
         ---@overload fun(options: {open: boolean})
         ---@param options {switch: boolean}
         Timeline = function(options)
+        end,
+
+        ---Toggle setting to display only active layer.
+        ---@Note TODO: Check source for options with this command.
+        ToggleOtherLayersOpacity = function()
         end,
 
         ---Toggles the animation playback setting to play all frames.
