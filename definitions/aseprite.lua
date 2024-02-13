@@ -656,8 +656,50 @@ app = {
         SetSameInk = function()
         end,
 
+        ---Toggles whether to show auto-guides on the canvas.
+        ShowAutoGuides = function()
+        end,
+
+        ---Toggles the brush preview setting.
+        ShowBrushPreview = function()
+        end,
+
+        ---Toggles the visibility for elements in the 'extras' category.
+        ShowExtras = function()
+        end,
+
+        ---Toggles grid visibility. If a tile map layer is active, shows the
+        ---tile grid. Otherwise, shows the sprite grid.
+        ShowGrid = function()
+        end,
+
+        ---Toggles whether to show layer edges, i.e., cel bounds, on the canvas.
+        ShowLayerEdges = function()
+        end,
+
         ---Toggles the onion skin's visibility.
         ShowOnionSkin = function()
+        end,
+
+        ---Toggles pixel grid visibility.
+        ShowPixelGrid = function()
+        end,
+
+        ---Toggles the show selection edges setting.
+        ShowSelectionEdges = function()
+        end,
+
+        ---Toggles the visibility of slices on the canvas.
+        ShowSlices = function()
+        end,
+
+        ---Toggles tile number visibility on the canvas.
+        ShowTileNumbers = function()
+        end,
+
+        ---Displays the slice properties dialog.
+        ---@param options {name: string, id: string}
+        SliceProperties = function(options)
         end,
 
         ---Toggles snap to grid setting.
