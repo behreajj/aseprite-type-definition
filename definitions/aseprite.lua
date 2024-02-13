@@ -396,13 +396,53 @@ app = {
         LayerFromBackground = function()
         end,
 
+        ---Toggles editability of layers in the active range.
+        LayerLock = function()
+        end,
+
         ---Sets the active layer's opacity.
         ---@param options {opacity: integer}
         LayerOpacity = function(options)
         end,
 
+        ---Displays the layer properties dialog.
+        LayerProperties = function()
+        end,
+
+        ---Toggles visibility of layers in the active range.
+        LayerVisibility = function()
+        end,
+
         ---Links the cels contained by the active range.
         LinkCels = function()
+        end,
+
+        ---Loads a selection from a file.
+        ---@param options {filename: string}
+        LoadMask = function(options)
+        end,
+
+        ---Loads a palette from either preset or file name. For the preset,
+        ---use "default" to load the default palette.
+        ---@overload fun(options: {preset: "default"|string})
+        ---@param options {filename: string}
+        LoadPalette = function(options)
+        end,
+
+        ---Selects all the sprite canvas.
+        MaskAll = function()
+        end,
+
+        ---Displays the select color dialog.
+        MaskByColor = function()
+        end,
+
+        ---Creates a selection around a cel's bounding box.
+        MaskContent = function()
+        end,
+
+        ---Merges the layer with those beneath.
+        MergeDownLayer = function()
         end,
 
         ---Changes the active selection, either contracting it, expanding it or
@@ -411,7 +451,7 @@ app = {
         ModifySelection = function(options)
         end,
 
-        ---Moves colors in a range to before the given index.
+        ---Moves colors in a range in the palette to before the given index.
         ---@param options {before:integer}
         MoveColors = function(options)
         end,
@@ -445,6 +485,7 @@ app = {
         ---parameter places a new layer at the top of the stack if true. The
         ---`before` parameter places the new layer before the active layer if
         ---true, after if false.
+        ---@NOTE TODO: Do top and before vars also apply to overloads?
         ---@overload fun(options: {fromClipboard: boolean, name: string})
         ---@overload fun(options: {fromFile: boolean, name: string})
         ---@param options {ask: boolean, before: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
