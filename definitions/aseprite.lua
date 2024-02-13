@@ -134,7 +134,6 @@ app = {
     end,
 
     ---Executes the command named `CommandName` with the parameters provided.
-    ---@NOTE SliceProperties, Stroke, Cancel, ContiguousFill omitted until further testing.
     command = {
         ---Displays the application about section.
         About = function()
@@ -492,6 +491,40 @@ app = {
         NewLayer = function(options)
         end,
 
+        ---Creates a new sprite from the active selection.
+        NewSpriteFromSelection = function()
+        end,
+
+        ---Opens a a file in the rich-text browser, e.g., for markdown (.md)
+        ---files.
+        ---@param options {filename: string}
+        OpenBrowser = function(options)
+        end,
+
+        ---Opens a file.
+        ---@param options {filename: string, folder: string, oneframe: boolean, repeat_checkbox: boolean, sequence: "agree"|"ask"|"no"|"skip"|"yes"}
+        OpenFile = function(options)
+        end,
+
+        ---Toggles whether the active group folder is open or closed.
+        OpenGroup = function()
+        end,
+
+        ---If the active sprite has been saved to disk, opens an operating
+        ---system file browser of the folder that contains the file.
+        OpenInFolder = function()
+        end,
+
+        ---Opens an operating system file browser indicating where Lua scripts
+        ---can be found.
+        OpenScriptFolder = function()
+        end,
+
+        ---If the active sprite has been saved to disk, opens the file with the
+        ---defaut application.
+        OpenWithApp = function()
+        end,
+
         ---Displays the preferences dialog, with an option to prompt the
         ---installation of an extension from a file path.
         ---@param options {installExtension: string}
@@ -621,6 +654,10 @@ app = {
 
         ---Toggles whether the ink type is shared across all tools.
         SetSameInk = function()
+        end,
+
+        ---Toggles the onion skin's visibility.
+        ShowOnionSkin = function()
         end,
 
         ---Toggles snap to grid setting.
