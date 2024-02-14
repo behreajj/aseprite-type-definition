@@ -134,6 +134,7 @@ app = {
     end,
 
     ---Executes the command named `CommandName` with the parameters provided.
+    ---@NOTE SelectTile, SetPalette omitted.
     command = {
         ---Displays the application about section.
         About = function()
@@ -586,6 +587,12 @@ app = {
         Rotate = function(options)
         end,
 
+        ---Runs a script from file name. Other parameters are passed to the
+        ---script to parse.
+        ---@param options {filename: string}
+        RunScript = function(options)
+        end,
+
         ---This method has serious bugs, particularly with `fromFrame` and
         ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
         ---where possible.
@@ -608,6 +615,15 @@ app = {
         ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
         ---@deprecated
         SaveFileCopyAs = function(options)
+        end,
+
+        ---Opens the file browser to save a selection to file.
+        SaveMask = function()
+        end,
+
+        ---Saves the active palette by preset name.
+        ---@param options {preset: string, saveAsPreset: boolean}
+        SavePalette = function(options)
         end,
 
         ---Scrolls the canvas view.
