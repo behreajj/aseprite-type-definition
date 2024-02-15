@@ -328,7 +328,7 @@ app = {
         end,
 
         ---Sets the next frame to active.
-        GoToNextFrame = function()
+        GotoNextFrame = function()
         end,
 
         ---Sets the next frame within the same tag to active.
@@ -336,15 +336,15 @@ app = {
         end,
 
         ---Sets the next layer up the stack to active.
-        GoToNextLayer = function()
+        GotoNextLayer = function()
         end,
 
         ---Sets the next tab in the application to active.
-        GoToNextTab = function()
+        GotoNextTab = function()
         end,
 
         ---Sets the previous frame to active.
-        GoToPreviousFrame = function()
+        GotoPreviousFrame = function()
         end,
 
         ---Sets the previuos frame within the same tag to active.
@@ -352,11 +352,11 @@ app = {
         end,
 
         ---Sets the previous layer down the stack to active.
-        GoToPreviousLayer = function()
+        GotoPreviousLayer = function()
         end,
 
         ---Sets the previous tab in the application to active.
-        GoToPreviousTab = function()
+        GotoPreviousTab = function()
         end,
 
         ---Displays grid settings window.
