@@ -134,7 +134,7 @@ app = {
     end,
 
     ---Executes the command named `CommandName` with the parameters provided.
-    ---@NOTE SelectTile, SetPalette omitted.
+    ---@NOTE Cancel, CopyCel, Eyedropper, Launch, SelectTile, SetPalette omitted.
     command = {
         ---Displays the application about section.
         About = function()
@@ -146,15 +146,15 @@ app = {
         AddColor = function(options)
         end,
 
+        ---Cycles the view mode from normal UI to context bar and timeline,
+        ---then to editor only mode, then back to normal.
+        AdvancedMode = function()
+        end,
+
         ---Resizes sprite canvas to remove excess transparent pixels.
         ---See https://github.com/aseprite/aseprite/blob/main/src/app/commands/cmd_crop.cpp#L86 .
         ---@param options {byGrid: boolean}
         AutocropSprite = function(options)
-        end,
-
-        ---Cycles the view mode from normal UI to context bar and timeline,
-        ---then to editor only mode, then back to normal.
-        AdvancedMode = function()
         end,
 
         ---Converts a layer to a background layer.
@@ -231,9 +231,18 @@ app = {
         ColorQuantization = function(options)
         end,
 
+        ---Toggles the contiguous fill setting on tools such as paint bucket
+        ---magic wand, and gradient.
+        ContiguousFill = function()
+        end,
+
         ---Applies a convolution matrix filter to the sprite.
         ---@param options {channels: FilterChannels|integer, fromResource: string, tiledMode: "both"|"none"|"x"|"y", ui: boolean}
         ConvolutionMatrix = function(options)
+        end,
+
+        ---Copies a selection at the active layer.
+        Copy = function()
         end,
 
         ---Copies the palette swatches in a range and pastes them before the
@@ -242,8 +251,21 @@ app = {
         CopyColors = function(options)
         end,
 
+        ---Copies a selection of composited layers.
+        CopyMerged = function()
+        end,
+
         ---Crops the sprite according to a selection.
-        CropSprite = function()
+        ---@overload fun(options: {x: integer, y: integer, width: integer, height: integer})
+        CropSprite = function(options)
+        end,
+
+        ---Copies and removes the selected content.
+        Cut = function()
+        end,
+
+        ---Removes a selection mask from the sprite.
+        DeselectMask = function()
         end,
 
         ---Applies a despeckle filter to the sprite.
@@ -253,6 +275,10 @@ app = {
 
         ---Opens the developer console.
         DeveloperConsole = function()
+        end,
+
+        ---Discards an active, custom brush, returning to a default brush.
+        DiscardBrush = function()
         end,
 
         ---Duplicates a layer. For tilemap layers, the new layer refers to the
@@ -272,6 +298,16 @@ app = {
 
         ---Exits the application.
         Exit = function()
+        end,
+
+        ---Exports the sprite to a sprite sheet.
+        ---@param options {askOverwrite: boolean, bestFit: boolean, borderPadding: integer, columns: integer, dataFilename: string, dataFormat: SpriteSheetDataFormat, extrude: boolean, filenameFormat: string, fromTilesets: boolean, height: integer, ignoreEmpty: boolean, innerPadding: integer, layer: string, listLayers: boolean, listSlices: boolean, listTags: boolean, mergeDuplicates: boolean, openGenerated: boolean, rows: integer, shapePadding: integer, splitGrid: boolean, splitLayers: boolean, splitTags: boolean, tag: string, textureFilename: string, trim: boolean, trimByGrid: boolean, trimSprite: boolean, type: SpriteSheetType, ui: boolean, width: integer}
+        ExportSpriteSheet = function(options)
+        end,
+
+        ---Exports a Tileset.
+        ---@param options {aniDir: AniDir, bounds: Rectangle, dataFormat: SpriteSheetDataFormat, filename: string, filenameFormat: string, fromFrame: Frame, fromTilesets: boolean, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ExportTileset = function(options)
         end,
 
         ---Fills a selection with the foreground color.
@@ -375,6 +411,11 @@ app = {
         ---When `ui` is `true`, widgets do not display values set by command.
         ---@param options {alpha: number, channels: FilterChannels|integer, hue: number, lightness: number, mode: 0|1|2|3, saturation: number, ui: boolean, value: number}
         HueSaturation = function(options)
+        end,
+
+        ---Imports a sprite from a sprite sheet.
+        ---@param options {frameBounds: Rectangle, padding: Size, partialTiles: boolean, type: SpriteSheetType, ui: boolean}
+        ImportSpriteSheet = function(options)
         end,
 
         ---Applies the invert color filter to the sprite.
@@ -485,7 +526,6 @@ app = {
         ---parameter places a new layer at the top of the stack if true. The
         ---`before` parameter places the new layer before the active layer if
         ---true, after if false.
-        ---@NOTE TODO: Do top and before vars also apply to overloads?
         ---@overload fun(options: {fromClipboard: boolean, name: string})
         ---@overload fun(options: {fromFile: boolean, name: string})
         ---@param options {ask: boolean, before: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
@@ -639,12 +679,6 @@ app = {
         SelectionAsGrid = function()
         end,
 
-        ---Creates a range in the color bar of used or unused colors or tiles,
-        ---per the modifier.
-        ---@param options {modifier: "unused_colors"|"unused_tiles"|"used_colors"|"used_tiles"}
-        SelectPaletteColors = function(options)
-        end,
-
         ---Sets the color selector in the UI. The argument "wheel" is the same
         ---as "rgb-wheel".
         ---@param options {type: "normal-map-wheel"|"rgb-wheel"|"ryb-wheel"|"spectrum"|"tint-shade-tone"|"wheel"}
@@ -663,9 +697,20 @@ app = {
         SetLoopSection = function(options)
         end,
 
+        ---Creates a range in the color bar of used or unused colors or tiles,
+        ---per the modifier.
+        ---@param options {modifier: "unused_colors"|"unused_tiles"|"used_colors"|"used_tiles"}
+        SelectPaletteColors = function(options)
+        end,
+
         ---Sets the palette swatch display size in the color bar.
         ---@param options {size: integer}
         SetPaletteEntrySize = function(options)
+        end,
+
+        ---Sets the animation playback speed.
+        ---@param options {multiplier: number}
+        SetPlaybackSpeed = function(options)
         end,
 
         ---Toggles whether the ink type is shared across all tools.
@@ -769,8 +814,8 @@ app = {
         end,
 
         ---Toggle setting to display only active layer.
-        ---@Note TODO: Check source for options with this command.
-        ToggleOtherLayersOpacity = function()
+        ---@param options {checkedIfZero: boolean, opacity: integer, preview: boolean}
+        ToggleOtherLayersOpacity = function(options)
         end,
 
         ---Toggles the animation playback setting to play all frames.
@@ -2027,7 +2072,7 @@ KeyEvent = {
 ---@field isEditable boolean Gets or sets a layer's editability in the timeline.
 ---@field isExpanded boolean Gets or sets a layer's expanded state in the timeline.
 ---@field isGroup boolean Whether the layer is a group and can be a parent to other layers.
----@field isImage boolean Whether the layer contains cels with images.
+---@field isImage boolean Whether the layer may contain cels with images, i.e., is not a group.
 ---@field isReference boolean Whether the layer is a reference layer.
 ---@field isTilemap boolean Whether the layer is a tile map.
 ---@field isTransparent boolean Gets a layer's support for transparency.
