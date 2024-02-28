@@ -1,9 +1,7 @@
 ---@meta
 
-
 ---@type unknown
 local undefined
-
 
 ---The `app` global namespace.
 app = {
@@ -128,13 +126,14 @@ app = {
     ---0 is the default. See
     ---https://github.com/aseprite/aseprite/blob/main/src/app/tools/freehand_algorithm.h .
     ---Many tools do not work, avoid using this method where possible.
-    ---@param options {bgColor: Color, brush: Brush, button: MouseButton, cel: Cel, color: Color, contiguous: boolean, frame: Frame, freehandAlgorithm: 0|1|2, ink: Ink, layer: Layer, opacity: integer, points: Point[], tolerance: integer, tool: string, selection: SelectionMode, tilemapMode: TilemapMode, tilesetMode: TilesetMode}
+    ---@param options {bgColor: Color, brush: Brush, button: MouseButton, cel: Cel, color: Color, contiguous: boolean, frame: Frame, freehandAlgorithm: 0|1|2, ink: Ink, layer: Layer, opacity: integer, points: Point[], selection: SelectionMode, tolerance: integer, tool: Tool|string, tilemapMode: TilemapMode, tilesetMode: TilesetMode}
     ---@deprecated
     useTool = function(options)
     end,
 
     ---Executes the command named `CommandName` with the parameters provided.
-    ---@NOTE Cancel, CopyCel, Eyedropper, Launch, SelectTile, SetPalette omitted.
+    ---@NOTE CopyCel, Eyedropper, Launch, SelectTile, SetPalette omitted.
+    ---@NOTE Try out Screenshot, ShowMenu
     command = {
         ---Displays the application about section.
         About = function()
@@ -164,6 +163,10 @@ app = {
         ---Applies a brightness-contrast adjustment filter to the sprite.
         ---@param options {brightness: integer, channels: FilterChannels|integer, contrast: integer, ui: boolean}
         BrightnessContrast = function(options)
+        end,
+
+        ---Cancels the current operation.
+        Cancel = function()
         end,
 
         ---Changes the sprite canvas size by the given dimensions.
@@ -2244,7 +2247,6 @@ end
 ---@field images Image[] Gets a table of unique images.
 ---@field isEmpty boolean Gets whether or not the range is empty.
 ---@field layers Layer[] Gets or sets a table of layers.
----@field slices Slice[] Gets or sets a table of slices.
 ---@field sprite Sprite Gets the sprite to which the range is pointing.
 ---@field tiles integer[] Sets a table of tile set indices.
 ---@field type RangeType Gets the type of range.
