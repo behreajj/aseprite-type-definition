@@ -132,8 +132,8 @@ app = {
     end,
 
     ---Executes the command named `CommandName` with the parameters provided.
-    ---@NOTE CopyCel, Eyedropper, Launch, SelectTile, SetPalette omitted.
-    ---@NOTE Try out Screenshot, ShowMenu
+    ---@NOTE CopyCel, Eyedropper, Launch, MoveCel, SelectTile, SetPalette omitted.
+    ---@NOTE Try out Screenshot
     command = {
         ---Displays the application about section.
         About = function()
@@ -339,6 +339,10 @@ app = {
 
         ---Displays the tag properties window.
         FrameTagProperties = function()
+        end,
+
+        ---Toggles full screen mode.
+        FullscreenMode = function()
         end,
 
         ---Displays full screen preview.
@@ -594,6 +598,10 @@ app = {
         PaletteSize = function(options)
         end,
 
+        ---Opens the insert text dialog window.
+        PasteText = function()
+        end,
+
         ---Toggles pixel perfect on and off for tools such as the pencil.
         PixelPerfectMode = function()
         end,
@@ -604,6 +612,10 @@ app = {
 
         ---Plays the sprite animation in the preview window.
         PlayPreviewAnimation = function()
+        end,
+
+        ---Repeats the previous export.
+        RepeatLastExport = function()
         end,
 
         ---Reloads Aseprite's theme, or skin. May cause crashes in version
@@ -739,6 +751,12 @@ app = {
 
         ---Toggles whether to show layer edges, i.e., cel bounds, on the canvas.
         ShowLayerEdges = function()
+        end,
+
+        ---Displays a menu. For appropriate menu strings, see
+        ---https://github.com/aseprite/aseprite/blob/main/data/gui.xml.
+        ---@param options {menu: string}
+        ShowMenu = function(options)
         end,
 
         ---Toggles the onion skin's visibility.
