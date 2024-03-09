@@ -1986,9 +1986,9 @@ Image = {
     saveAs = function(image, filename)
     end,
 
-    ---Returns the shrunken bounds, a rectangle, of the image, removing empty
-    ---space as defined by the mask color or a given `refColor`. For tile map
-    ---images, returns an empty rectangle.
+    ---Returns a rectangle of the image where empty space, as defined by a
+    ---`refColor` has been removed. For tile map images, returns an empty
+    ---rectangle.
     ---@param image Image
     ---@param refColor integer
     ---@return Rectangle
