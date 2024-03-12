@@ -63,7 +63,8 @@ app = {
     ---Gets an array of sprites open in the application.
     sprites = undefined --[=[@as Sprite[]]=],
 
-    ---Gets the active tag.
+    ---Gets the active tag based on the active frame. For overlapping tags,
+    ---prioritizes the lower frame number.
     ---`nil` when no sprite is active.
     tag = undefined --[[@as Tag|nil]],
 
