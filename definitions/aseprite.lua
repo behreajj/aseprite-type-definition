@@ -333,12 +333,12 @@ app = {
         Flip = function(options)
         end,
 
-        ---Displays the frame properties window.
+        ---Displays the frame properties dialog.
         ---@param options {frame: "all"|"current"|integer}
         FrameProperties = function(options)
         end,
 
-        ---Displays the tag properties window.
+        ---Displays the tag properties dialog.
         FrameTagProperties = function()
         end,
 
@@ -2251,10 +2251,11 @@ function Point()
 end
 
 ---A range of selected objects. It may contain layers, frames, cels,
----images, tiles and/or colors. Tiles and colors are referenced indirectly
----through `integer`s.
+---images, slices, tiles and/or colors. Tiles and colors are referenced
+---indirectly through `integer`s.
 ---
----Ranges may report as empty when the timeline is hidden.
+---Ranges, or tables of some elements therein, may report as empty when the
+---timeline is hidden.
 ---
 ---The `layers` field is not necessarily ordered according to stack index,
 ---whether relative to the sprite or to parent layer.
@@ -2266,11 +2267,11 @@ end
 ---@field images Image[] Gets a table of unique images.
 ---@field isEmpty boolean Gets whether or not the range is empty.
 ---@field layers Layer[] Gets or sets a table of layers.
+---@field slices Slice[] Gets or sets a table of active slices.
 ---@field sprite Sprite Gets the sprite to which the range is pointing.
 ---@field tiles integer[] Sets a table of tile set indices.
 ---@field type RangeType Gets the type of range.
 ---@NOTE Tiles field works as a setter, but not yet as a getter.
----@NOTE It's not clear from the UI how a range contains slices.
 Range = {
     ---Clears the current range's contents.
     ---@param range Range
@@ -2619,7 +2620,8 @@ Sprite = {
     end,
 
     ---Creates a new empty frame in the given `frameNumber`.
-    ---Defaults to `#sprite.frames + 1`.
+    ---Defaults to the last frame in the sprite.
+    ---The new frame's duration defaults to that of the active frame.
     ---@param sprite Sprite
     ---@param frameNumber? integer
     ---@return Frame
@@ -2627,7 +2629,8 @@ Sprite = {
     end,
 
     ---Creates a copy of the given `Frame` object or frame number and returns
-    ---the copy. Defaults to the last frame in the sprite.
+    ---the copy.
+    ---Defaults to the last frame in the sprite.
     ---@param sprite Sprite
     ---@param frame? Frame|integer
     ---@return Frame
