@@ -2473,11 +2473,11 @@ end
 ---An object that allows for nine-slice scaling.
 ---@class Slice
 ---@field bounds Rectangle|nil The slice's bounding rectangle, if any.
----@field center Rectangle|nil The central rectangle of a slice's nine-slice, if any.
+---@field center Rectangle|nil The central rectangle of a slice's nine-slice, if any. Coordinates are in local space.
 ---@field color Color Gets or sets the slice's color.
 ---@field data string Gets or sets custom data assigned to the slice.
 ---@field name string Gets or sets the slice's name.
----@field pivot Point|nil The slice's pivot, if any.
+---@field pivot Point|nil The slice's pivot, if any. Coordinates are in local space.
 ---@field properties table<string, any> Gets or sets the slice's user-defined properties.
 ---@field sprite Sprite The sprite to which the slice belongs.
 Slice = {}
