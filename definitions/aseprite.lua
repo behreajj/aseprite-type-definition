@@ -1677,7 +1677,7 @@ Events = {
 ---@field frameNumber integer Gets the frame number.
 ---@field next Frame|nil Gets the next frame, if any.
 ---@field previous Frame|nil Gets the previous frame, if any.
----@field sprite Sprite Gets the sprite of this frame.
+---@field sprite Sprite Gets the sprite to which this frame belongs.
 Frame = {}
 
 
@@ -1988,8 +1988,8 @@ Image = {
     end,
 
     ---Returns a rectangle of the image where empty space, as defined by a
-    ---`refColor` has been removed. For tile map images, returns an empty
-    ---rectangle.
+    ---`refColor` has been removed. For empty images and tile map images,
+    ---returns an empty rectangle, i.e., with zero size.
     ---@param image Image
     ---@param refColor integer
     ---@return Rectangle
@@ -2268,7 +2268,7 @@ end
 ---@field isEmpty boolean Gets whether or not the range is empty.
 ---@field layers Layer[] Gets or sets a table of layers.
 ---@field slices Slice[] Gets or sets a table of active slices.
----@field sprite Sprite Gets the sprite to which the range is pointing.
+---@field sprite Sprite Gets the sprite to which the range belongs.
 ---@field tiles integer[] Sets a table of tile set indices.
 ---@field type RangeType Gets the type of range.
 ---@NOTE Tiles field works as a setter, but not yet as a getter.
@@ -2470,7 +2470,8 @@ Size {
 function Size()
 end
 
----An object that allows for nine-slice scaling.
+---An object that allows for nine-slice scaling. The slice's frame data cannot
+---be accessed via the API.
 ---@class Slice
 ---@field bounds Rectangle|nil The slice's bounding rectangle, if any.
 ---@field center Rectangle|nil The central rectangle of a slice's nine-slice, if any. Coordinates are in local space.
@@ -2479,7 +2480,7 @@ end
 ---@field name string Gets or sets the slice's name.
 ---@field pivot Point|nil The slice's pivot, if any. Coordinates are in local space.
 ---@field properties table<string, any> Gets or sets the slice's user-defined properties.
----@field sprite Sprite The sprite to which the slice belongs.
+---@field sprite Sprite Gets the sprite to which the slice belongs.
 Slice = {}
 
 
