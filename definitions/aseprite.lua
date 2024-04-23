@@ -1710,8 +1710,8 @@ GraphicsContext = {
     closePath = function(gc)
     end,
 
-    ---Appends a cubic Bezier curve to the current sub-path, from the last
-    ---point to the specified xy-coordinates, with two control points.
+    ---Appends a cubic Bezier curve to the current sub-path, from the previous
+    ---anchor point to the given coordinates with two control points between.
     ---@param gc GraphicsContext Graphics context.
     ---@param cp1x number First control point x.
     ---@param cp1y number First control point y.
@@ -1722,9 +1722,10 @@ GraphicsContext = {
     cubicTo = function(gc, cp1x, cp1y, cp2x, cp2y, x, y)
     end,
 
-    ---Draws on the canvas the given image.
-    ---If given source and destination bounds, a part of the image is drawn on
-    ---the canvas.
+    ---Draws the given image on the canvas. Does not support translucent or
+    ---transparent pixels.
+    ---If given source and destination rectangles, a part of the image is drawn
+    ---on the canvas.
     ---If given coordinates, the full image will be drawn at the specified
     ---position in its original scale.
     ---@param gc GraphicsContext Graphics context.
@@ -1736,8 +1737,8 @@ GraphicsContext = {
     drawImage = function(gc, image, rectSrc, rectDst)
     end,
 
-    ---Draws on the canvas a theme part specified by the given partId,
-    ---at a given Point or at specified coordinates.
+    ---Draws a theme part given by partId on the canvas at the given
+    ---coordinates.
     ---@param gc GraphicsContext
     ---@param partId string
     ---@param point Point
@@ -1745,14 +1746,14 @@ GraphicsContext = {
     drawThemeImage = function(gc, partId, point)
     end,
 
-    ---Draws on the canvas a theme part specified by the given partId,
-    ---filling a given Rectangle or at specified coordinates, with
-    ---given width and height. This method uses nine-slice scaling for
-    ---parts that have their Slice's center defined.
+    ---Draws a theme part given by partId on the canvas, filling a given
+    ---rectangle. Uses nine-slice scaling for parts that have a defined Slice
+    ---center.
     ---@param gc GraphicsContext
     ---@param partId string
     ---@param rectangle Rectangle
     ---@overload fun(gc: GraphicsContext, partId: string, x: integer, y: integer, w: integer, h: integer)
+    ---@see Slice.center
     drawThemeRect = function(gc, partId, rectangle)
     end,
 
