@@ -2491,6 +2491,7 @@ Slice = {}
 ---@field backgroundLayer Layer|nil Gets a background layer, if any, for which the sprite is a direct parent.
 ---@field bounds Rectangle Gets the sprite bounds.
 ---@field cels Cel[] Gets the cels contained by the sprite.
+---@field color Color Gets or sets the sprite's tab color in the UI.
 ---@field colorMode ColorMode Gets the sprite's color mode.
 ---@field colorSpace ColorSpace Gets or sets the sprite color space.
 ---@field data string Gets or sets custom data assigned to the sprite.
