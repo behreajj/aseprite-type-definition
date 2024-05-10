@@ -2047,7 +2047,7 @@ end
 ---Specifications of sprites or images.
 ---@class ImageSpec
 ---@field colorMode ColorMode Gets or sets the spec color mode.
----@field colorSpace ColorSpace Gets or sets the spec color space.
+---@field colorSpace ColorSpace|nil Gets or sets the spec color space.
 ---@field height integer Gets or sets the spec height.
 ---@field width integer Gets or sets the spec width.
 ---@field transparentColor integer Gets or sets the index for a transparent color in a palette.
