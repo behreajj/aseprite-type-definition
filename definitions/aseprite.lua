@@ -2047,7 +2047,7 @@ end
 ---Specifications of sprites or images.
 ---@class ImageSpec
 ---@field colorMode ColorMode Gets or sets the spec color mode.
----@field colorSpace ColorSpace|nil Gets or sets the spec color space.
+---@field colorSpace ColorSpace Gets or sets the spec color space.
 ---@field height integer Gets or sets the spec height.
 ---@field width integer Gets or sets the spec width.
 ---@field transparentColor integer Gets or sets the index for a transparent color in a palette.
@@ -2493,7 +2493,7 @@ Slice = {}
 ---@field cels Cel[] Gets the cels contained by the sprite.
 ---@field color Color Gets or sets the sprite's tab color in the UI.
 ---@field colorMode ColorMode Gets the sprite's color mode.
----@field colorSpace ColorSpace|nil Gets or sets the sprite color space.
+---@field colorSpace ColorSpace Gets or sets the sprite color space.
 ---@field data string Gets or sets custom data assigned to the sprite.
 ---@field events Events Events to associate functions that can act as listeners.
 ---@field filename string Gets or sets the sprite file name.
