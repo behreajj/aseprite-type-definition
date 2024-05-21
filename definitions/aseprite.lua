@@ -305,7 +305,7 @@ app = {
         end,
 
         ---Exports the sprite to a sprite sheet.
-        ---@param options {askOverwrite: boolean, bestFit: boolean, borderPadding: integer, columns: integer, dataFilename: string, dataFormat: SpriteSheetDataFormat, extrude: boolean, filenameFormat: string, fromTilesets: boolean, height: integer, ignoreEmpty: boolean, innerPadding: integer, layer: string, listLayers: boolean, listSlices: boolean, listTags: boolean, mergeDuplicates: boolean, openGenerated: boolean, rows: integer, shapePadding: integer, splitGrid: boolean, splitLayers: boolean, splitTags: boolean, tag: string, textureFilename: string, trim: boolean, trimByGrid: boolean, trimSprite: boolean, type: SpriteSheetType, ui: boolean, width: integer}
+        ---@param options {askOverwrite: boolean, bestFit: boolean, borderPadding: integer, columns: integer, dataFilename: string, dataFormat: SpriteSheetDataFormat, extrude: boolean, filenameFormat: string, fromTilesets: boolean, height: integer, ignoreEmpty: boolean, innerPadding: integer, layer: string, recent: boolean, listLayers: boolean, listSlices: boolean, listTags: boolean, mergeDuplicates: boolean, openGenerated: boolean, rows: integer, shapePadding: integer, splitGrid: boolean, splitLayers: boolean, splitTags: boolean, tag: string, textureFilename: string, trim: boolean, trimByGrid: boolean, trimSprite: boolean, type: SpriteSheetType, ui: boolean, width: integer}
         ExportSpriteSheet = function(options)
         end,
 
@@ -652,7 +652,7 @@ app = {
         ---This method has serious bugs, particularly with `fromFrame` and
         ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
         ---where possible.
-        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
         ---@deprecated
         SaveFile = function(options)
         end,
@@ -660,7 +660,7 @@ app = {
         ---This method has serious bugs, particularly with `fromFrame` and
         ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
         ---where possible.
-        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
         ---@deprecated
         SaveFileAs = function(options)
         end,
@@ -668,7 +668,7 @@ app = {
         ---This method has serious bugs, particularly with `fromFrame` and
         ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
         ---where possible.
-        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
         ---@deprecated
         SaveFileCopyAs = function(options)
         end,
@@ -999,6 +999,36 @@ app = {
         ---@return boolean success
         removeDirectory = function(path)
         end
+    },
+
+    ---Properties about the operating system.
+    os = {
+        ---Returns true if the architecture is Arm 64.
+        arm64 = undefined --[[@as boolean]],
+
+        ---Gets the operating system name and version.
+        fullName = undefined --[[@as string]],
+
+        ---Returns true if the operating system is Linux.
+        linux = undefined --[[@as boolean]],
+
+        ---Returns true if the operating system is Mac.
+        macos = undefined --[[@as boolean]],
+
+        ---Gets the operating system name.
+        name = undefined --[[@as "Linux"|"macOS"|"Windows"]],
+
+        ---Gets the operating system semantic version. See https://semver.org/ .
+        version = undefined --[[@as string]],
+
+        ---Returns true if the operating system is Windows.
+        windows = undefined --[[@as boolean]],
+
+        ---Returns true if the architecture is x64.
+        x64 = undefined --[[@as boolean]],
+
+        ---Returns true if the architecture is x86.
+        x86 = undefined --[[@as boolean]]
     },
 
     ---A module to handle the color for Image pixels as unsigned integers.
