@@ -2453,7 +2453,8 @@ Selection = {
     end,
 }
 
----Creates a new `Selection` instance.
+---Creates a new `Selection` instance. When rectangle dimensions are zero or
+---negative, selection is empty with zero bounds.
 ---@param rectangle? Rectangle
 ---@return Selection
 function Selection(rectangle)
