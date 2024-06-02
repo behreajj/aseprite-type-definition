@@ -2063,6 +2063,8 @@ Image = {
 
 ---Creates a new `Image` instance.
 ---Images loaded fromFile may be `nil`.
+---Images created a rectangle parameter may return `nil` if the rectangle is
+---invalid, i.e., has zero width or height.
 ---The ImageSpec constructor is preferable, so that transparent color and color
 ---space fields can be transferred from a source to a target.
 ---@param spec ImageSpec
@@ -2070,7 +2072,9 @@ Image = {
 ---@overload fun(width: integer, height: integer, colorMode?: ColorMode): Image
 ---@overload fun(sprite: Sprite): Image
 ---@overload fun(otherImage: Image): Image
+---@overload fun(otherImage: Image, rectangle: Rectangle): Image
 ---@overload fun(option: {fromFile: string}): Image
+---@NOTE A constructor overload cannot have variants on return type, e.g, Image|nil, without impacting other overloads in autocomplete.
 function Image(spec)
 end
 
@@ -2332,7 +2336,8 @@ Range = {
 }
 
 
----Creates a new `Rectangle` instance.
+---Creates a new `Rectangle` instance.  Dimensions may be negative or zero.
+---They are not validated by the constructor.
 ---@class Rectangle
 ---@field h integer Gets or sets the vertical dimension.
 ---@field height integer Gets or sets the vertical dimension.
@@ -2384,7 +2389,9 @@ Rectangle = {
     end
 }
 
----Creates a new `Rectangle` instance.
+---Creates a new `Rectangle` instance.  Dimensions may be negative or zero.
+---They are not validated by the constructor.
+---Width and height default to zero.
 ---@return Rectangle
 ---@overload fun(otherRectangle: Rectangle): Rectangle
 ---@overload fun(x: integer, y: integer, width: integer, height: integer): Rectangle
@@ -2466,7 +2473,7 @@ Site = {}
 
 
 ---Represents a non-uniform scalar with two dimensions, i.e., width and height.
----Dimensions may be negative or zero; they are not validated by the
+---Dimensions may be negative or zero. They are not validated by the
 ---constructor.
 ---@class Size
 ---@field h integer Gets or sets the height.
@@ -2491,7 +2498,8 @@ Size {
     end
 }
 
----Creates a new `Size` instance with the given dimensions.
+---Creates a new `Size` instance with the given dimensions. Dimensions may be
+---negative or zero. They are not validated by the constructor.
 ---Width and height default to zero.
 ---@return Size
 ---@overload fun(otherSize: Size): Size
