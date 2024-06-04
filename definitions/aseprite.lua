@@ -2351,37 +2351,46 @@ Range = {
 ---@operator band(Rectangle): Rectangle
 ---@operator bor(Rectangle): Rectangle
 Rectangle = {
-    ---Returns true if `otherRectangle` is inside `rectangle`. Best used with
-    ---positive, non-zero left and right operands.
+    ---Returns true if a `Point` or `Rectangle` is inside the left operand.
+    ---For rectangle and rectangle, Returns false if either rectangle is empty. See
+    ---https://github.com/aseprite/laf/blob/main/gfx/rect.h#L256 .
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return boolean
+    ---@overload fun(point: Point): boolean
+    ---@see Rectangle.isEmpty
     contains = function(rectangle, otherRectangle)
     end,
 
     ---Returns a new rectangle which is the intersection of `rectangle` and
     ---`otherRectangle`. If the rectangles do not intersect, then the result
-    ---will be empty. Best used with positive, non-zero left and right operands.
+    ---will be empty. See
+    ---https://github.com/aseprite/laf/blob/main/gfx/rect.h#L289 .
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return Rectangle
+    ---@see Rectangle.intersects
     intersect = function(rectangle, otherRectangle)
     end,
 
     ---Returns true if `rectangle` intersects `otherRectangle`. Returns false
-    ---when either rectangle has zero or negative dimensions.
+    ---if either rectangle is empty. See
+    ---https://github.com/aseprite/laf/blob/main/gfx/rect.h#L267 .
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return boolean
+    ---@see Rectangle.isEmpty
     intersects = function(rectangle, otherRectangle)
     end,
 
     ---Returns a new rectangle that contains both given rectangles `rectangle`
-    ---and `otherRectangle`. Best used with positive, non-zero left and right
-    ---operands.
+    ---and `otherRectangle`. If the left operand is empty, then returns the
+    ---right. If the right operand is empty, then returns the left. See
+    ---https://github.com/aseprite/laf/blob/main/gfx/rect.h#L277 .
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return Rectangle
+    ---@see Rectangle.isEmpty
     union = function(rectangle, otherRectangle)
     end
 }
