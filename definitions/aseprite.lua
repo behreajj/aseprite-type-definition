@@ -2341,6 +2341,7 @@ Range = {
 ---@class Rectangle
 ---@field h integer Gets or sets the vertical dimension.
 ---@field height integer Gets or sets the vertical dimension.
+---@field isEmpty boolean Returns true if either width or height is less than or equal to zero.
 ---@field origin Point Gets or sets the top-left corner.
 ---@field size Size Gets or sets the width and height.
 ---@field w integer Gets or sets the horizontal dimension.
@@ -2373,13 +2374,6 @@ Rectangle = {
     ---@param otherRectangle Rectangle
     ---@return boolean
     intersects = function(rectangle, otherRectangle)
-    end,
-
-    ---Returns true if the rectangle is empty,
-    ---i.e., width and/or height are zero.
-    ---@param rectangle Rectangle
-    ---@return boolean
-    isEmpty = function(rectangle)
     end,
 
     ---Returns a new rectangle that contains both given rectangles `rectangle`
