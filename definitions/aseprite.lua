@@ -2357,8 +2357,8 @@ Rectangle = {
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return boolean
-    ---@overload fun(point: Point): boolean
     ---@see Rectangle.isEmpty
+    ---@overload fun(rectangle: Rectangle, point: Point): boolean
     contains = function(rectangle, otherRectangle)
     end,
 
