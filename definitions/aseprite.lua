@@ -171,8 +171,8 @@ app = {
         end,
 
         ---Changes the sprite canvas size by the given dimensions.
-        ---Accepts either a boundary as a Rectangle or separate edges as
-        ---integers. When trimOutside is true, trims cels of excess alpha and
+        ---Accepts either a boundary Rectangle or separate edges as integers.
+        ---When trimOutside is true, trims cels of excess alpha and
         ---trims cels to sprite bounds.
         ---@overload fun(options: {bottom: integer, left: integer, right: integer, top: integer, trimOutside: boolean, ui: boolean})
         ---@param options {bounds: Rectangle, trimOutside: boolean, ui: boolean}
@@ -2336,8 +2336,8 @@ Range = {
 }
 
 
----Creates a new `Rectangle` instance.  Dimensions may be negative or zero.
----They are not validated by the constructor.
+---Creates a new `Rectangle` instance. Dimensions may be negative or zero;
+---they are not validated by the constructor.
 ---@class Rectangle
 ---@field h integer Gets or sets the vertical dimension.
 ---@field height integer Gets or sets the vertical dimension.
@@ -2350,7 +2350,8 @@ Range = {
 ---@operator band(Rectangle): Rectangle
 ---@operator bor(Rectangle): Rectangle
 Rectangle = {
-    ---Returns true if `otherRectangle` is inside `rectangle`.
+    ---Returns true if `otherRectangle` is inside `rectangle`. Best used with
+    ---positive, non-zero left and right operands.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return boolean
@@ -2359,14 +2360,15 @@ Rectangle = {
 
     ---Returns a new rectangle which is the intersection of `rectangle` and
     ---`otherRectangle`. If the rectangles do not intersect, then the result
-    ---will be empty.
+    ---will be empty. Best used with positive, non-zero left and right operands.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return Rectangle
     intersect = function(rectangle, otherRectangle)
     end,
 
-    ---Returns true if `rectangle` intersects `otherRectangle`.
+    ---Returns true if `rectangle` intersects `otherRectangle`. Returns false
+    ---when either rectangle has zero or negative dimensions.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return boolean
@@ -2380,8 +2382,9 @@ Rectangle = {
     isEmpty = function(rectangle)
     end,
 
-    ---Returns a new rectangle that contains both given
-    ---rectangles `rectangle` and `otherRectangle`.
+    ---Returns a new rectangle that contains both given rectangles `rectangle`
+    ---and `otherRectangle`. Best used with positive, non-zero left and right
+    ---operands.
     ---@param rectangle Rectangle
     ---@param otherRectangle Rectangle
     ---@return Rectangle
@@ -2389,8 +2392,8 @@ Rectangle = {
     end
 }
 
----Creates a new `Rectangle` instance.  Dimensions may be negative or zero.
----They are not validated by the constructor.
+---Creates a new `Rectangle` instance. Dimensions may be negative or zero;
+---they are not validated by the constructor.
 ---Width and height default to zero.
 ---@return Rectangle
 ---@overload fun(otherRectangle: Rectangle): Rectangle
@@ -2474,7 +2477,7 @@ Site = {}
 
 
 ---Represents a non-uniform scalar with two dimensions, i.e., width and height.
----Dimensions may be negative or zero. They are not validated by the
+---Dimensions may be negative or zero; they are not validated by the
 ---constructor.
 ---@class Size
 ---@field h integer Gets or sets the height.
@@ -2490,8 +2493,9 @@ Site = {}
 ---@operator sub(Size): Size
 ---@operator unm(): Size
 Size {
-    ---Returns the new size which will be big enough to contain
-    ---both given dimensions, `size` and `otherSize`.
+    ---Returns a new size that contains both given sizes `size`
+    ---and `otherSize`. Best used with positive, non-zero left and right
+    ---operands.
     ---@param size Size
     ---@param otherSize Size
     ---@return Size
@@ -2500,7 +2504,7 @@ Size {
 }
 
 ---Creates a new `Size` instance with the given dimensions. Dimensions may be
----negative or zero. They are not validated by the constructor.
+---negative or zero; they are not validated by the constructor.
 ---Width and height default to zero.
 ---@return Size
 ---@overload fun(otherSize: Size): Size
@@ -2692,10 +2696,12 @@ Sprite = {
     end,
 
     ---Creates a new slice.
+    ---If the given bounds `Rectangle` is zero or negative, then the created
+    ---Slice `bounds` will be `nil`.
     ---@param sprite Sprite
-    ---@param rectangle? Rectangle
+    ---@param bounds? Rectangle
     ---@return Slice
-    newSlice = function(sprite, rectangle)
+    newSlice = function(sprite, bounds)
     end,
 
     ---Creates a new tag that contains the frames between `fromFrame` and
