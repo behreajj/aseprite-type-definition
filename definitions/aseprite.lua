@@ -2725,7 +2725,8 @@ Sprite = {
     ---Appends a new tileset to the sprite's tilesets.
     ---If no parameters are given, the tileset has 1 tile of 16x16 pixels.
     ---If a `Grid` or `Rectangle` is specified, it is used to set the tileset's
-    ---origin and tile size.
+    ---`origin` and `tileSize`. `Rectangle`s should be verified to have
+    ---positive size before being given to the method.
     ---`numTiles` specifies the number of initial tiles.
     ---@param sprite Sprite
     ---@return Tileset
