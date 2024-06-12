@@ -2073,7 +2073,7 @@ Image = {
 ---Creates a new `Image` instance.
 ---Images loaded fromFile may be `nil`.
 ---Images created a rectangle parameter may return `nil` if the rectangle is
----invalid, i.e., has zero width or height.
+---empty, i.e., has zero or negative width or height.
 ---The ImageSpec constructor is preferable, so that transparent color and color
 ---space fields can be transferred from a source to a target.
 ---@param spec ImageSpec
@@ -2783,6 +2783,8 @@ Sprite = {
 ---Sprites loaded fromFile may be `nil`.
 ---The ImageSpec constructor is preferable, so that transparent color and color
 ---space fields can be transferred from a source to a target.
+---Not all fields are duplicated when `otherSprite` is used, for example,
+---custom user data and tag colors.
 ---@param spec ImageSpec
 ---@return Sprite
 ---@overload fun(width: integer, height: integer, colorMode?: ColorMode): Sprite
