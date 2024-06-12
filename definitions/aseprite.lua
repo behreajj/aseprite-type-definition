@@ -1923,10 +1923,14 @@ Image = {
     clone = function(image)
     end,
 
-    ---Draws the given sourceImage image on the destinationImage. Images should
-    ---have the same color mode.
+    ---Blits the `sourceImage` onto the `destinationImage`. Images should
+    ---have the same color mode. For indexed color mode, *sets* the region to
+    ---the destination image.
+    ---@NOTE The above may change for the next version of Aseprite, v 1.3.8.
     ---
-    ---For indexed color mode, *sets* the region to the destination image.
+    ---The `position` offsets where the destination is drawn on the source.
+    ---Offsets may be positive or negative. The source may be larger than the
+    ---destination. Excess pixels will be be clipped.
     ---@param destinationImage Image
     ---@param sourceImage Image
     ---@param position? Point
@@ -1943,8 +1947,11 @@ Image = {
     drawPixel = function(image, x, y, color)
     end,
 
-    ---Draws the given sourceSprite frame number into the destinationImage.
-    ---If position is a point, it will draw the sourceSprite in the given position.
+    ---Blits the `sourceSprite` at the `frame` onto the `destinationImage`.
+    ---
+    ---The `position` offsets where the destination is drawn on the source.
+    ---Offsets may be positive or negative. The source may be larger than the
+    ---destination. Excess pixels will be be clipped.
     ---@param destinationImage Image
     ---@param sourceSprite Sprite
     ---@param frame Frame|integer
