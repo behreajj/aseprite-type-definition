@@ -1994,7 +1994,7 @@ Image = {
     ---Returns a pixel iterator for the whole image or the given rectangle.
     ---@param image Image
     ---@param rectangle? Rectangle
-    ---@return fun(integer)|fun(): integer|{x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates.
+    ---@return fun(int: integer)|fun(): integer|{x: integer, y: integer} accessor Can be called to get pixel and set pixel (e.g. `accessor()` and `accessor(pixelValue)`), and holds x, y coordinates.
     ---@NOTE To parse correctly, fun(): integer cannot be at the start of the union above.
     pixels = function(image, rectangle)
     end,
