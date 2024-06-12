@@ -1923,8 +1923,10 @@ Image = {
     clone = function(image)
     end,
 
-    ---Draws the given sourceImage image on the destinationImage.
-    ---For indexed color mode, sets the region to the destination image.
+    ---Draws the given sourceImage image on the destinationImage. Images should
+    ---have the same color mode.
+    ---
+    ---For indexed color mode, *sets* the region to the destination image.
     ---@param destinationImage Image
     ---@param sourceImage Image
     ---@param position? Point
@@ -2286,11 +2288,11 @@ function Point()
 end
 
 ---A range of selected objects. It may contain layers, frames, cels,
----images, slices, tiles and/or colors. Tiles and colors are referenced
----indirectly through `integer`s.
+---images, slices, tiles and/or colors.
+
+---Tiles and colors are referenced indirectly through `integer`s.
 ---
----Ranges, or tables of some elements therein, may report as empty when the
----timeline is hidden.
+---Some tables, may report as empty when the timeline is hidden.
 ---
 ---The `layers` field is not necessarily ordered according to stack index,
 ---whether relative to the sprite or to parent layer.
