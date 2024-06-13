@@ -171,7 +171,6 @@ app = {
         end,
 
         ---Changes the sprite canvas size by the given dimensions.
-        ---Accepts either a boundary Rectangle or separate edges as integers.
         ---When trimOutside is true, trims cels of excess alpha and
         ---trims cels to sprite bounds.
         ---@NOTE Discourage the use of buggy overload which uses left, right, top and bottom.
