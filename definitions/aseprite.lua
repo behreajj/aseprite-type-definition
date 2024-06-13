@@ -174,7 +174,7 @@ app = {
         ---Accepts either a boundary Rectangle or separate edges as integers.
         ---When trimOutside is true, trims cels of excess alpha and
         ---trims cels to sprite bounds.
-        ---@overload fun(options: {bottom: integer, left: integer, right: integer, top: integer, trimOutside: boolean, ui: boolean})
+        ---@NOTE Discourage the use of buggy overload which uses left, right, top and bottom.
         ---@param options {bounds: Rectangle, trimOutside: boolean, ui: boolean}
         CanvasSize = function(options)
         end,
