@@ -1938,11 +1938,11 @@ Image = {
     drawImage = function(destinationImage, sourceImage, position, opacity, blendMode)
     end,
 
-    ---Sets the pixel in the coordinate to the given integer pixel value.
+    ---Sets the pixel at a coordinate to a given color.
     ---@param image Image
     ---@param x integer
     ---@param y integer
-    ---@param color integer
+    ---@param color Color|integer
     drawPixel = function(image, x, y, color)
     end,
 
@@ -2890,7 +2890,7 @@ function Timer(options)
 end
 
 ---References a drawing tool. At the moment this class is used only to get and
----set the `app.activeTool` or to paint on the canvas, i.e., the `tool`
+---set the `app.tool` or to paint on the canvas, i.e., the `tool`
 ---parameter in `app.useTool()`.
 ---@class Tool
 ---@field id string The identifier specified in the `gui.xml` file.
