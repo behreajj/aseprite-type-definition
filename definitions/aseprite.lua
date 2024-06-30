@@ -1938,7 +1938,9 @@ Image = {
     drawImage = function(destinationImage, sourceImage, position, opacity, blendMode)
     end,
 
-    ---Sets the pixel at a coordinate to a given color.
+    ---Sets the pixel at a coordinate to a given color if the coordinate is in
+    ---bounds, i.e., greater than or equal to zero and less than the image
+    ---width and height.
     ---@param image Image
     ---@param x integer
     ---@param y integer
