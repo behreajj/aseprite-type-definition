@@ -1412,7 +1412,13 @@ WebSocketMessageType = {
 ---@field size integer Gets the brush size.
 ---@field type BrushType Gets the brush type.
 Brush = {
-    ---@NOTE There are two methods, setFgColor and setBgColor. Not clear how they work, if at all.
+    ---@NOTE There is also setBgColor. Not clear how it works, if at all.
+
+    ---Sets the brush's foreground color.
+    ---@param brush Brush
+    ---@param color Color
+    setFgColor = function(brush, color)
+    end
 }
 
 ---Creates a new `Brush` instance.
