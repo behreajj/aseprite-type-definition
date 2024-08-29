@@ -167,7 +167,8 @@ app = {
         end,
 
         ---Cancels the current operation.
-        Cancel = function()
+        ---@param options {type: "all"|"noop"}
+        Cancel = function(options)
         end,
 
         ---Changes the sprite canvas size by the given dimensions.
@@ -1467,7 +1468,7 @@ Cel = {}
 ---@field hsvSaturation number Gets or sets the HSV saturation.
 ---@field hsvValue number Gets or sets the HSV value.
 ---@field hue number Gets or sets the hue.
----@field index integer Gets or sets the nearest or exact match palette index for this color.
+---@field index integer Gets or sets the nearest or exact match palette index for this color. Index may be greater than a byte in size, [0, 255].
 ---@field lightness number Gets or sets the HSL lightness.
 ---@field red integer Gets or sets the red color channel.
 ---@field rgbaPixel integer Gets a 32-bit pixel for RGB color mode (0xAABBGGRR).
