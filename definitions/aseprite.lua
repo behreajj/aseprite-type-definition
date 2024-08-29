@@ -2512,7 +2512,7 @@ Site = {}
 ---@operator pow(integer): Size
 ---@operator sub(Size): Size
 ---@operator unm(): Size
-Size {
+Size = {
     ---Returns a new size that contains both given sizes `size`
     ---and `otherSize`. Best used with positive, non-zero left and right
     ---operands.
