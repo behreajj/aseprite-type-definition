@@ -1093,15 +1093,15 @@ app = {
         end,
 
         ---Returns the modifier flags for a tile in the map, where `0x20000000`
-        ---is diagonal, `0x40000000` is vertical, `0x80000000` is horizontal,
-        ---and these three may be composited together up to `0xe0000000`.
+        ---is diagonal, `0x40000000` is vertical, `0x80000000` is horizontal.
+        ---These three may be composited together up to `0xe0000000`.
         ---See https://github.com/aseprite/aseprite/blob/main/src/doc/tile.h .
         ---@param mapEntryValue integer Entry value.
         ---@return integer
         tileF = function(mapEntryValue)
         end,
 
-        ---Returns the tile set index.
+        ---Returns the tile set index for a tile in the map.
         ---@param mapEntryValue integer Entry value.
         ---@return integer
         tileI = function(mapEntryValue)
@@ -1447,7 +1447,7 @@ end
 ---@field properties table<string, any> Gets or sets the cel's user-defined properties.
 ---@field sprite Sprite Gets the sprite to which the cel belongs.
 ---@field zIndex integer Gets or sets the cel's z offset in [-32768, 32767].
----@NOTE also includes frameNumber property, but unclear what happens if frame is nil
+---@NOTE also includes frameNumber property, but uncertain what happens if frame is nil
 Cel = {}
 
 
@@ -1669,7 +1669,7 @@ end
 ---@class Editor
 ---@field mousePos Point Gets the mouse's screen position.
 ---@field sprite Sprite Gets the active sprite.
----@field spritePos Point Gets the mouse position on the sprite.
+---@field spritePos Point Gets the mouse position on the sprite. Does not account for offset due to view tiled mode.
 Editor = {
     ---Asks the user to select a point on the sprite. Decorations may include
     ---"rulers" and "dimmed".
@@ -1917,10 +1917,12 @@ end
 Image = {
     ---Clears all pixels in the image with given color
     ---or `image.spec.transparentColor` if no color is specified.
+    ---For 8bpp indexed color mode images, the reference color overflows if it
+    ---is out of bounds, e.g., `295` would clear to index `295 & 255` or `39`.
     ---@param image Image
-    ---@param color? Color|integer
-    ---@overload fun(image: Image, bounds: Rectangle, color?: Color|integer)
-    clear = function(image, color)
+    ---@param refColor? Color|integer
+    ---@overload fun(image: Image, bounds: Rectangle, refColor?: Color|integer)
+    clear = function(image, refColor)
     end,
 
     ---Creates a copy of the image.
@@ -2191,7 +2193,7 @@ MouseEvent = {}
 ---@class Palette
 ---@field frame Frame|nil Gets the first frame, if any.
 ---@operator len(): integer
----@NOTE also includes frameNumber property, but unclear what happens if frame is nil
+---@NOTE also includes frameNumber property, but uncertain what happens if frame is nil
 Palette = {
     ---Returns the color at the given index.
     ---The index goes from `0` to `#palette - 1`.
