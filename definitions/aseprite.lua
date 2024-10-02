@@ -11,6 +11,9 @@ app = {
     ---Gets or sets the background color.
     bgColor = undefined --[[@as Color]],
 
+    --Gets or sets the background tile.
+    bgTile = undefined --[[@as integer]],
+
     ---Gets or sets the active brush.
     brush = undefined --[[@as Brush]],
 
@@ -30,6 +33,9 @@ app = {
 
     ---Gets or sets the foreground color.
     fgColor = undefined --[[@as Color]],
+
+    --Gets or sets the foreground tile.
+    fgTile = undefined --[[@as integer]],
 
     ---Gets or sets the active frame.
     ---`nil` when no sprite is active.
@@ -597,6 +603,11 @@ app = {
         ---Sets the size of the active palette.
         ---@param options {size: integer}
         PaletteSize = function(options)
+        end,
+
+        ---Pastes content from the clipboard.
+        ---@param options {x: integer, y: integer}
+        Paste = function(options)
         end,
 
         ---Opens the insert text dialog window.
@@ -2228,12 +2239,9 @@ Palette = {
 
 ---Creates a new `Palette` instance. By default it will contain 256 colors.
 ---`fromResource` is an ID specified in one of the extensions
----palette (e.g. `DB16`, `DB32`, `Solarized`).
----
----Palettes loaded `fromFile` may be `nil`.
----
----The resource string given to `fromResource` should be validated as
----correct before the constructor is called.
+---palette (e.g. `DB16`, `DB32`, `Solarized`). Palettes loaded `fromFile` may
+---be `nil`. The resource string given to `fromResource` should be validated
+---before the constructor is called.
 ---@return Palette
 ---@overload fun(numberOfColors: integer): Palette
 ---@overload fun(options: {fromFile: string}): Palette
@@ -2494,6 +2502,8 @@ end
 ---@field image Image|nil Gets the active image, if any.
 ---@field layer Layer|nil Gets the active layer, if any.
 ---@field sprite Sprite|nil Gets the active sprite, if any.
+---@field tilemapMode TilemapMode|nil Gets the active TilemapMode, if any.
+---@field tilesetMode TilesetMode|nil Gets the active TilesetMode, if any.
 ---@NOTE As with other classes, omit frameNumber property.
 Site = {}
 
