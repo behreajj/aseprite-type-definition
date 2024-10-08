@@ -128,11 +128,11 @@ app = {
     undo = function()
     end,
 
-    ---Simulates a user stroke in the canvas using the given tool.
-    ---For the `freehandAlgorithm` parameter, 2 is dots, 1 is pixel perfect,
-    ---0 is the default. See
-    ---https://github.com/aseprite/aseprite/blob/main/src/app/tools/freehand_algorithm.h .
-    ---Many tools do not work, avoid using this method where possible.
+    ---Simulates a user stroke in the canvas using the given tool. Many tools
+    ---do not work, including but not limited to: polygon, contour, curve.
+    ---
+    ---Do not use with event handler functions (https://github.com/aseprite/aseprite/issues/4695).
+    ---@see Events.on 
     ---@param options {bgColor: Color, brush: Brush, button: MouseButton, cel: Cel, color: Color, contiguous: boolean, frame: Frame, freehandAlgorithm: 0|1|2, ink: Ink, layer: Layer, opacity: integer, points: Point[], selection: SelectionMode, tolerance: integer, tool: Tool|string, tilemapMode: TilemapMode, tilesetMode: TilesetMode}
     ---@deprecated
     useTool = function(options)
@@ -1859,6 +1859,7 @@ GraphicsContext = {
     end,
 
     ---Restores the last saved canvas state.
+    ---Does not include pixels set by drawImage.
     ---@param gc GraphicsContext
     restore = function(gc)
     end,
@@ -1876,8 +1877,9 @@ GraphicsContext = {
     roundedRect = function(gc, rectangle, rx, ry)
     end,
 
-    ---Saves the current state of the canvas to restore it later, including:
-    ---color, opacity, blendMode, strokeWidth and clipping region.
+    ---Saves the current state of the canvas to restore it later.
+    ---Includes: color, opacity, blendMode, strokeWidth and clipping
+    ---region. Does not include pixels set by drawImage.
     ---@param gc GraphicsContext
     save = function(gc)
     end,
