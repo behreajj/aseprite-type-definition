@@ -2131,13 +2131,13 @@ end
 ---@field altKey boolean Whether the `Alt` key was pressed.
 ---@field code string A string identifier for the key. See https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values .
 ---@field ctrlKey boolean Whether the `Ctrl` key was pressed.
----@field key string A string containing the pressed/released Unicode character.
+---@field key string A string containing the unicode character.
 ---@field metaKey boolean Whether the `Windows` or `Command` key was pressed.
 ---@field repeatCount integer Number of times the key was autorepeated.
 ---@field shiftKey boolean Whether the `Shift` key was pressed.
 ---@field spaceKey boolean Whether the `Space` key was pressed.
 KeyEvent = {
-    ---Stops propagating this event to other parent widget/main
+    ---Stops propagating this event to other parent widget or main
     ---Aseprite window. Use this in case that the canvas widget
     ---used the key and you want to avoid triggering a command
     ---with a keyboard shortcut.
@@ -2929,11 +2929,13 @@ Tool = {}
 TouchEvent = {}
 
 
----Represents a Universally unique identifier.
----May be indexed, converted to a string or checked for equality.
+---Represents a Universally unique identifier composed of 16 bytes. Each byte
+---may be retrieved by index. Can be converted to a string with `tostring`.
 ---@class Uuid
 Uuid = {}
 
+---Creates a new Uuid. When called without arguments, a random Uuid is created. 
+---Otherwise, can be created from a string or another Uuid.
 ---@overload fun(otherUuid: Uuid): Uuid
 ---@overload fun(str: string): Uuid
 function Uuid()
