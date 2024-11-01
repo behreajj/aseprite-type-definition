@@ -270,6 +270,10 @@ app = {
         CopyMerged = function()
         end,
 
+        ---Copies the active sprite's path to the clipboard.
+        CopyPath = function()
+        end,
+
         ---Crops the sprite according to a selection.
         ---@overload fun(options: {x: integer, y: integer, width: integer, height: integer})
         CropSprite = function(options)
