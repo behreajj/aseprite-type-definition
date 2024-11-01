@@ -246,6 +246,11 @@ app = {
         ContiguousFill = function()
         end,
 
+        ---Converts a layer's type.
+        ---@param options {to: "background"|"layer"|"tilemap", ui: boolean}
+        ConvertLayer = function(options)
+        end,
+
         ---Applies a convolution matrix filter to the sprite.
         ---@param options {channels: FilterChannels|integer, fromResource: string, tiledMode: "both"|"none"|"x"|"y", ui: boolean}
         ConvolutionMatrix = function(options)
@@ -2316,10 +2321,10 @@ end
 
 ---A range of selected objects. It may contain layers, frames, cels,
 ---images, slices, tiles and/or colors.
-
+---
 ---Tiles and colors are referenced indirectly through `integer`s.
 ---
----Some tables, may report as empty when the timeline is hidden.
+---Some tables may report as empty when the timeline is hidden.
 ---
 ---The `layers` field is not necessarily ordered according to stack index,
 ---whether relative to the sprite or to parent layer.
@@ -2333,7 +2338,7 @@ end
 ---@field layers Layer[] Gets or sets a table of layers.
 ---@field slices Slice[] Gets or sets a table of active slices.
 ---@field sprite Sprite Gets the sprite to which the range belongs.
----@field tiles integer[] Sets a table of tile set indices.
+---@field tiles integer[] Gets or sets a table of tile set indices.
 ---@field type RangeType Gets the type of range.
 ---@NOTE Tiles field works as a setter, but not yet as a getter.
 Range = {
@@ -2931,6 +2936,7 @@ TouchEvent = {}
 
 ---Represents a Universally unique identifier composed of 16 bytes. Each byte
 ---may be retrieved by index. Can be converted to a string with `tostring`.
+---Follows the format "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".
 ---@class Uuid
 Uuid = {}
 
