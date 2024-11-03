@@ -1604,7 +1604,8 @@ Dialog = {
 
     ---Changes properties of the given widget given by string identifier.
     ---@param dialog Dialog
-    ---@param options {id: string, visible: boolean, enabled: boolean}|{[string]: any}
+    ---@param options {id: string, color: Color, enabled: boolean, max: integer, min: integer, option: string, selected: boolean, text: string, value: integer, visible: boolean}
+    ---@overload fun(options: {id: string, [string]: any}): Dialog
     modify = function(dialog, options)
     end,
 
