@@ -132,7 +132,7 @@ app = {
     ---do not work, including but not limited to: polygon, contour, curve.
     ---
     ---Do not use with event handler functions (https://github.com/aseprite/aseprite/issues/4695).
-    ---@see Events.on 
+    ---@see Events.on
     ---@param options {bgColor: Color, brush: Brush, button: MouseButton, cel: Cel, color: Color, contiguous: boolean, frame: Frame, freehandAlgorithm: 0|1|2, ink: Ink, layer: Layer, opacity: integer, points: Point[], selection: SelectionMode, tolerance: integer, tool: Tool|string, tilemapMode: TilemapMode, tilesetMode: TilesetMode}
     ---@deprecated
     useTool = function(options)
@@ -1576,6 +1576,7 @@ Dialog = {
     ---belongs.
     ---@param dialog Dialog
     ---@param options {id: string, selected: string, align: Align|integer, onchange: function}
+    ---@return Dialog
     endtabs = function(dialog, options)
     end,
 
@@ -1597,7 +1598,7 @@ Dialog = {
 
     ---Appends a static label to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, visible: boolean }
+    ---@param options {id: string, label: string, text: string, visible: boolean}
     ---@return Dialog
     label = function(dialog, options)
     end,
@@ -1635,6 +1636,7 @@ Dialog = {
 
     ---Calls the onpaint event of all canvas widgets in the dialog.
     ---@param dialog Dialog
+    ---@NOTE Does not return a dialog.
     repaint = function(dialog)
     end,
 
@@ -1660,7 +1662,8 @@ Dialog = {
     ---When wait is true, blocks other user interactions.
     ---@param dialog Dialog
     ---@param options {autoscrollbars: boolean, bounds: Rectangle, wait: boolean}
-    ---@overload fun(dialog: Dialog)
+    ---@overload fun(dialog: Dialog): Dialog
+    ---@return Dialog
     show = function(dialog, options)
     end,
 
@@ -1675,6 +1678,7 @@ Dialog = {
     ---and starts a new one.
     ---@param dialog Dialog
     ---@param options {id: string, text: string, onclick: function}
+    ---@return Dialog
     tab = function(dialog, options)
     end,
 }
@@ -2945,7 +2949,7 @@ TouchEvent = {}
 ---@class Uuid
 Uuid = {}
 
----Creates a new Uuid. When called without arguments, a random Uuid is created. 
+---Creates a new Uuid. When called without arguments, a random Uuid is created.
 ---Otherwise, can be created from a string or another Uuid.
 ---@overload fun(otherUuid: Uuid): Uuid
 ---@overload fun(str: string): Uuid
