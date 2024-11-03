@@ -1606,6 +1606,7 @@ Dialog = {
     ---Changes properties of the given widget given by string identifier.
     ---@param dialog Dialog
     ---@param options {id: string, color: Color, enabled: boolean, max: integer, min: integer, option: string, selected: boolean, text: string, value: integer, visible: boolean}
+    ---@return Dialog
     ---@overload fun(options: {id: string, [string]: any}): Dialog
     modify = function(dialog, options)
     end,
@@ -1662,8 +1663,8 @@ Dialog = {
     ---When wait is true, blocks other user interactions.
     ---@param dialog Dialog
     ---@param options {autoscrollbars: boolean, bounds: Rectangle, wait: boolean}
-    ---@overload fun(dialog: Dialog): Dialog
     ---@return Dialog
+    ---@overload fun(dialog: Dialog): Dialog
     show = function(dialog, options)
     end,
 
@@ -2059,8 +2060,8 @@ Image = {
     ---operation is successful.
     ---@param image Image
     ---@param filename string
-    ---@overload fun(image: Image, options: {filename: string, palette: Palette})
     ---@return boolean
+    ---@overload fun(image: Image, options: {filename: string, palette: Palette}): boolean
     saveAs = function(image, filename)
     end,
 
