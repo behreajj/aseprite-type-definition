@@ -1539,9 +1539,8 @@ Dialog = {
 
     ---Appends a canvas to a dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, width: integer, height: integer, autoscaling: boolean, visible: boolean, ondblclick: fun(event: MouseEvent), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousedown: fun(event: MouseEvent), onmousemove: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), onpaint: fun(event: {context: GraphicsContext}), ontouchmagnify: fun(event: TouchEvent), onwheel: fun(event: MouseEvent)}
+    ---@param options {id: string, label: string, width: integer, height: integer, hexpand: boolean, autoscaling: boolean, visible: boolean, vexpand: boolean, ondblclick: fun(event: MouseEvent), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousedown: fun(event: MouseEvent), onmousemove: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), onpaint: fun(event: {context: GraphicsContext}), ontouchmagnify: fun(event: TouchEvent), onwheel: fun(event: MouseEvent)}
     ---@return Dialog
-    ---@NOTE Canvas expansion doesn't seem to work when it is followed by other widgets.
     canvas = function(dialog, options)
     end,
 
