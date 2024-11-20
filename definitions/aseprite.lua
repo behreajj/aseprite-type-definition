@@ -2167,7 +2167,7 @@ KeyEvent = {
 ---Represents a layer in the timeline. Can be one of many subtypes:
 ---background, group, reference or tilemap.
 ---@class Layer
----@field blendMode BlendMode|nil Gets or sets the layer blend mode. `nil` if the layer is a group.
+---@field blendMode BlendMode|nil Gets or sets the layer blend mode. Behavior for group layers depends on experimental composition as of 1.3.11-beta-1.
 ---@field cels Cel[] Gets the cels table in the layer.
 ---@field color Color Gets or sets the layer's color in the timeline.
 ---@field data string Gets or sets custom data assigned to the layer.
