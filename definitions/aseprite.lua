@@ -1661,7 +1661,7 @@ Dialog = {
     ---Displays the dialog on the screen.
     ---When wait is true, blocks other user interactions.
     ---@param dialog Dialog
-    ---@param options {autoscrollbars: boolean, bounds: Rectangle, wait: boolean}
+    ---@param options {autoscrollbars: boolean, hand: boolean, bounds: Rectangle, wait: boolean}
     ---@return Dialog
     ---@overload fun(dialog: Dialog): Dialog
     show = function(dialog, options)
@@ -1693,8 +1693,10 @@ end
 ---Represents a sprite editor.
 ---@class Editor
 ---@field mousePos Point Gets the mouse's screen position.
+---@field scroll {x: number, y: number} Gets or sets the editor scrollbar.
 ---@field sprite Sprite Gets the active sprite.
 ---@field spritePos Point Gets the mouse position on the sprite. Does not account for offset due to view tiled mode.
+---@field zoom number Gets or sets the editor zoom, where `1.0` is 100%.
 Editor = {
     ---Asks the user to select a point on the sprite. Decorations may include
     ---"rulers" and "dimmed".
