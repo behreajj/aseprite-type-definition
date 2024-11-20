@@ -305,9 +305,9 @@ app = {
         DuplicateLayer = function()
         end,
 
-        ---Duplicates a sprite. Opens a UI dialog to name the duplicate and to
-        ---optionally merge layers.
-        DuplicateSprite = function()
+        ---Duplicates a sprite. Parameters available as of version 1.3.11beta-1.
+        ---@param options {filename: string, flatten: boolean, ui: boolean}
+        DuplicateSprite = function(options)
         end,
 
         ---Duplicates a view of the sprite in the editor. Does not duplicate
@@ -1937,6 +1937,7 @@ end
 ---@field bytesPerPixel integer Gets the number of bytes per pixel.
 ---@field cel Cel Gets the cel to which this image belongs or `nil`.
 ---@field colorMode ColorMode Gets the image color mode.
+---@field context GraphicsContext|nil Gets a graphics context for the image if Skia is supported. As of version 1.3.11beta-1.
 ---@field height integer Gets the image height.
 ---@field id integer Gets the image identifier.
 ---@field rowStride integer Gets the number of bytes for each row in the image.
