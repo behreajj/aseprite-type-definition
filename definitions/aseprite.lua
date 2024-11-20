@@ -305,7 +305,7 @@ app = {
         DuplicateLayer = function()
         end,
 
-        ---Duplicates a sprite. Parameters available as of version 1.3.11beta-1.
+        ---Duplicates a sprite. Parameters available as of version 1.3.11-beta-1.
         ---@param options {filename: string, flatten: boolean, ui: boolean}
         DuplicateSprite = function(options)
         end,
@@ -1937,7 +1937,7 @@ end
 ---@field bytesPerPixel integer Gets the number of bytes per pixel.
 ---@field cel Cel Gets the cel to which this image belongs or `nil`.
 ---@field colorMode ColorMode Gets the image color mode.
----@field context GraphicsContext|nil Gets a graphics context for the image if Skia is supported. As of version 1.3.11beta-1.
+---@field context GraphicsContext|nil Gets a graphics context for the image if Skia is supported. As of version 1.3.11-beta-1.
 ---@field height integer Gets the image height.
 ---@field id integer Gets the image identifier.
 ---@field rowStride integer Gets the number of bytes for each row in the image.
@@ -2186,7 +2186,7 @@ KeyEvent = {
 ---@field layers Layer[]|nil If a layer is a group, gets the table of child layers.
 ---@field name string Gets or sets the layer's name. Should not be treated as a unique identifier.
 ---@field next Layer|nil Gets the next layer, if any.
----@field opacity integer|nil Gets or sets the layer opacity. `nil` if the `Layer` is a group.
+---@field opacity integer|nil Gets or sets the layer opacity. Behavior for group layers depends on experimental composition as of 1.3.11-beta-1.
 ---@field parent Sprite|Layer Gets or sets the layer's parent. May be a `Sprite` for top-level layers.
 ---@field previous Layer|nil Gets the previous layer, if any.
 ---@field properties table<string, any> Gets or sets the layer's user-defined properties.
