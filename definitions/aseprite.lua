@@ -275,7 +275,7 @@ app = {
         end,
 
         ---Crops the sprite according to a selection.
-        ---@overload fun(options: {x: integer, y: integer, width: integer, height: integer})
+        ---@param options {x: integer, y: integer, width: integer, height: integer}
         CropSprite = function(options)
         end,
 
