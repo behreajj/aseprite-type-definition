@@ -832,9 +832,8 @@ app = {
         SwitchColors = function()
         end,
 
-        ---Toggles a sprite's symmetry mode. Any string other than "horizontal"
-        ---or "vertical" will evaluate to "none".
-        ---@param options {orientation: "horizontal"|"none"|"vertical"}
+        ---Toggles a sprite's symmetry mode. Defaults to "none".
+        ---@param options {orientation: "horizontal"|"left_diagonal"|"none"|"right_diagonal"|"vertical"}
         SymmetryMode = function(options)
         end,
 
