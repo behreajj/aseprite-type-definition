@@ -498,6 +498,7 @@ app = {
         end,
 
         ---Displays the select color dialog.
+        ---@NOTE: Will have params as of https://github.com/aseprite/aseprite/pull/4770/ .
         MaskByColor = function()
         end,
 
@@ -1697,10 +1698,11 @@ end
 ---@field spritePos Point Gets the mouse position on the sprite. Does not account for offset due to view tiled mode.
 ---@field zoom number Gets or sets the editor zoom, where `1.0` is 100%.
 Editor = {
-    ---Asks the user to select a point on the sprite. Decorations may include
-    ---"rulers" and "dimmed".
+    ---Asks the user to select a point on the sprite.
+    ---The title appears in the context bar.
+    ---Decorations are similar to Canvas Size interface.
     ---@param editor Editor
-    ---@param options {title: string, point: Point, decorate: table, onclick: function, onchange: function, oncancel: function}
+    ---@param options {title: string, point: Point, decorate: {rulers: boolean, dimmed: boolean}, onclick: fun(event: {point: Point}), onchange: fun(event: {point: Point}), oncancel: fun(event: table)}
     askPoint = function(editor, options)
     end,
 
@@ -1960,11 +1962,7 @@ Image = {
     clone = function(image)
     end,
 
-    ---Blits the `sourceImage` onto the `destinationImage`. Images should
-    ---have the same color mode. For indexed color mode, *sets* the region to
-    ---the destination image.
-    ---@NOTE The above may change for the next version of Aseprite, v 1.3.8.
-    ---
+    ---Blits the `sourceImage` onto the `destinationImage`.
     ---The `position` offsets where the destination is drawn on the source.
     ---Offsets may be positive or negative. The source may be larger than the
     ---destination. Excess pixels will be be clipped.
