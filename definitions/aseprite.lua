@@ -1659,7 +1659,9 @@ Dialog = {
     end,
 
     ---Displays the dialog on the screen.
-    ---When wait is true, blocks other user interactions.
+    ---When `wait` is `true`, blocks other user interactions.
+    ---When `hand` is `true`, blocks other user interactions except panning
+    ---the canvas with the hand tool.
     ---@param dialog Dialog
     ---@param options {autoscrollbars: boolean, hand: boolean, bounds: Rectangle, wait: boolean}
     ---@return Dialog
