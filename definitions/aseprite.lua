@@ -1721,7 +1721,7 @@ Events = {
     ---Connects the given function with the given event.
     ---Returns the listenerCode.
     ---@param ev Events
-    ---@param eventName string
+    ---@param eventName string|"aftercommand"|"beforecommand"|"beforesitechange"|"bgcolorchange"|"fgcolorchange"|"sitechange"
     ---@param func function
     ---@return integer
     on = function(ev, eventName, func)
@@ -2269,9 +2269,11 @@ end
 
 ---Structures an Aseprite plug-in, or extension.
 ---@class Plugin
+---@field displayName string Gets the extension display name.
 ---@field name string Gets the extension name.
 ---@field path string Gets the path where the extension is installed.
 ---@field preferences table Gets or sets user preferences.
+---@field version Version Gets the extension version.
 Plugin = {
     ---Removes a command.
     ---@param plugin Plugin
