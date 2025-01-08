@@ -498,8 +498,8 @@ app = {
         end,
 
         ---Displays the select color dialog.
-        ---@NOTE: Will have params as of https://github.com/aseprite/aseprite/pull/4770/ .
-        MaskByColor = function()
+        ---@param options {color: Color, mode: SelectionMode, tolerance: integer, ui: boolean}
+        MaskByColor = function(options)
         end,
 
         ---Creates a selection around a cel's bounding box.
