@@ -117,10 +117,11 @@ app = {
     refresh = function()
     end,
 
-    ---Creates a new transaction so as to group several sprite modifications
-    ---in just one undo/redo operation.
+    ---Creates a new transaction so as to bundle many modifications into one
+    ---undo operation. The transaction is rolled back if an error is thrown.
     ---@param func function a function called inside the transaction
     ---@overload fun(name: string, func: function)
+    ---@see error
     transaction = function(func)
     end,
 
