@@ -1605,7 +1605,7 @@ Dialog = {
 
     ---Changes properties of the given widget given by string identifier.
     ---@param dialog Dialog
-    ---@param options {id: string, color: Color, enabled: boolean, max: integer, min: integer, option: string, selected: boolean, text: string, value: integer, visible: boolean}
+    ---@param options {id: string, color: Color, enabled: boolean, filename: string, max: integer, min: integer, option: string, selected: boolean, text: string, value: integer, visible: boolean}
     ---@return Dialog
     ---@overload fun(options: {id: string, [string]: any}): Dialog
     modify = function(dialog, options)
@@ -1630,7 +1630,7 @@ Dialog = {
 
     ---Appends a radio button widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, selected: boolean, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, text: string, selected: boolean, enabled: boolean, focus: boolean, visible: boolean, onclick: function}
     ---@return Dialog
     radio = function(dialog, options)
     end,
