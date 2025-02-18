@@ -923,100 +923,100 @@ app = {
         ---The preferred path separator of the current platform.
         pathSeparator = undefined --[[@as "/"|"\\"]],
 
-        ---The path for temporary files for the current platform.
+        ---The path for temporary files.
         tempPath = undefined --[[@as string]],
 
-        ---The user's Aseprite configuration path for the current platform.
+        ---The user's Aseprite configuration path.
         userConfigPath = undefined --[[@as string]],
 
-        ---The user's Documents path for the current platform.
+        ---The user's Documents path.
         userDocsPath = undefined --[[@as string]],
 
         ---Returns the file extension of the given filename, excluding the `.`.
-        ---@param fn string Filename.
+        ---@param fileName string
         ---@return string
-        fileExtension = function(fn)
+        fileExtension = function(fileName)
         end,
 
         ---Returns the file name, including the extension.
-        ---@param fn string Filename.
+        ---@param fileName string
         ---@return string
-        fileName = function(fn)
+        fileName = function(fileName)
         end,
 
         ---Returns the path, or directory, part of the given filename.
-        ---@param fn string Filename.
+        ---@param fileName string
         ---@return string
-        filePath = function(fn)
+        filePath = function(fileName)
         end,
 
         ---Returns the file path joined with the title, excluding the extension,
         ---of the given filename.
-        ---@param fn string Filename.
+        ---@param fileName string
         ---@return string
-        filePathAndTitle = function(fn)
+        filePathAndTitle = function(fileName)
         end,
 
-        ---Returns the file size of the given filename `fn`.
-        ---@param fn string Filename.
+        ---Returns the file size of the given filename.
+        ---@param fileName string
         ---@return integer
-        fileSize = function(fn)
+        fileSize = function(fileName)
         end,
 
         ---Returns the file title, excluding the path and extension, of the
         ---given filename.
-        ---@param fn string Filename.
+        ---@param fileName string
         ---@return string
-        fileTitle = function(fn)
+        fileTitle = function(fileName)
         end,
 
-        ---Returns true if the given filename `fn` is a directory.
-        ---@param fn string Filename.
+        ---Returns true if the given filename is a directory.
+        ---@param fileName string
         ---@return boolean
-        isDirectory = function(fn)
+        isDirectory = function(fileName)
         end,
 
-        ---Returns true if the given filename `fn` is a file.
-        ---@param fn string Filename.
+        ---Returns true if the given filename is a file.
+        ---@param fileName string
         ---@return boolean
-        isFile = function(fn)
+        isFile = function(fileName)
         end,
 
         ---Joins together a number of string arguments
         ---with the path separator for the current platform.
-        ---@param ... string Strings.
+        ---@param ... string
         ---@return string
         joinPath = function(...)
         end,
 
         ---Returns a list of files in the given directory path.
         ---Each file name in the return table is relative to the path.
-        ---@param path string Directory path.
+        ---@param path string
         ---@return string[]
         listFiles = function(path)
         end,
 
         ---Returns the file path converted to a canonical form for the current
         ---platform.
-        ---@param path string File path.
+        ---@param path string
         ---@return string
         normalizePath = function(path)
         end,
 
         ---Creates all directories needed to access the path.
-        ---@param path string Path.
+        ---@param path string
         ---@return boolean
         makeAllDirectories = function(path)
         end,
 
         ---Creates one directory.
-        ---@param path string Directory path.
+        ---@param path string
         ---@return boolean
         makeDirectory = function(path)
         end,
 
         ---Removes the given directory (it must be empty).
-        ---@param path string Directory path.
+        ---@param path string
         ---@return boolean success
         removeDirectory = function(path)
         end
@@ -1645,7 +1645,7 @@ Dialog = {
     ---@param dialog Dialog
     ---@param options {id: string, text: string}
     ---@return Dialog
-    ---@NOTE visible parameter does not apply to separators.
+    ---@NOTE visible parameter does not apply to separators. https://github.com/aseprite/aseprite/issues/4989
     separator = function(dialog, options)
     end,
 
@@ -1950,13 +1950,14 @@ end
 ---@field version integer Gets the version assigned to the image inside the program, updated with each image change.
 ---@field width integer Gets the image width.
 Image = {
-    ---Clears all pixels in the image with given color
+    ---Clears all pixels in the image with the given color
     ---or `image.spec.transparentColor` if no color is specified.
     ---For 8bpp indexed color mode images, the reference color overflows if it
     ---is out of bounds, e.g., `295` would clear to index `295 & 255` or `39`.
     ---@param image Image
     ---@param refColor? Color|integer
     ---@overload fun(image: Image, bounds: Rectangle, refColor?: Color|integer)
+    ---@NOTE Does not create undo. https://github.com/aseprite/aseprite/issues/5015
     clear = function(image, refColor)
     end,
 
