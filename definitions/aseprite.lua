@@ -139,6 +139,28 @@ app = {
     useTool = function(options)
     end,
 
+    ---Properties and methods to get, set and clear the clipboard.
+    clipboard = {
+        ---Gets or sets clipboard content.
+        content = undefined --[[@as {image: Image|nil, palette:Palette|nil, selection: Selection|nil, text:string|nil, tileset:Tileset|nil}]],
+
+        ---Gets or sets clipboard image data. Getter may return nil.
+        image = undefined --[[@as Image|nil]],
+
+        ---Gets or sets clipboard text. Getter may return nil.
+        text = undefined --[[@as string|nil]],
+
+        ---Returns true if the clipboard contains image content.
+        hasImage = undefined --[[@as boolean]],
+
+        ---Returns true if the clipboard contains text content.
+        hasText = undefined --[[@as boolean]],
+
+        ---Clears content from the clipboard.
+        clear = function()
+        end,
+    },
+
     ---Executes the command named `CommandName` with the parameters provided.
     ---@NOTE CopyCel, Eyedropper, Launch, MoveCel, SelectTile, SetPalette omitted.
     ---@NOTE Try out Screenshot
@@ -210,7 +232,8 @@ app = {
         end,
 
         ---Changes the sprite's color mode.
-        ---@param options {format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", ["dithering-matrix"]: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
+        ---When `ui` is `true`, widgets do not display values set by command.
+        ---@param options {fitCriteria: "cielab"|"ciexyz"|"linearizedRGB"|"rgb"|"default", format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", ["dithering-matrix"]: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
         ChangePixelFormat = function(options)
         end,
 
