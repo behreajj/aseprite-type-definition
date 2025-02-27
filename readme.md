@@ -3,7 +3,7 @@
 ![Demo of suggest in VSCode](https://gyazo.com/2a91bc263590356d218dbeae3209cfb8.gif)
 
 A lua type definition for [Aseprite API](https://www.aseprite.org/api/) based on [lua-language-server](https://github.com/LuaLS/lua-language-server).
-The supported API version is `31` (since version 1.3.12-beta1).
+The supported API version is `32` (since version 1.3.14-beta1).
 
 ## Usage
 
