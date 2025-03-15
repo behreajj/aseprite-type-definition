@@ -232,7 +232,7 @@ app = {
         end,
 
         ---Changes the sprite's color mode.
-        ---When `ui` is `true`, widgets do not display values set by command.
+        ---When `ui` is `true`, widgets do not display arguments set by command.
         ---@param options {fitCriteria: "cielab"|"ciexyz"|"linearizedRGB"|"rgb"|"default", format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", ["dithering-matrix"]: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
         ChangePixelFormat = function(options)
         end,
@@ -455,7 +455,7 @@ app = {
         ---`mode` can be 0 for HSV_MUL; 1, HSL_MUL; 2, HSV_ADD; 3, HSL_ADD. See
         ---https://github.com/aseprite/aseprite/blob/main/src/filters/hue_saturation_filter.h .
         ---Defaults to HSL_MUL.
-        ---When `ui` is `true`, widgets do not display values set by command.
+        ---When `ui` is `true`, widgets do not display arguments set by command.
         ---@param options {alpha: number, channels: FilterChannels|integer, hue: number, lightness: number, mode: 0|1|2|3, saturation: number, ui: boolean, value: number}
         HueSaturation = function(options)
         end,
@@ -1744,9 +1744,13 @@ Editor = {
 ---@class Events
 Events = {
     ---Connects the given function with the given event.
+    ---Suitable arguments for the parameter `eventName` depend on whether the
+    ---`Events` object is from a `Sprite` or the `app`. See `SpriteEvents` and
+    ---`AppEvents` in
+    ---https://github.com/aseprite/aseprite/blob/main/src/app/script/events_class.cpp .
     ---Returns the listenerCode.
     ---@param ev Events
-    ---@param eventName string|"aftercommand"|"beforecommand"|"beforesitechange"|"bgcolorchange"|"fgcolorchange"|"sitechange"
+    ---@param eventName string|"afteraddtile"|"aftercommand"|"beforecommand"|"beforesitechange"|"bgcolorchange"|"change"|"fgcolorchange"|"filenamechange"|"remaptileset"|"sitechange"
     ---@param func function
     ---@return integer
     on = function(ev, eventName, func)
