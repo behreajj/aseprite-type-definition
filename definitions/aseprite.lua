@@ -624,11 +624,11 @@ app = {
         end,
 
         ---Applies an outline to the selected elements.
-        ---When matrix is an integer, then the neighbor pixels matrix uses the
-        ---following integer flags:
+        ---When `matrix` is an integer, then the neighbor pixels matrix uses
+        ---the following integer flags:
         ---<pre>
         ---256, 128,  64,
-        --- 32,  16,   8
+        --- 32,  16,   8,
         ---  4,   2,   1
         ---</pre>
         ---These are composited using the bitwise inclusive-or operator, `|`.
