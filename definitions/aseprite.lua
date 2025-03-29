@@ -11,7 +11,7 @@ app = {
     ---Gets or sets the background color.
     bgColor = undefined --[[@as Color]],
 
-    --Gets or sets the background tile.
+    --Gets or sets the background tile index.
     bgTile = undefined --[[@as integer]],
 
     ---Gets or sets the active brush.
@@ -34,7 +34,7 @@ app = {
     ---Gets or sets the foreground color.
     fgColor = undefined --[[@as Color]],
 
-    --Gets or sets the foreground tile.
+    --Gets or sets the foreground tile index.
     fgTile = undefined --[[@as integer]],
 
     ---Gets or sets the active frame.
@@ -568,12 +568,15 @@ app = {
         end,
 
         ---Creates a new layer. Layer type options `reference`, `tilemap` and
-        ---`group` are mutually exclusive. The `gridBounds` parameter applies
-        ---only to tilemap layers. The `ask` parameter refers to displaying a
-        ---dialog in the UI for the user to enter a layer name. The `top`
-        ---parameter places a new layer at the top of the stack if true. The
-        ---`before` parameter places the new layer before the active layer if
-        ---true, after if false.
+        ---`group` are mutually exclusive.
+        ---
+        ---The `gridBounds` parameter applies only to tilemap layers. The
+        ---`ask` parameter refers to displaying a dialog in the UI for the
+        ---user to enter a layer name.
+        ---
+        ---The `top` parameter places a new layer at the top of the stack if
+        ---true. The `before` parameter places the new layer before the active
+        ---layer if true, after if false.
         ---@overload fun(options: {fromClipboard: boolean, name: string})
         ---@overload fun(options: {fromFile: boolean, name: string})
         ---@param options {ask: boolean, before: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
@@ -621,7 +624,17 @@ app = {
         end,
 
         ---Applies an outline to the selected elements.
-        ---@param options {bgColor: Color, channels: FilterChannels|integer, color: Color, matrix:"circle"|"horizontal"|"square"|"vertical", place: "inside"|"outside", tiledMode: "both"|"none"|"x"|"y", ui: boolean}
+        ---When matrix is an integer, then the neighbor pixels matrix uses the
+        ---following integer flags:
+        ---<pre>
+        ---256, 128,  64,
+        --- 32,  16,   8
+        ---  4,   2,   1
+        ---</pre>
+        ---These are composited using the bitwise inclusive-or operator, `|`.
+        ---For example, `128 | 4 | 2` activates the top center, bottom left and
+        ---bottom center pixels.
+        ---@param options {bgColor: Color, channels: FilterChannels|integer, color: Color, matrix:integer|"circle"|"horizontal"|"square"|"vertical", place: "inside"|"outside", tiledMode: "both"|"none"|"x"|"y", ui: boolean}
         Outline = function(options)
         end,
 
