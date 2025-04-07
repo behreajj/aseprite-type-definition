@@ -192,7 +192,7 @@ app = {
         end,
 
         ---Applies a brightness-contrast adjustment filter to the sprite.
-        ---@param options {brightness: integer, channels: FilterChannels|integer, contrast: integer, ui: boolean}
+        ---@param options {brightness: integer, channels: integer|FilterChannels, contrast: integer, ui: boolean}
         BrightnessContrast = function(options)
         end,
 
@@ -256,7 +256,7 @@ app = {
         end,
 
         ---Applies an sRGB color curve filter to the sprite.
-        ---@param options {channels: FilterChannels|integer, curve: Point[]|integer[][], ui: boolean}
+        ---@param options {channels: integer|FilterChannels, curve: Point[]|integer[][], ui: boolean}
         ColorCurve = function(options)
         end,
 
@@ -277,7 +277,7 @@ app = {
         end,
 
         ---Applies a convolution matrix filter to the sprite.
-        ---@param options {channels: FilterChannels|integer, fromResource: string, tiledMode: "both"|"none"|"x"|"y", ui: boolean}
+        ---@param options {channels: integer|FilterChannels, fromResource: string, tiledMode: "both"|"none"|"x"|"y", ui: boolean}
         ConvolutionMatrix = function(options)
         end,
 
@@ -313,7 +313,7 @@ app = {
         end,
 
         ---Applies a despeckle filter to the sprite.
-        ---@param options {channels: FilterChannels|integer, height: integer, tiledMode: "both"|"none"|"x"|"y", ui: boolean, width: integer}
+        ---@param options {channels: integer|FilterChannels, height: integer, tiledMode: "both"|"none"|"x"|"y", ui: boolean, width: integer}
         Despeckle = function(options)
         end,
 
@@ -457,7 +457,7 @@ app = {
         ---https://github.com/aseprite/aseprite/blob/main/src/filters/hue_saturation_filter.h .
         ---Defaults to HSL_MUL.
         ---When `ui` is `true`, widgets do not display arguments set by command.
-        ---@param options {alpha: number, channels: FilterChannels|integer, hue: number, lightness: number, mode: 0|1|2|3, saturation: number, ui: boolean, value: number}
+        ---@param options {alpha: number, channels: integer|FilterChannels, hue: number, lightness: number, mode: 0|1|2|3, saturation: number, ui: boolean, value: number}
         HueSaturation = function(options)
         end,
 
@@ -467,7 +467,7 @@ app = {
         end,
 
         ---Applies the invert color filter to the sprite.
-        ---@param options {channels: FilterChannels|integer, ui: boolean}
+        ---@param options {channels: integer|FilterChannels, ui: boolean}
         InvertColor = function(options)
         end,
 
@@ -635,7 +635,7 @@ app = {
         ---These are composited with the bitwise inclusive or operator, `|`.
         ---For example, `128 | 4 | 2` activates the top center, bottom left and
         ---bottom center pixels.
-        ---@param options {bgColor: Color, channels: FilterChannels|integer, color: Color, matrix:integer|"circle"|"horizontal"|"square"|"vertical", place: "inside"|"outside", tiledMode: "both"|"none"|"x"|"y", ui: boolean}
+        ---@param options {bgColor: Color, channels: integer|FilterChannels, color: Color, matrix:integer|"circle"|"horizontal"|"square"|"vertical", place: "inside"|"outside", tiledMode: "both"|"none"|"x"|"y", ui: boolean}
         Outline = function(options)
         end,
 
@@ -685,7 +685,7 @@ app = {
 
         ---Replaces the `from` color with the `to` color according to a match
         ---tolerance.
-        ---@param options {channels: FilterChannels|integer, from: Color, to: Color, tolerance: integer, ui: boolean}
+        ---@param options {channels: integer|FilterChannels, from: Color, to: Color, tolerance: integer, ui: boolean}
         ReplaceColor = function(options)
         end,
 
