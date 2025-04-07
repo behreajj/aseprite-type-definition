@@ -142,7 +142,8 @@ app = {
     ---Properties and methods to get, set and clear the clipboard.
     clipboard = {
         ---Gets or sets clipboard content.
-        content = undefined --[[@as {image: Image|nil, palette:Palette|nil, selection: Selection|nil, text:string|nil, tileset:Tileset|nil}]],
+        content =
+        undefined --[[@as {image: Image|nil, palette:Palette|nil, selection: Selection|nil, text:string|nil, tileset:Tileset|nil}]],
 
         ---Gets or sets clipboard image data. Getter may return nil.
         image = undefined --[[@as Image|nil]],
@@ -625,13 +626,13 @@ app = {
 
         ---Applies an outline to the selected elements.
         ---When `matrix` is an integer, then the neighbor pixels matrix uses
-        ---the following integer flags:
+        ---the following flags:
         ---<pre>
         ---256, 128,  64,
         --- 32,  16,   8,
         ---  4,   2,   1
         ---</pre>
-        ---These are composited using the bitwise inclusive-or operator, `|`.
+        ---These are composited with the bitwise inclusive or operator, `|`.
         ---For example, `128 | 4 | 2` activates the top center, bottom left and
         ---bottom center pixels.
         ---@param options {bgColor: Color, channels: FilterChannels|integer, color: Color, matrix:integer|"circle"|"horizontal"|"square"|"vertical", place: "inside"|"outside", tiledMode: "both"|"none"|"x"|"y", ui: boolean}
@@ -2396,7 +2397,6 @@ end
 ---@field sprite Sprite Gets the sprite to which the range belongs.
 ---@field tiles integer[] Gets or sets a table of tile set indices.
 ---@field type RangeType Gets the type of range.
----@NOTE Tiles field works as a setter, but not yet as a getter.
 Range = {
     ---Clears the current range's contents.
     ---@param range Range
@@ -2899,13 +2899,11 @@ Tag = {}
 ---@field color table<string, Color> Gets the colors used by a theme.
 ---@field dimension table<string, integer> Gets the dimensions of theme elements.
 Theme = {
-    ---Returns data about the given style ID string. The data is a table
-    ---containing integers for the left, right, top and bottom border in pixels.
-    ---Whether UI scaling is applied depends on whether the theme was retrieved
-    ---from `app` or a `GraphicsContext`.
+    ---Returns data about the border for a given style ID string, or `nil` if
+    ---the ID cannot be found.
     ---@param theme Theme
     ---@param id string
-    ---@return {bottom: integer, left: integer, right: integer, top: integer}
+    ---@return { border: { bottom: integer, left: integer, right: integer, top: integer} }|nil
     styleMetrics = function(theme, id)
     end
 }
