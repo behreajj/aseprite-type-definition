@@ -1831,19 +1831,19 @@ GraphicsContext = {
     cubicTo = function(gc, cp1x, cp1y, cp2x, cp2y, x, y)
     end,
 
-    ---Draws the given image on the canvas. Does not support translucent or
-    ---transparent pixels.
-    ---If given source and destination rectangles, a part of the image is drawn
+    ---Draws the given image on the canvas.
+    ---Does not support translucent or transparent pixels.
+    ---If given source and target rectangles, a part of the image is drawn
     ---on the canvas.
     ---If given coordinates, the full image will be drawn at the specified
     ---position in its original scale.
     ---@param gc GraphicsContext Graphics context.
     ---@param image Image Source image.
     ---@param rectSrc Rectangle Source rectangle.
-    ---@param rectDst Rectangle Destination rectangle.
-    ---@overload fun(gc: GraphicsContext, image: Image, xSrc: integer, ySrc: integer, wSrc: integer, hSrc: integer, xDst: integer, yDst: integer, wDst: integer, hDst: integer)
-    ---@overload fun(gc: GraphicsContext, image: Image, xDst: integer, yDst: integer)
-    drawImage = function(gc, image, rectSrc, rectDst)
+    ---@param rectTrg Rectangle Target rectangle.
+    ---@overload fun(gc: GraphicsContext, image: Image, xSrc: integer, ySrc: integer, wSrc: integer, hSrc: integer, xTrg: integer, yTrg: integer, wTrg: integer, hTrg: integer)
+    ---@overload fun(gc: GraphicsContext, image: Image, xTrg: integer, yTrg: integer)
+    drawImage = function(gc, image, rectSrc, rectTrg)
     end,
 
     ---Draws a theme part given by partId on the canvas at the given
@@ -1921,7 +1921,7 @@ GraphicsContext = {
     end,
 
     ---Restores the last saved canvas state.
-    ---Does not include pixels set by drawImage.
+    ---Does not include pixels set by `drawImage`.
     ---@param gc GraphicsContext
     restore = function(gc)
     end,
@@ -1941,7 +1941,7 @@ GraphicsContext = {
 
     ---Saves the current state of the canvas to restore it later.
     ---Includes: color, opacity, blendMode, strokeWidth and clipping
-    ---region. Does not include pixels set by drawImage.
+    ---region. Does not include pixels set by `drawImage`.
     ---@param gc GraphicsContext
     save = function(gc)
     end,
@@ -2008,16 +2008,19 @@ Image = {
     clone = function(image)
     end,
 
-    ---Blits the `sourceImage` onto the `destinationImage`.
-    ---The `position` offsets where the destination is drawn on the source.
-    ---Offsets may be positive or negative. The source may be larger than the
-    ---destination. Excess pixels will be be clipped.
-    ---@param destinationImage Image
+    ---Blits the `sourceImage` onto the `targetImage`.
+    ---The `position` offsets where the target is drawn on the source.
+    ---Offsets may be positive or negative.
+    ---The source may be larger than the target.
+    ---Excess pixels will be be clipped.
+    ---Does not verify that zero alpha pixels have zero RGB channels,
+    ---so method should not be called when `opacity` is zero.
+    ---@param targetImage Image
     ---@param sourceImage Image
     ---@param position? Point
     ---@param opacity? integer
     ---@param blendMode? BlendMode|integer
-    drawImage = function(destinationImage, sourceImage, position, opacity, blendMode)
+    drawImage = function(targetImage, sourceImage, position, opacity, blendMode)
     end,
 
     ---Sets the pixel at a coordinate to a given color if the coordinate is in
@@ -2157,7 +2160,7 @@ Image = {
 ---Images loaded fromFile may be `nil`.
 ---Images created a rectangle parameter may return `nil` if the rectangle is
 ---empty, i.e., has zero or negative width or height.
----The ImageSpec constructor is preferable, so that transparent color and color
+---The ImageSpec constructor is preferred, so that transparent color and color
 ---space fields can be transferred from a source to a target.
 ---@param spec ImageSpec
 ---@return Image
