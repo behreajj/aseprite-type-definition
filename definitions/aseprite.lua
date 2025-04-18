@@ -234,7 +234,8 @@ app = {
 
         ---Changes the sprite's color mode.
         ---When `ui` is `true`, widgets do not display arguments set by command.
-        ---@param options {fitCriteria: "cielab"|"ciexyz"|"linearizedRGB"|"rgb"|"default", format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "ordered"|"old"|"error-diffusion", ["dithering-matrix"]: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
+        ---Dithering factor is expected to be in [0.0, 1.0].
+        ---@param options {fitCriteria: "cielab"|"ciexyz"|"linearizedRGB"|"rgb"|"default", format: "rgb"|"gray"|"grayscale"|"indexed", dithering: "none"|"ordered"|"old"|"error-diffusion", ditheringFactor: number, ditheringMatrix: string, rgbmap: "octree"|"rgb5a3"|"default", toGray: "luma"|"hsv"|"hsl"}
         ChangePixelFormat = function(options)
         end,
 
@@ -1614,6 +1615,7 @@ Dialog = {
     ---@param dialog Dialog
     ---@param options {id: string, selected: string, align: Align|integer, onchange: function}
     ---@return Dialog
+    ---@NOTE See https://github.com/aseprite/aseprite/issues/5114 Empty tabs may cause crash.
     endtabs = function(dialog, options)
     end,
 
@@ -2748,7 +2750,7 @@ Sprite = {
     end,
 
     ---Creates a new cel in the given layer. Throws an error if the layer is a
-    ---group.
+    ---group. Throws an error if the frame number is out of bounds.
     ---If a frame is not provided, defaults to the first frame.
     ---If an image is not provided, a new image will be created with the size
     ---of the sprite canvas.
