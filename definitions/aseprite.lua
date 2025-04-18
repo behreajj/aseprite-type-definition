@@ -181,7 +181,7 @@ app = {
         AdvancedMode = function()
         end,
 
-        ---Resizes sprite canvas to remove excess transparent pixels.
+        ---Trims sprite canvas to remove excess transparent pixels.
         ---See https://github.com/aseprite/aseprite/blob/main/src/app/commands/cmd_crop.cpp#L86 .
         ---@param options {byGrid: boolean}
         AutocropSprite = function(options)
