@@ -2246,6 +2246,7 @@ Layer = {
     ---@param layer Layer
     ---@param frame Frame|integer
     ---@return Cel|nil
+    ---@NOTE TODO What happens if frame index is out of bounds?
     cel = function(layer, frame)
     end
 }
@@ -2645,14 +2646,14 @@ Slice = {}
 ---@field height integer Gets or sets the height.
 ---@field id integer Gets the sprite's id.
 ---@field isModified boolean Returns true if the sprite is modified compared to the latest saved state.
----@field layers Layer[] Gets the layers contained by the sprite.
+---@field layers Layer[] Gets the topmost layers contained by the sprite.
 ---@field palettes Palette[] Gets the palettes contained by the sprite.
 ---@field pixelRatio Size Gets or sets the sprite pixel ratio.
 ---@field properties table<string, any> Gets or sets the sprite's user-defined properties.
 ---@field selection Selection Gets or sets the active selection.
----@field slices Slice[] Gets the slices contained by the sprite.
+---@field slices Slice[] Gets the slices from the sprite.
 ---@field spec ImageSpec Gets the sprite's image specification.
----@field tags Tag[] Gets the tags contained by the sprite.
+---@field tags Tag[] Gets the tags from the sprite.
 ---@field tileManagementPlugin string|nil Gets or sets external plugin string for custom tile management.
 ---@field tilesets Tileset[] Gets the tilesets contained by the sprite.
 ---@field transparentColor integer Gets or sets the transparent color.
@@ -2697,12 +2698,16 @@ Sprite = {
     end,
 
     ---Deletes the given `Frame`.
+    ---Throws an error if the frame number is out of bounds.
+    ---If the sprite has only one frame, then replaces deleted frame with an
+    ---empty frame.
     ---@param sprite Sprite
     ---@param frame Frame|integer
     deleteFrame = function(sprite, frame)
     end,
 
-    ---Deletes the given `Layer`.
+    ---Deletes the given `Layer`. Deleting all layers in a sprite will crash
+    ---the application.
     ---@param sprite Sprite
     ---@param layer Layer
     ---@NOTE Also accepts a string name. Discouraged because names aren't unique.
@@ -2766,7 +2771,10 @@ Sprite = {
     end,
 
     ---Creates a new empty frame in the given `frameNumber`.
-    ---Defaults to the last frame in the sprite.
+    ---Throws an error if the frame number is less than 1.
+    ---The default frame number is the sprite's last frame + 1.
+    ---If the frame number is greater than the sprite's frame length + 1,
+    ---then resorts to the default.
     ---The new frame's duration defaults to that of the active frame.
     ---@param sprite Sprite
     ---@param frameNumber? integer
@@ -2776,7 +2784,8 @@ Sprite = {
 
     ---Creates a copy of the given `Frame` object or frame number and returns
     ---the copy.
-    ---Defaults to the last frame in the sprite.
+    ---The default source frame is the last frame in the sprite.
+    ---The duplicated frame is appended after the source frame.
     ---@param sprite Sprite
     ---@param frame? Frame|integer
     ---@return Frame
@@ -3003,6 +3012,7 @@ Uuid = {}
 ---Otherwise, can be created from a string or another Uuid.
 ---@overload fun(otherUuid: Uuid): Uuid
 ---@overload fun(str: string): Uuid
+---@return Uuid
 function Uuid()
 end
 
