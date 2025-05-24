@@ -103,7 +103,7 @@ app = {
     exit = function()
     end,
 
-    ---Loads and opens a sprite from the given filename.
+    ---Loads and opens a sprite from the given file name.
     ---@param filename string
     ---@return Sprite|nil
     open = function(filename)
@@ -970,54 +970,54 @@ app = {
         ---The user's Documents path.
         userDocsPath = undefined --[[@as string]],
 
-        ---Returns the file extension of the given filename, excluding the `.`.
-        ---@param fileName string
+        ---Returns the file extension of the given file name, excluding the `.`.
+        ---@param filename string
         ---@return string
-        fileExtension = function(fileName)
+        fileExtension = function(filename)
         end,
 
         ---Returns the file name, including the extension.
-        ---@param fileName string
+        ---@param filename string
         ---@return string
-        fileName = function(fileName)
+        fileName = function(filename)
         end,
 
-        ---Returns the path, or directory, part of the given filename.
-        ---@param fileName string
+        ---Returns the path, or directory, part of the given file name.
+        ---@param filename string
         ---@return string
-        filePath = function(fileName)
+        filePath = function(filename)
         end,
 
         ---Returns the file path joined with the title, excluding the extension,
-        ---of the given filename.
-        ---@param fileName string
+        ---of the given file name.
+        ---@param filename string
         ---@return string
-        filePathAndTitle = function(fileName)
+        filePathAndTitle = function(filename)
         end,
 
-        ---Returns the file size of the given filename.
-        ---@param fileName string
+        ---Returns the file size of the given file name.
+        ---@param filename string
         ---@return integer
-        fileSize = function(fileName)
+        fileSize = function(filename)
         end,
 
         ---Returns the file title, excluding the path and extension, of the
-        ---given filename.
-        ---@param fileName string
+        ---given file name.
+        ---@param filename string
         ---@return string
-        fileTitle = function(fileName)
+        fileTitle = function(filename)
         end,
 
-        ---Returns true if the given filename is a directory.
-        ---@param fileName string
+        ---Returns true if the given file name is a directory.
+        ---@param filename string
         ---@return boolean
-        isDirectory = function(fileName)
+        isDirectory = function(filename)
         end,
 
-        ---Returns true if the given filename is a file.
-        ---@param fileName string
+        ---Returns true if the given file name is a file.
+        ---@param filename string
         ---@return boolean
-        isFile = function(fileName)
+        isFile = function(filename)
         end,
 
         ---Joins together a number of string arguments
@@ -2181,7 +2181,7 @@ end
 ---@field colorSpace ColorSpace Gets or sets the spec color space.
 ---@field height integer Gets or sets the spec height.
 ---@field width integer Gets or sets the spec width.
----@field transparentColor integer Gets or sets the index for a transparent color in a palette.
+---@field transparentColor integer Gets or sets the index for a transparent color in a palette as an unsigned 32 bit integer. The value -1 is disallowed.
 ImageSpec = {}
 
 ---Creates a new `ImageSpec` instance.
@@ -2289,7 +2289,7 @@ Palette = {
     resize = function(palette, ncolors)
     end,
 
-    ---Saves the palette in the given `filename`.
+    ---Saves the palette in the given file name.
     ---@param palette Palette
     ---@param filename string
     saveAs = function(palette, filename)
