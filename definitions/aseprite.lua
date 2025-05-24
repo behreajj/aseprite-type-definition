@@ -3010,7 +3010,7 @@ Uuid = {}
 
 ---Creates a new Uuid. When called without arguments, a random Uuid is created.
 ---Otherwise, can be created from a string or another Uuid.
----When an invalid string is used, returns a Uuid with all zeroes.
+---When an invalid string is given, returns a Uuid with all zeroes.
 ---@overload fun(otherUuid: Uuid): Uuid
 ---@overload fun(str: string): Uuid
 ---@return Uuid
