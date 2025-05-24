@@ -1462,7 +1462,7 @@ WebSocketMessageType = {
 }
 
 
----Identifies a brush to paint with `app.useTool()` function.
+---Represents a brush's geometry and relationship with the canvas.
 ---@class Brush
 ---@field angle integer Gets the angle between -180 and 180.
 ---@field center Point Gets the center.
