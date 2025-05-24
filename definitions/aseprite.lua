@@ -2106,7 +2106,7 @@ Image = {
     resize = function(image, width, height)
     end,
 
-    ---Saves the image as a sprite in the given `filename`. Returns true if the
+    ---Saves the image as a sprite in the given file name. Returns true if the
     ---operation is successful.
     ---@param image Image
     ---@param filename string
