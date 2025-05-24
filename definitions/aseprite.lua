@@ -3036,7 +3036,7 @@ end
 
 ---Object used to communicate with another program.
 ---@class WebSocket
----@field url string Address of the server. Read-only. The url is specified when creating the websocket.
+---@field url string Gets the server address.
 WebSocket = {
     ---Tries to connect to the server.
     ---@param webSocket WebSocket
