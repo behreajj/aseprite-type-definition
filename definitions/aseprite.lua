@@ -1628,8 +1628,9 @@ Dialog = {
     end,
 
     ---Appends a button to select one file to open or save.
-    ---The `basepath` property sets the file path, which will be visible for relative paths.
-    ---The base path may override a path in the `filename`.
+    ---The `basepath` property sets the file path, which will be visible as
+    ---the relative path in the widget submenu.
+    ---The base path may override any path data in the `filename` string.
     ---The `title` property sets the file browser window's title.
     ---When `entry` is present, a text entry field will appear to the left of
     ---an ellipsis file browser button.
