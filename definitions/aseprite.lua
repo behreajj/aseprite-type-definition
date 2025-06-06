@@ -1571,21 +1571,22 @@ end
 Dialog = {
     ---Appends a button to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, enabled: boolean, focus: boolean, selected: boolean, visible: boolean, onclick: function}
+    ---@param options {id: string, label: string, enabled: boolean, focus: boolean, selected: boolean, text: string, vexpand: boolean, visible: boolean, onclick: function}
     ---@return Dialog
+    ---@NOTE hexpand doesn't seem to work for buttons.
     button = function(dialog, options)
     end,
 
     ---Appends a canvas to a dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, width: integer, height: integer, hexpand: boolean, autoscaling: boolean, visible: boolean, vexpand: boolean, ondblclick: fun(event: MouseEvent), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousedown: fun(event: MouseEvent), onmousemove: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), onpaint: fun(event: {context: GraphicsContext}), ontouchmagnify: fun(event: TouchEvent), onwheel: fun(event: MouseEvent)}
+    ---@param options {id: string, label: string, autoscaling: boolean, width: integer, height: integer, hexpand: boolean, vexpand: boolean, visible: boolean, ondblclick: fun(event: MouseEvent), onkeydown: fun(event: KeyEvent), onkeyup: fun(event: KeyEvent), onmousedown: fun(event: MouseEvent), onmousemove: fun(event: MouseEvent), onmouseup: fun(event: MouseEvent), onpaint: fun(event: {context: GraphicsContext}), ontouchmagnify: fun(event: TouchEvent), onwheel: fun(event: MouseEvent)}
     ---@return Dialog
     canvas = function(dialog, options)
     end,
 
     ---Appends a check box widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, enabled: boolean, focus: boolean, selected: boolean, visible: boolean, onclick: function}
+    ---@param options {id: string, label: string, hexpand: boolean, enabled: boolean, focus: boolean, selected: boolean, text: string, vexpand: boolean, visible: boolean, onclick: function}
     ---@return Dialog
     check = function(dialog, options)
     end,
@@ -1597,14 +1598,14 @@ Dialog = {
 
     ---Appends a color picker widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, color: Color, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, color: Color, enabled: boolean, focus: boolean, hexpand: boolean, vexpand: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     color = function(dialog, options)
     end,
 
     ---Appends a combo box, or drop down menu, to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, option: string, options: string[], enabled: boolean, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, enabled: boolean, hexpand: boolean, option: string, options: string[], vexpand: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     ---@NOTE The focus optional property does not work for drop down.
     combobox = function(dialog, options)
@@ -1621,24 +1622,29 @@ Dialog = {
 
     ---Appends a text entry field to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, enabled: boolean, focus: boolean, hexpand: boolean, text: string, vexpand: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     entry = function(dialog, options)
     end,
 
-    ---Appends a button to select one file to open or save. When 'entry' is
-    ---present, a text entry field will appear to the left of an ellipsis file
-    ---browser button.
+    ---Appends a button to select one file to open or save.
+    ---The `basepath` property sets the file path, which will be visible for relative paths.
+    ---The base path may override a path in the `filename`.
+    ---The `title` property sets the file browser window's title.
+    ---When `entry` is present, a text entry field will appear to the left of
+    ---an ellipsis file browser button.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, title: string, filename: string|string[], filetypes: string[], open: boolean, save: boolean, entry: boolean, enabled: boolean, focus: boolean, visible: boolean, onchange:function}
+    ---@param options {id: string, label: string, basepath: string, enabled: boolean, entry: boolean, filename: string|string[], filetypes: string[], focus: boolean, hexpand: boolean, open: boolean, save: boolean, title: string, vexpand: boolean, visible: boolean, onchange:function}
     ---@return Dialog
+    ---@NOTE The open property is listed in the docs, but it probably does nothing in the CPP source.
     file = function(dialog, options)
     end,
 
     ---Appends a static label to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, visible: boolean}
+    ---@param options {id: string, label: string, text: string, vexpand: boolean, visible: boolean}
     ---@return Dialog
+    ---@NOTE Does hexpand make a difference in this case?
     label = function(dialog, options)
     end,
 
@@ -1662,14 +1668,14 @@ Dialog = {
     ---When assigning the text option, the number should be formatted to a
     ---string.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, decimals: integer, enabled: boolean, focus: boolean, visible: boolean, onchange: function}
+    ---@param options {id: string, label: string, decimals: integer, enabled: boolean, focus: boolean, hexpand: boolean, text: string, vexpand: boolean, visible: boolean, onchange: function}
     ---@return Dialog
     number = function(dialog, options)
     end,
 
     ---Appends a radio button widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, text: string, selected: boolean, enabled: boolean, focus: boolean, visible: boolean, onclick: function}
+    ---@param options {id: string, label: string, enabled: boolean, focus: boolean, hexpand: boolean, selected: boolean, text: string, vexpand: boolean, visible: boolean, onclick: function}
     ---@return Dialog
     radio = function(dialog, options)
     end,
@@ -1693,7 +1699,7 @@ Dialog = {
     ---They can be sorted and accessed as an array when the mode is "sort".
     ---The default mode is "pick".
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, colors: Color[], mode: "pick"|"sort", visible: boolean, onclick: fun(event: {color: Color, button: MouseButton})}
+    ---@param options {id: string, label: string, colors: Color[], hexpand: boolean, mode: "pick"|"sort", vexpand: boolean, visible: boolean, onclick: fun(event: {color: Color, button: MouseButton})}
     ---@return Dialog
     shades = function(dialog, options)
     end,
@@ -1712,8 +1718,9 @@ Dialog = {
 
     ---Appends a slider widget to the dialog.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, min: integer, max: integer, value: integer, enabled: boolean, focus: boolean, visible: boolean, onchange: function, onrelease: function}
+    ---@param options {id: string, label: string, min: integer, max: integer, value: integer, enabled: boolean, focus: boolean, vexpand: boolean, visible: boolean, onchange: function, onrelease: function}
     ---@return Dialog
+    ---@NOTE hexpand is not listed for slider, as it causes widget to be too narrow.
     slider = function(dialog, options)
     end,
 
@@ -3008,9 +3015,9 @@ TouchEvent = {}
 ---@class Uuid
 Uuid = {}
 
----Creates a new Uuid. When called without arguments, a random Uuid is created.
----Otherwise, can be created from a string or another Uuid.
----When an invalid string is given, returns a Uuid with all zeroes.
+---Creates a new Uuid. When called without arguments, creates a random Uuid.
+---Otherwise, can be supplied a string or another Uuid.
+---When an invalid string is given, creates a Uuid with all zeroes.
 ---@overload fun(otherUuid: Uuid): Uuid
 ---@overload fun(str: string): Uuid
 ---@return Uuid
