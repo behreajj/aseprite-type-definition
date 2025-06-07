@@ -1628,6 +1628,7 @@ Dialog = {
     end,
 
     ---Appends a button to select one file to open or save.
+    ---Open is the default behavior.
     ---The `basepath` property sets the file path, which will be visible as
     ---the relative path in the widget submenu.
     ---The base path may override any path data in the `filename` string.
@@ -1635,9 +1636,8 @@ Dialog = {
     ---When `entry` is present, a text entry field will appear to the left of
     ---an ellipsis file browser button.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, basepath: string, enabled: boolean, entry: boolean, filename: string|string[], filetypes: string[], focus: boolean, hexpand: boolean, open: boolean, save: boolean, title: string, vexpand: boolean, visible: boolean, onchange:function}
+    ---@param options {id: string, label: string, basepath: string, enabled: boolean, entry: boolean, filename: string|string[], filetypes: string[], focus: boolean, hexpand: boolean, save: boolean, title: string, vexpand: boolean, visible: boolean, onchange:function}
     ---@return Dialog
-    ---@NOTE The open property is listed in the docs, but it probably does nothing in the CPP source.
     file = function(dialog, options)
     end,
 
