@@ -2249,6 +2249,7 @@ KeyEvent = {
 ---@field sprite Sprite Gets the sprite to which the layer belongs.
 ---@field stackIndex integer Gets or sets the layer's index in its parent's layers table.
 ---@field tileset Tileset|nil If the layer is a tile map, gets or sets the layer's tile set.
+---@field uuid Uuid Gets the layer unique identifier.
 Layer = {
     ---Returns a cel, if any, at the intersection of the layer and a frame.
     ---@param layer Layer
@@ -2665,6 +2666,7 @@ Slice = {}
 ---@field tileManagementPlugin string|nil Gets or sets external plugin string for custom tile management.
 ---@field tilesets Tileset[] Gets the tilesets contained by the sprite.
 ---@field transparentColor integer Gets or sets the transparent color.
+---@field useLayerUuids boolean Gets or sets whether to generate layer unique identifiers.
 ---@field width integer Gets or sets the width.
 Sprite = {
     ---Assigns a new color space to the sprite without modifying pixels.
