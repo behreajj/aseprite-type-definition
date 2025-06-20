@@ -1774,7 +1774,7 @@ Events = {
     ---https://github.com/aseprite/aseprite/blob/main/src/app/script/events_class.cpp .
     ---Returns the listenerCode.
     ---@param ev Events
-    ---@param eventName string|"afteraddtile"|"aftercommand"|"beforecommand"|"beforesitechange"|"bgcolorchange"|"change"|"fgcolorchange"|"filenamechange"|"remaptileset"|"sitechange"
+    ---@param eventName string|"afteraddtile"|"aftercommand"|"beforecommand"|"beforesitechange"|"bgcolorchange"|"change"|"fgcolorchange"|"filenamechange"|"layerblendmode"|"layername"|"layeropacity"|"layervisibility"|"remaptileset"|"sitechange"
     ---@param func function
     ---@return integer
     on = function(ev, eventName, func)
