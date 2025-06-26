@@ -2320,7 +2320,7 @@ Palette = {
 ---The `fromResource` constructor accepts an identifier string, e.g., `DB16`,
 ---`DB32`, `Solarized`. Throws an error if no palette can be found.
 ---
----The `fromFile` parameter accepts a path string. Returns `nil` if no palette
+---The `fromFile` constructor accepts a path string. Returns `nil` if no palette
 ---can be found.
 ---@return Palette
 ---@overload fun(numberOfColors: integer): Palette
