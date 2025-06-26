@@ -2317,11 +2317,11 @@ Palette = {
 ---Creates a new `Palette` instance with a number of color swatches.
 ---The palette defaults to 256 colors.
 ---
+---The `fromFile` constructor accepts a path string. Returns `nil` if no
+---palette can be found.
+---
 ---The `fromResource` constructor accepts an identifier string, e.g., `DB16`,
 ---`DB32`, `Solarized`. Throws an error if no palette can be found.
----
----The `fromFile` constructor accepts a path string. Returns `nil` if no palette
----can be found.
 ---@return Palette
 ---@overload fun(numberOfColors: integer): Palette
 ---@overload fun(options: {fromFile: string}): Palette
