@@ -989,13 +989,14 @@ app = {
         end,
 
         ---Returns the file path joined with the title, excluding the extension,
-        ---of the given file name.
+        ---of the given string.
         ---@param filename string
         ---@return string
         filePathAndTitle = function(filename)
         end,
 
         ---Returns the file size of the given file name.
+        ---Returns zero when the file cannot be found.
         ---@param filename string
         ---@return integer
         fileSize = function(filename)
@@ -1008,13 +1009,15 @@ app = {
         fileTitle = function(filename)
         end,
 
-        ---Returns true if the given file name is a directory.
+        ---Returns true if the given string indicates a directory.
+        ---Returns false when the the argument is `nil`.
         ---@param filename string
         ---@return boolean
         isDirectory = function(filename)
         end,
 
-        ---Returns true if the given file name is a file.
+        ---Returns true if the given string indicates an existing file.
+        ---Returns false when the the argument is `nil`.
         ---@param filename string
         ---@return boolean
         isFile = function(filename)
