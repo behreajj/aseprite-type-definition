@@ -346,7 +346,7 @@ app = {
         end,
 
         ---Exports the sprite to a sprite sheet.
-        ---@param options {askOverwrite: boolean, bestFit: boolean, borderPadding: integer, columns: integer, dataFilename: string, dataFormat: SpriteSheetDataFormat, extrude: boolean, filenameFormat: string, fromTilesets: boolean, height: integer, ignoreEmpty: boolean, innerPadding: integer, layer: string, recent: boolean, listLayers: boolean, listSlices: boolean, listTags: boolean, mergeDuplicates: boolean, openGenerated: boolean, rows: integer, shapePadding: integer, splitGrid: boolean, splitLayers: boolean, splitTags: boolean, tag: string, textureFilename: string, trim: boolean, trimByGrid: boolean, trimSprite: boolean, type: SpriteSheetType, ui: boolean, width: integer}
+        ---@param options {askOverwrite: boolean, bestFit: boolean, borderPadding: integer, columns: integer, dataFilename: string, dataFormat: SpriteSheetDataFormat, extrude: boolean, filenameFormat: string, fromTilesets: boolean, height: integer, ignoreEmpty: boolean, innerPadding: integer, layer: string, recent: boolean, listLayers: boolean, listSlices: boolean, listTags: boolean, mergeDuplicates: boolean, openGenerated: boolean, recent: boolean, rows: integer, shapePadding: integer, splitGrid: boolean, splitLayers: boolean, splitTags: boolean, tag: string, tagnameFormat: string, textureFilename: string, trim: boolean, trimByGrid: boolean, trimSprite: boolean, type: SpriteSheetType, ui: boolean, width: integer}
         ExportSpriteSheet = function(options)
         end,
 
@@ -712,7 +712,7 @@ app = {
         ---This method has serious bugs, particularly with `fromFrame` and
         ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
         ---where possible.
-        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, playSubtags: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
         ---@deprecated
         SaveFile = function(options)
         end,
@@ -720,15 +720,16 @@ app = {
         ---This method has serious bugs, particularly with `fromFrame` and
         ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
         ---where possible.
-        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, playSubtags: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
         ---@deprecated
         SaveFileAs = function(options)
         end,
 
+        ---Alias for file export.
         ---This method has serious bugs, particularly with `fromFrame` and
         ---`toFrame` parameters. Prefer save methods in `Image` and `Sprite`
         ---where possible.
-        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
+        ---@param options {aniDir: AniDir, bounds: Rectangle, filename: string, filenameFormat: string, fromFrame: Frame, ignoreEmpty: boolean, playSubtags: boolean, recent: boolean, scale: number, slice: string, tag: string, toFrame: Frame, ui: boolean}
         ---@deprecated
         SaveFileCopyAs = function(options)
         end,
@@ -1596,6 +1597,7 @@ Dialog = {
 
     ---Closes the dialog.
     ---@param dialog Dialog
+    ---@return Dialog
     close = function(dialog)
     end,
 
