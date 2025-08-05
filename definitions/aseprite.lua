@@ -130,7 +130,8 @@ app = {
     end,
 
     ---Simulates a user stroke in the canvas using the given tool. Many tools
-    ---do not work, including but not limited to: polygon, contour, curve.
+    ---do not work, including but not limited to: hand, move, contour, curve,
+    ---polygon.
     ---
     ---Do not use with event handler functions (https://github.com/aseprite/aseprite/issues/4695).
     ---@see Events.on
@@ -675,13 +676,31 @@ app = {
         PlayPreviewAnimation = function()
         end,
 
-        ---Repeats the previous export.
-        RepeatLastExport = function()
-        end,
-
         ---Reloads Aseprite's theme, or skin. May cause crashes in version
         ---1.2.40 or older, especially with custom themes.
         Refresh = function()
+        end,
+
+        ---Removes a frame.
+        RemoveFrame = function()
+        end,
+
+        ---Removes a tag.
+        ---@param options {name: string, id: string}
+        RemoveFrameTag = function(options)
+        end,
+
+        ---Removes a layer.
+        RemoveLayer = function()
+        end,
+
+        ---Removes a slice.
+        ---@param options {name: string, id: string}
+        RemoveSlice = function(options)
+        end,
+
+        ---Repeats the previous export.
+        RepeatLastExport = function()
         end,
 
         ---Replaces the `from` color with the `to` color according to a match
