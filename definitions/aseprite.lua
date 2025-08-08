@@ -699,6 +699,11 @@ app = {
         RemoveSlice = function(options)
         end,
 
+        ---Reopens a closed file.
+        ---Appropriate settings must be enabled in Preferences.
+        ReopenClosedFile = function()
+        end,
+
         ---Repeats the previous export.
         RepeatLastExport = function()
         end,
@@ -775,6 +780,12 @@ app = {
         SelectionAsGrid = function()
         end,
 
+        ---Creates a range in the color bar of used or unused colors or tiles,
+        ---per the modifier.
+        ---@param options {modifier: "unused_colors"|"unused_tiles"|"used_colors"|"used_tiles"}
+        SelectPaletteColors = function(options)
+        end,
+
         ---Sets the color selector in the UI. The argument "wheel" is the same
         ---as "rgb-wheel".
         ---@param options {type: "normal-map-wheel"|"rgb-wheel"|"ryb-wheel"|"spectrum"|"tint-shade-tone"|"wheel"}
@@ -791,12 +802,6 @@ app = {
         ---reserved keyword, so place in square brackets, e.g., { ["end"] = 5 }.
         ---@param options {action: "off"|"on", begin: integer, end: integer}
         SetLoopSection = function(options)
-        end,
-
-        ---Creates a range in the color bar of used or unused colors or tiles,
-        ---per the modifier.
-        ---@param options {modifier: "unused_colors"|"unused_tiles"|"used_colors"|"used_tiles"}
-        SelectPaletteColors = function(options)
         end,
 
         ---Sets the palette swatch display size in the color bar.
@@ -1495,7 +1500,11 @@ WebSocketMessageType = {
 ---@field size integer Gets the brush size.
 ---@field type BrushType Gets the brush type.
 Brush = {
-    ---@NOTE There is also setBgColor. Not clear how it works, if at all.
+    ---Sets the brush's background color.
+    ---@param brush Brush
+    ---@param color Color
+    setBgColor = function(brush, color)
+    end,
 
     ---Sets the brush's foreground color.
     ---@param brush Brush
@@ -1508,7 +1517,7 @@ Brush = {
 ---@return Brush
 ---@overload fun(size: Size): Brush
 ---@overload fun(image: Image): Brush
----@overload fun(options: {type: BrushType, size: integer, angle: integer, center: Point, image: Image, pattern: BrushPattern, patternOrigin: Point}): Brush
+---@overload fun(options: {angle: integer, center: Point, image: Image, pattern: BrushPattern, patternOrigin: Point, size: integer, type: BrushType}): Brush
 function Brush()
 end
 
