@@ -144,9 +144,11 @@ app = {
     clipboard = {
         ---Gets or sets clipboard content.
         content =
-        undefined --[[@as {image: Image|nil, palette:Palette|nil, selection: Selection|nil, text:string|nil, tileset:Tileset|nil}]],
+            undefined --[[@as {image: Image|nil, palette:Palette|nil, selection: Selection|nil, text:string|nil, tileset:Tileset|nil}]],
 
-        ---Gets or sets clipboard image data. Getter may return nil.
+        ---Gets an image created from clipboard data or sets clipboard data to
+        ---content from an image. Does *not* access image by reference.
+        ---Getter may return nil.
         image = undefined --[[@as Image|nil]],
 
         ---Gets or sets clipboard text. Getter may return nil.
@@ -2735,7 +2737,7 @@ Sprite = {
     end,
 
     ---Deletes the given `cel`.
-    ---If the cel is from a background layer, the cel will be replaced with
+    ---If the cel is from a background layer, then replaces the cel with
     ---another that contains an image filled with `app.bgColor`.
     ---@param sprite Sprite
     ---@param cel Cel
@@ -2752,8 +2754,8 @@ Sprite = {
     deleteFrame = function(sprite, frame)
     end,
 
-    ---Deletes the given `Layer`. Deleting all layers in a sprite will crash
-    ---the application.
+    ---Deletes the given `Layer`.
+    ---Deleting all layers in a sprite will crash the application.
     ---@param sprite Sprite
     ---@param layer Layer
     ---@NOTE Also accepts a string name. Discouraged because names aren't unique.
