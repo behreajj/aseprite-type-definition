@@ -1374,6 +1374,7 @@ FilterChannels = {
 
 ---https://github.com/aseprite/aseprite/blob/main/src/doc/algorithm/flip_type.h
 ---@enum FlipType
+---@NOTE FlipType.DIAGONAL is 'nil' even though it is documented in https://github.com/aseprite/api/blob/main/api/fliptype.md. See https://github.com/aseprite/aseprite/issues/5359 .
 FlipType = {
     HORIZONTAL = 0,
     VERTICAL = 1
@@ -1772,7 +1773,7 @@ Dialog = {
 ---Creates a new `Dialog` instance.
 ---@return Dialog
 ---@overload fun(title: string): Dialog
----@overload fun(options: {title: string, notitlebar: boolean, parent: Dialog, onclose: function}): Dialog
+---@overload fun(options: {title: string, notitlebar: boolean, parent: Dialog, resizeable: boolean, onclose: function}): Dialog
 function Dialog()
 end
 
@@ -2387,7 +2388,7 @@ Plugin = {
     ---Creates a new command that can be associated to keyboard shortcuts
     ---and is added in the app menu in a group.
     ---@param plugin Plugin
-    ---@param options {id: string, title: string, group: string, onclick: function, onenabled: function}
+    ---@param options {id: string, title: string, group: string, onchecked: function, onclick: function, onenabled: function}
     newCommand = function(plugin, options)
     end,
 
@@ -2704,6 +2705,7 @@ Slice = {}
 ---@field tileManagementPlugin string|nil Gets or sets external plugin string for custom tile management.
 ---@field tilesets Tileset[] Gets the tilesets contained by the sprite.
 ---@field transparentColor integer Gets or sets the transparent color.
+---@field undoHistory {redoStates: integer, undoStates: integer}|nil Gets the undo history count, if any.
 ---@field useLayerUuids boolean Gets or sets whether to generate layer unique identifiers.
 ---@field width integer Gets or sets the width.
 Sprite = {
