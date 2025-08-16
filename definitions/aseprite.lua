@@ -2092,7 +2092,9 @@ Image = {
     end,
 
     ---Flips an image in-place on either the horizontal or vertical axis.
-    ---Defaults to horizontal.
+    ---Defaults to horizontal. As of version 1.3.14, diagonal flips are not
+    ---supported in all cases. See
+    ---https://github.com/aseprite/aseprite/blob/main/src/doc/algorithm/flip_image.cpp.
     ---@param image Image
     ---@param flipType? FlipType
     flip = function(image, flipType)
