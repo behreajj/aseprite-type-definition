@@ -1374,10 +1374,11 @@ FilterChannels = {
 
 ---https://github.com/aseprite/aseprite/blob/main/src/doc/algorithm/flip_type.h
 ---@enum FlipType
----@NOTE FlipType.DIAGONAL is 'nil' even though it is documented in https://github.com/aseprite/api/blob/main/api/fliptype.md. See https://github.com/aseprite/aseprite/issues/5359 .
+---@NOTE FlipType.DIAGONAL was nil prior to api version 35. See https://github.com/aseprite/aseprite/issues/5359 .
 FlipType = {
     HORIZONTAL = 0,
-    VERTICAL = 1
+    VERTICAL = 1,
+    DIAGONAL = 2
 }
 
 
@@ -1423,7 +1424,7 @@ MouseCursor = {
     S_RESIZE = 14,
     SW_RESIZE = 15,
     W_RESIZE = 16,
-    NW_RESIZE = 17,
+    NW_RESIZE = 17
 }
 
 
@@ -2092,8 +2093,7 @@ Image = {
     end,
 
     ---Flips an image in-place on either the horizontal or vertical axis.
-    ---Defaults to horizontal. As of version 1.3.14, diagonal flips are not
-    ---supported in all cases. See
+    ---Defaults to horizontal. See
     ---https://github.com/aseprite/aseprite/blob/main/src/doc/algorithm/flip_image.cpp.
     ---@param image Image
     ---@param flipType? FlipType
