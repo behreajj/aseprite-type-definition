@@ -579,12 +579,12 @@ app = {
         ---`ask` parameter refers to displaying a dialog in the UI for the
         ---user to enter a layer name.
         ---
-        ---The `top` parameter places a new layer at the top of the stack if
-        ---true. The `before` parameter places the new layer before the active
+        ---The `before` parameter places the new layer before the active
         ---layer if true, after if false.
         ---@overload fun(options: {fromClipboard: boolean, name: string})
         ---@overload fun(options: {fromFile: boolean, name: string})
-        ---@param options {ask: boolean, before: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, top: boolean, viaCopy: boolean, viaCut: boolean}
+        ---@param options {ask: boolean, before: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, viaCopy: boolean, viaCut: boolean}
+        ---@NOTE The documentation is wrong about how the top parameter works. See https://github.com/aseprite/aseprite/issues/5364 .
         NewLayer = function(options)
         end,
 
