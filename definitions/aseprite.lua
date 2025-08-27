@@ -104,7 +104,7 @@ app = {
     end,
 
     ---Loads and opens a sprite from the given file name.
-    ---@param filename string
+    ---@param filename string file name
     ---@return Sprite|nil
     open = function(filename)
     end,
@@ -115,6 +115,12 @@ app = {
 
     ---Forces a screen refresh.
     refresh = function()
+    end,
+
+    ---Displays a tool tip in the bottom right corner of the application.
+    ---@param text string tip string
+    ---@overload fun(options: {text: string, duration: number})
+    tip = function(text)
     end,
 
     ---Creates a new transaction so as to bundle many modifications into one
@@ -1679,7 +1685,7 @@ Dialog = {
     file = function(dialog, options)
     end,
 
-    ---Appends a static label to the dialog.
+    ---Appends a fixed label to the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, label: string, text: string, vexpand: boolean, visible: boolean}
     ---@return Dialog
@@ -1776,6 +1782,7 @@ Dialog = {
 ---@return Dialog
 ---@overload fun(title: string): Dialog
 ---@overload fun(options: {autofit: integer|Align, notitlebar: boolean, parent: Dialog, resizeable: boolean, title: string, onclose: function}): Dialog
+---@NOTE Not clear what autofit actually does.
 function Dialog()
 end
 
