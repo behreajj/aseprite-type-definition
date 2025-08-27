@@ -584,7 +584,6 @@ app = {
         ---@overload fun(options: {fromClipboard: boolean, name: string})
         ---@overload fun(options: {fromFile: boolean, name: string})
         ---@param options {ask: boolean, before: boolean, gridBounds: Rectangle, group: boolean, name: string, reference: boolean, tilemap: boolean, viaCopy: boolean, viaCut: boolean}
-        ---@NOTE The documentation is wrong about how the top parameter works. See https://github.com/aseprite/aseprite/issues/5364 .
         NewLayer = function(options)
         end,
 
@@ -1602,8 +1601,10 @@ end
 
 ---Creates dialog windows with input widgets on the screen to accept user input.
 ---@class Dialog
+---@field autofit integer|Align Gets or sets the autofit alignment.
 ---@field bounds Rectangle Gets or sets the dialog bounds.
----@field data {[string]: boolean|string|integer|number|Color|Color[]}
+---@field data {[string]: boolean|string|integer|number|Color|Color[]} Data stored by dialog widgets.
+---@field sizeHint Size Gets the size hint.
 Dialog = {
     ---Appends a button to the dialog.
     ---@param dialog Dialog
@@ -1651,7 +1652,7 @@ Dialog = {
     ---Marks the end of both the last tab and the group of tabs to which it
     ---belongs.
     ---@param dialog Dialog
-    ---@param options {id: string, selected: string, align: Align|integer, onchange: function}
+    ---@param options {id: string, selected: string, align: integer|Align, onchange: function}
     ---@return Dialog
     ---@NOTE See https://github.com/aseprite/aseprite/issues/5114 Empty tabs may cause crash.
     endtabs = function(dialog, options)
@@ -1774,7 +1775,7 @@ Dialog = {
 ---Creates a new `Dialog` instance.
 ---@return Dialog
 ---@overload fun(title: string): Dialog
----@overload fun(options: {title: string, notitlebar: boolean, parent: Dialog, resizeable: boolean, onclose: function}): Dialog
+---@overload fun(options: {autofit: integer|Align, notitlebar: boolean, parent: Dialog, resizeable: boolean, title: string, onclose: function}): Dialog
 function Dialog()
 end
 
@@ -2288,6 +2289,7 @@ KeyEvent = {
 ---@field stackIndex integer Gets or sets the layer's index in its parent's layers table.
 ---@field tileset Tileset|nil If the layer is a tile map, gets or sets the layer's tile set.
 ---@field uuid Uuid Gets the layer unique identifier.
+---@NOTE isImage returns true for reference layers.
 Layer = {
     ---Returns a cel, if any, at the intersection of the layer and a frame.
     ---@param layer Layer
