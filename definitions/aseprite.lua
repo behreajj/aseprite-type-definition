@@ -1680,8 +1680,9 @@ Dialog = {
     ---When `entry` is present, a text entry field will appear to the left of
     ---an ellipsis file browser button.
     ---@param dialog Dialog
-    ---@param options {id: string, label: string, basepath: string, enabled: boolean, entry: boolean, filename: string|string[], filetypes: string[], focus: boolean, hexpand: boolean, save: boolean, title: string, vexpand: boolean, visible: boolean, onchange:function}
+    ---@param options {id: string, label: string, basepath: string, enabled: boolean, entry: boolean, filename: string|string[], filetypes: string[], hexpand: boolean, save: boolean, title: string, vexpand: boolean, visible: boolean, onchange:function}
     ---@return Dialog
+    ---@NOTE As of api version 35, focus no longer works for file widget.
     file = function(dialog, options)
     end,
 
