@@ -2554,12 +2554,15 @@ Rectangle = {
 ---Creates a new `Rectangle` instance. Dimensions may be negative or zero;
 ---they are not validated by the constructor.
 ---Width and height default to zero.
+---@param x? integer top left corner x
+---@param y? integer top left corner y
+---@param w? integer width
+---@param h? integer height
 ---@return Rectangle
 ---@overload fun(otherRectangle: Rectangle): Rectangle
----@overload fun(x: integer, y: integer, width: integer, height: integer): Rectangle
 ---@overload fun(options: {x: integer, y: integer, width: integer, height: integer}): Rectangle
 ---@overload fun(numbers: {[1]: integer, [2]: integer, [3]: integer, [4]: integer}): Rectangle
-function Rectangle()
+function Rectangle(x, y, w, h)
 end
 
 ---Represents a region of selected pixels on the sprite canvas.
@@ -2888,7 +2891,7 @@ Sprite = {
     ---If tileIndex is not provided, the new tile is appended at the end.
     ---@param sprite Sprite
     ---@param tileset Tileset
-    ---@param tileIndex integer?
+    ---@param tileIndex? integer
     ---@return Tile
     newTile = function(sprite, tileset, tileIndex)
     end,
