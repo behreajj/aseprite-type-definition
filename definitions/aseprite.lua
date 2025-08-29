@@ -2670,12 +2670,13 @@ Size = {
 ---Creates a new `Size` instance with the given dimensions. Dimensions may be
 ---negative or zero; they are not validated by the constructor.
 ---Width and height default to zero.
+---@param w? integer width
+---@param h? integer height
 ---@return Size
 ---@overload fun(otherSize: Size): Size
----@overload fun(width: integer, height: integer): Size
 ---@overload fun(options: {width: integer, height: integer}): Size
 ---@overload fun(numbers: {[1]: integer, [2]: integer}): Size
-function Size()
+function Size(w, h)
 end
 
 ---An object that allows for nine-slice scaling. The slice's frame data cannot
