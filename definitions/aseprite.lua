@@ -1696,7 +1696,7 @@ Dialog = {
 
     ---Changes properties of the widget given by an id string.
     ---@param dialog Dialog
-    ---@param options {id: string, color: Color, enabled: boolean, filename: string, max: integer, min: integer, option: string, selected: boolean, text: string, value: integer, visible: boolean}
+    ---@param options {id: string, color: Color, enabled: boolean, filename: string, max: integer, min: integer, mouseCursor: MouseCursor, option: string, selected: boolean, text: string, value: integer, visible: boolean}
     ---@return Dialog
     ---@overload fun(options: {id: string, [string]: any}): Dialog
     modify = function(dialog, options)
@@ -2725,7 +2725,7 @@ Slice = {}
 ---@field useLayerUuids boolean Gets or sets whether to generate layer unique identifiers.
 ---@field width integer Gets or sets the width.
 Sprite = {
-    ---Assigns a new color space to the sprite without modifying pixels.
+    ---Assigns a new color space to the sprite without changing pixels.
     ---@param sprite Sprite
     ---@param colorSpace ColorSpace
     assignColorSpace = function(sprite, colorSpace)
