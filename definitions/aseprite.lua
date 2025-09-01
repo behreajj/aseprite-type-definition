@@ -301,6 +301,12 @@ app = {
         CopyColors = function(options)
         end,
 
+        ---Copies the tiles in a range and pastes them before the
+        ---given index.
+        ---@param options {before: integer}
+        CopyTiles = function(options)
+        end,
+
         ---Copies a selection of composited layers.
         CopyMerged = function()
         end,
