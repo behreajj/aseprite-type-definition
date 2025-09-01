@@ -563,6 +563,11 @@ app = {
         MoveMask = function(options)
         end,
 
+        ---Moves tiles in a range in the Tileset to before the given index.
+        ---@param options {before:integer}
+        MoveTiles = function(options)
+        end,
+
         ---Creates a new sprite.
         ---@overload fun(options: {fromClipboard: boolean})
         ---@param options {colorMode: ColorMode, height: integer, ui: boolean, width: integer}
