@@ -149,6 +149,7 @@ app = {
     ---Properties and methods to get, set and clear the clipboard.
     clipboard = {
         ---Gets or sets clipboard content.
+        ---Selection may refer to invalid sprite state and throw error.
         content =
             undefined --[[@as {image: Image|nil, palette:Palette|nil, selection: Selection|nil, text:string|nil, tileset:Tileset|nil}]],
 
@@ -346,7 +347,7 @@ app = {
         DuplicateLayer = function()
         end,
 
-        ---Duplicates a sprite. Parameters available as of version 1.3.11-beta-1.
+        ---Duplicates a sprite.
         ---@param options {filename: string, flatten: boolean, ui: boolean}
         DuplicateSprite = function(options)
         end,
@@ -1138,6 +1139,18 @@ app = {
 
     ---A module to handle the color for Image pixels as unsigned integers.
     pixelColor = {
+        ---Tile map diagonal flip (tranpose) flag, `0x20000000`.
+        ---May be composited with other flags using bitwise inclusive or.
+        TILE_DFLIP = 0x20000000,
+
+        ---Tile map x flip flag, `0x80000000`.
+        ---May be composited with other flags using bitwise inclusive or.
+        TILE_XFLIP = 0x80000000,
+
+        ---Tile map y flip flag, `0x40000000`.
+        ---May be composited with other flags using bitwise inclusive or.
+        TILE_YFLIP = 0x40000000,
+
         ---Constructs a 16-bit unsigned integer for grayscale images.
         ---@param gray integer Gray value. Black is 0, white is 255.
         ---@param alpha? integer Alpha. Default is 255, opaque.
