@@ -118,6 +118,7 @@ app = {
     end,
 
     ---Displays a tool tip in the bottom right corner of the application.
+    ---Duration is expected to be in [0.5, 30.0] seconds.
     ---@param text string tip string
     ---@overload fun(options: {text: string, duration: number})
     tip = function(text)
