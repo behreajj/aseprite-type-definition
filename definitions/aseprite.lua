@@ -1721,9 +1721,10 @@ Dialog = {
 
     ---Changes properties of the widget given by an id string.
     ---@param dialog Dialog
-    ---@param options {id: string, color: Color, enabled: boolean, filename: string, max: integer, min: integer, mouseCursor: MouseCursor, option: string, selected: boolean, text: string, value: integer, visible: boolean}
+    ---@param options {id: string, color: Color, enabled: boolean, filename: string, max: integer, min: integer, mousecursor: MouseCursor, option: string, selected: boolean, text: string, value: integer, visible: boolean}
     ---@return Dialog
     ---@overload fun(options: {id: string, [string]: any}): Dialog
+    ---@NOTE The parameter 'mouseCursor' was changed to 'mousecursor' circa api version 36.
     modify = function(dialog, options)
     end,
 
