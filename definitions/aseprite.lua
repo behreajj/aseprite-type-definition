@@ -3162,7 +3162,7 @@ WebSocket = {
 }
 
 ---Creates a websocket client.
----@param options? {url: string, onreceive: fun(message: string, data: string), deflate: boolean, minreconnectwait: integer, maxreconnectwait: integer}
+---@param options? {url: string, onreceive: fun(messageType: WebSocketMessageType, messageData: string, messageError: string), deflate: boolean, minreconnectwait: integer, maxreconnectwait: integer}
 ---@return WebSocket
 function WebSocket(options)
 end
