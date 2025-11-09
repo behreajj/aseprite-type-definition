@@ -973,6 +973,10 @@ app = {
         ToggleTimelineThumbnails = function()
         end,
 
+        ---Toggles mode where user can drag and drop UI elements.
+        ToggleWorkspaceLayout = function()
+        end,
+
         ---Undoes the most recent action.
         Undo = function()
         end,
