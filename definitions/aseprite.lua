@@ -1617,6 +1617,7 @@ Color = {}
 ---@overload fun(options: {hue: number, saturation: number, lightness: number, alpha: integer}): Color
 ---@overload fun(options: {gray: integer, alpha: integer}): Color
 ---@overload fun(options: {index: integer}): Color
+---@NOTE Constructor is overloaded to convert a tile to a color. This is not documented because how it works would be opaque and arbitrary. See https://github.com/aseprite/aseprite/blob/main/src/app/script/color_class.cpp#L139, https://github.com/aseprite/aseprite/blob/7cbc4f8d168d1f1c0d56ee1f7c86fec3f40139a7/src/app/color.cpp#L95.
 function Color()
 end
 
