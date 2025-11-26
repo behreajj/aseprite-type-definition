@@ -743,7 +743,7 @@ app = {
         end,
 
         ---Rotates an element by an angle in degrees.
-        ---@param options {target: "mask", angle: integer}
+        ---@param options {target: "mask", angle: integer, ui: boolean}
         Rotate = function(options)
         end,
 
@@ -1641,6 +1641,7 @@ end
 ---@field bounds Rectangle Gets or sets the dialog bounds.
 ---@field data {[string]: boolean|string|integer|number|Color|Color[]} Data stored by dialog widgets.
 ---@field sizeHint Size Gets the size hint.
+---@NOTE TODO What does Dialog:menuItem, Dialog:showMenu do?
 Dialog = {
     ---Appends a button to the dialog.
     ---@param dialog Dialog
