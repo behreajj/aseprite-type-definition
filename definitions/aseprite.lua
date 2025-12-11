@@ -1814,7 +1814,7 @@ Dialog = {
 ---Creates a new `Dialog` instance.
 ---@return Dialog
 ---@overload fun(title: string): Dialog
----@overload fun(options: {autofit: integer|Align, notitlebar: boolean, parent: Dialog, resizeable: boolean, title: string, onclose: function}): Dialog
+---@overload fun(options: {autofit: integer|Align, notitlebar: boolean, parent: Dialog, resizeable: boolean, title: string, onclose: function, onresize: function}): Dialog
 ---@NOTE Not clear what autofit actually does.
 function Dialog()
 end
