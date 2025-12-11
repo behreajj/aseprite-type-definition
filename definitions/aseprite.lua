@@ -2742,6 +2742,7 @@ Slice = {}
 ---@field height integer Gets or sets the height.
 ---@field id integer Gets the sprite's id.
 ---@field isModified boolean Returns true if the sprite is modified compared to the latest saved state.
+---@field isValid boolean Returns true if a variable refers to an existing sprite.
 ---@field layers Layer[] Gets the topmost layers contained by the sprite.
 ---@field palettes Palette[] Gets the palettes contained by the sprite.
 ---@field pixelRatio Size Gets or sets the sprite pixel ratio.
