@@ -1530,7 +1530,7 @@ WebSocketMessageType = {
 
 ---Represents a brush's geometry and relationship with the canvas.
 ---@class Brush
----@field angle integer Gets the angle between -180 and 180.
+---@field angle integer Gets the signed angle in degrees, between -180 and 180.
 ---@field center Point Gets the center.
 ---@field image Image|nil Gets the image, if any, based on type.
 ---@field pattern BrushPattern Gets the pattern.
@@ -2739,6 +2739,7 @@ Slice = {}
 ---@field filename string Gets or sets the sprite file name.
 ---@field frames Frame[] Gets the frames contained by the sprite.
 ---@field gridBounds Rectangle Gets or sets grid offset and size.
+---@field hasAssociatedFile boolean Returns true if the sprite is associated with a file.
 ---@field height integer Gets or sets the height.
 ---@field id integer Gets the sprite's id.
 ---@field isModified boolean Returns true if the sprite is modified compared to the latest saved state.
@@ -3103,7 +3104,8 @@ TouchEvent = {}
 
 ---Represents a Universally unique identifier composed of 16 bytes. Each byte
 ---may be retrieved by index. Can be converted to a string with `tostring`.
----Follows the format "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".
+---Follows the format "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", where each
+---entry is a hexadecimal digit.
 ---@class Uuid
 Uuid = {}
 
