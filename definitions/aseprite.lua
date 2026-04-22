@@ -2436,6 +2436,13 @@ Plugin = {
     newCommand = function(plugin, options)
     end,
 
+    ---Establishes support for importing and exporting a file format.
+    ---The onload and onsave functions are required.
+    ---@param plugin Plugin
+    ---@param options {binary: boolean, extension: string, extensions: string[], name: string, supports: integer, onload: function, onsave: function}
+    newFileFormat = function(plugin, options)
+    end,
+
     ---Creates a new menu item which will contain a submenu grouping several
     ---plugin commands.
     ---@param plugin Plugin
