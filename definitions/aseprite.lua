@@ -2437,7 +2437,18 @@ Plugin = {
     end,
 
     ---Establishes support for importing and exporting a file format.
-    ---The onload and onsave functions are required.
+    ---
+    ---The `onload` and `onsave` functions are required.
+    ---
+    ---The `binary` parameter indicates whether the file is binary, as opposed
+    ---to plain text. Defaults to `true`.
+    ---
+    ---Extension strings should exclude the dot ('.'). Extensions may not
+    ---overlap with those already supported by Aseprite.
+    ---
+    ---The `supports` parameter is a bit flag, where load is `0x1`, save is
+    ---`0x2`, RGBA color is `0x8`, indexed color is `0x40`, and so on.
+    ---See https://github.com/aseprite/aseprite/blob/main/src/app/file/file_format.h .
     ---@param plugin Plugin
     ---@param options {binary: boolean, extension: string, extensions: string[], name: string, supports: integer, onload: function, onsave: function}
     newFileFormat = function(plugin, options)
