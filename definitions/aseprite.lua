@@ -1237,13 +1237,13 @@ app = {
     preferences = {
         ---Returns the preferences of the given `Tool`.
         ---@param tool Tool|string
-        ---@return any
+        ---@return table<string, any>
         tool = function(tool)
         end,
 
         ---Returns the preferences of the given `Sprite`.
         ---@param sprite Sprite
-        ---@return any
+        ---@return table<string, any>
         document = function(sprite)
         end
     },
