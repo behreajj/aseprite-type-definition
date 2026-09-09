@@ -1764,6 +1764,15 @@ Dialog = {
     repaint = function(dialog)
     end,
 
+    ---Places widgets of separate types on the same row in the dialog.
+    ---Only the first widget in a row should have a label.
+    ---@param dialog Dialog
+    ---@param options {always: boolean}
+    ---@return Dialog
+    ---@overload fun(): Dialog
+    samerow = function(dialog, options)
+    end,
+
     ---Creates a separator line in the dialog.
     ---@param dialog Dialog
     ---@param options {id: string, text: string}
